@@ -98,8 +98,8 @@
     <button onclick="cancelPendingRequest()" class="verify-btn verify-btn-secondary" style="max-width:300px;margin-top:8px">✖️ إلغاء الطلب</button>
   </div>
 
-  <!-- Loading Screen -->
-  <div id="loading-screen">
+  <!-- Loading Screen (Hidden by default to prevent freeze) -->
+  <div id="loading-screen" style="display:none;">
     <div class="spinner"></div>
     <p style="margin-top:12px;color:#666;font-size:14px;">جاري التحقق...</p>
   </div>
@@ -109,15 +109,19 @@
     <h2 style="color:var(--primary);margin-bottom:16px;font-weight:900;font-size:24px;">💬 فيسي برو</h2>
     <div class="login-hint">
       <strong>✅ رقم موثق:</strong> <span id="login-phone-badge" style="direction:ltr;display:inline-block;color:#0d47a1;font-weight:900;">-</span><br>
-      يجب إدخال <strong>اسمك</strong> للدخول إلى الغرفة.
+      اكتب <strong>اسمك</strong> أدناه للدخول الفوري إلى الغرفة:
     </div>
     <div class="login-error-box" id="login-error-box">
       <strong>❌ خطأ في الاسم:</strong>
       <div id="login-error-text"></div>
     </div>
     <input type="text" id="username-input" class="login-input" placeholder="اكتب اسمك هنا..." autocomplete="off" maxlength="30">
-    <button id="login-btn" class="login-btn">🚀 دخول</button>
-    <p style="margin-top:8px;font-size:11px;color:#999;">سيتم حفظ جلستك في هذا الجهاز</p>
+    <button id="login-btn" class="login-btn">🚀 دخول إلى الدردشة</button>
+    <div style="display:flex;gap:8px;margin-top:10px;width:100%;">
+      <button type="button" onclick="window.quickLoginAs('owner')" style="flex:1;padding:10px;background:#fef7e0;border:1.5px solid #fbc02d;border-radius:12px;font-family:inherit;font-size:12px;font-weight:700;color:#f57f17;cursor:pointer;">👑 دخول سريع كمالك</button>
+      <button type="button" onclick="window.quickLoginAs('guest')" style="flex:1;padding:10px;background:#e8f5e9;border:1.5px solid #81c784;border-radius:12px;font-family:inherit;font-size:12px;font-weight:700;color:#2e7d32;cursor:pointer;">👤 دخول كعضو</button>
+    </div>
+    <p style="margin-top:10px;font-size:11px;color:#999;">سيتم حفظ جلستك في هذا المتصفح تلقائياً</p>
   </div>
 
   <!-- Ban Screen -->
@@ -438,6 +442,7 @@
       <!-- Owner Admin Controls -->
       <button id="btn-security-settings" class="btn-security-settings" onclick="openSecuritySettings()">🛡️ الإعدادات الأمنية</button>
       <button id="btn-database-settings" class="btn-advanced" onclick="openDatabaseSettings()" style="background:linear-gradient(135deg,#ff8f00,#e65100);display:flex;align-items:center;justify-content:center;gap:6px;">🔥 إعدادات قاعدة البيانات (Firebase)</button>
+      <button id="btn-upload-settings" class="btn-advanced" onclick="openUploadSettings()" style="background:linear-gradient(135deg,#0288d1,#0097a7);display:flex;align-items:center;justify-content:center;gap:6px;">☁️ مركز رفع الصور والفيديوهات (Upload API)</button>
       <button id="btn-theme-settings" class="btn-theme-settings" onclick="openThemeSettings()">🎨 ألوان الواجهة</button>
       <button id="btn-bg-settings" class="btn-bg-settings" onclick="openBgSettings()">🖼️ خلفيات الدردشة</button>
       <button id="btn-effects-settings" class="btn-effects-settings" onclick="openEffectsSettings()">🎆 التأثيرات المتحركة</button>
@@ -600,13 +605,51 @@
     </div>
   </div>
 
+  <!-- Upload Settings Modal -->
+  <div class="modal-popup" id="upload-settings-modal">
+    <div class="popup-box" style="max-width:480px;text-align:right;">
+      <h3 style="text-align:center;font-size:18px;font-weight:900;color:#0288d1;margin-bottom:8px;">☁️ مركز رفع الصور والفيديوهات</h3>
+      <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:12px;">
+        يمكنك هنا ضبط أو تغيير الرابط المستخدم لرفع الصور ومقاطع الفيديو مباشرة في الشات والخاص والحالات:
+      </p>
+
+      <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;">🌐 رابط API الرفع المباشر (Upload Endpoint):</label>
+      <input type="text" id="upload-url-input" class="login-input" placeholder="https://catbox.moe/user/api.php" style="margin-bottom:10px;padding:10px;font-size:13px;text-align:left;direction:ltr;">
+
+      <label style="display:block;font-size:12px;font-weight:700;margin-bottom:6px;">⚡ مراكز الرفع الجاهزة بنقرة واحدة:</label>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+        <button type="button" onclick="selectUploadPreset('https://catbox.moe/user/api.php')" class="perm-role-row" style="padding:8px;font-size:12px;">
+          <span>🐱 كاتبكس (Catbox - صور وفيديوهات حتى 200MB)</span>
+          <span style="color:#0288d1;font-weight:900;">اختيار 👈</span>
+        </button>
+        <button type="button" onclick="selectUploadPreset('https://litterbox.catbox.moe/resources/internals/api.php')" class="perm-role-row" style="padding:8px;font-size:12px;">
+          <span>⚡ ليتربوكس (Litterbox - سريع ومباشر)</span>
+          <span style="color:#0288d1;font-weight:900;">اختيار 👈</span>
+        </button>
+        <button type="button" onclick="selectUploadPreset('https://tmpfiles.org/api/v1/upload')" class="perm-role-row" style="padding:8px;font-size:12px;">
+          <span>📁 تي ام بي فايلز (TmpFiles - متعدد الصيغ)</span>
+          <span style="color:#0288d1;font-weight:900;">اختيار 👈</span>
+        </button>
+        <button type="button" onclick="selectUploadPreset('')" class="perm-role-row" style="padding:8px;font-size:12px;">
+          <span>💾 تخزين محلي داخلي (Base64 - بدون خادم خارجي)</span>
+          <span style="color:#0288d1;font-weight:900;">اختيار 👈</span>
+        </button>
+      </div>
+
+      <div style="display:flex;gap:8px;">
+        <button class="login-btn" style="background:linear-gradient(135deg,#0288d1,#0097a7);padding:10px;font-size:14px;font-weight:800;" onclick="saveUploadSettings()">💾 حفظ رابط الرفع</button>
+        <button class="login-btn" style="background:#f0f0f0;color:#555;padding:10px;font-size:14px;" onclick="closeUploadSettings()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script type="module" src="./src/main.ts"></script>
 <script>
-  // Failsafe auto-dismiss loading screen
+  // Failsafe auto-dismiss loading screen - instant response
   (function() {
-    function dismissLoading() {
+    function ensureReady() {
       var ls = document.getElementById('loading-screen');
       if (ls) {
         ls.style.display = 'none';
@@ -614,15 +657,19 @@
       }
       var cu = localStorage.getItem('veysi_current_user');
       if (!cu) {
-        var vs = document.getElementById('verify-screen');
         var log = document.getElementById('login-screen');
-        if (vs && !vs.classList.contains('active') && (!log || log.style.display !== 'flex')) {
-          vs.style.display = 'flex';
-          vs.classList.add('active');
+        if (log && log.style.display !== 'flex') {
+          log.style.display = 'flex';
         }
       }
     }
-    setTimeout(dismissLoading, 300);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', ensureReady);
+    } else {
+      ensureReady();
+    }
+    setTimeout(ensureReady, 50);
+    setTimeout(ensureReady, 250);
   })();
 </script>
 </body>

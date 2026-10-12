@@ -76,10 +76,16 @@ import {
   verifyTelegramContactSuccess,
 } from './auth';
 import { toggleSound } from './audio';
+import { getUploadApiUrl, saveUploadApiUrl, uploadMedia, UPLOAD_PRESETS } from './uploader';
 
 // Extend window object for HTML inline handlers
 declare global {
   interface Window {
+    openUploadSettings: () => void;
+    closeUploadSettings: () => void;
+    saveUploadSettings: () => void;
+    selectUploadPreset: (url: string) => void;
+    quickLoginAs: (type: 'owner' | 'guest') => void;
     initTelegramVerification: (e: Event) => void;
     checkTelegramContactAndLogin: (e: Event) => void;
     skipVerificationIfAllowed: () => void;
@@ -421,19 +427,39 @@ function setupGlobalWindowHandlers() {
     }
   };
 
-  window.handleStatusFile = (input) => {
+  function showToast(msg: string) {
+    let toast = document.getElementById('veysi-global-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'veysi-global-toast';
+      toast.style.cssText = 'position:fixed;bottom:75px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.85);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;font-family:inherit;z-index:999999;pointer-events:none;transition:opacity 0.3s;box-shadow:0 4px 15px rgba(0,0,0,0.3);';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.opacity = '1';
+    clearTimeout((toast as any)._timeout);
+    (toast as any)._timeout = setTimeout(() => {
+      if (toast) toast.style.opacity = '0';
+    }, 2500);
+  }
+
+  window.handleStatusFile = async (input) => {
     const file = input.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        pendingStatusFileBase64 = e.target?.result as string;
-        const nameEl = document.getElementById('selected-filename');
+      const nameEl = document.getElementById('selected-filename');
+      if (nameEl) {
+        nameEl.textContent = `📎 جاري الرفع: ${file.name}...`;
+        nameEl.classList.add('active');
+      }
+      showToast('⏳ جاري رفع الوسائط...');
+      try {
+        pendingStatusFileBase64 = await uploadMedia(file, (msg) => showToast(msg));
         if (nameEl) {
-          nameEl.textContent = `📎 ${file.name}`;
-          nameEl.classList.add('active');
+          nameEl.textContent = `✅ تم الرفع: ${file.name}`;
         }
-      };
-      reader.readAsDataURL(file);
+      } catch {
+        if (nameEl) nameEl.textContent = `⚠️ تم التجهيز محلياً: ${file.name}`;
+      }
     }
   };
 
@@ -474,30 +500,34 @@ function setupGlobalWindowHandlers() {
     }
   };
 
-  window.handleFile = (input) => {
+  window.handleFile = async (input) => {
     const file = input.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const base64 = e.target?.result as string;
+      showToast('⏳ جاري رفع الصورة / الفيديو إلى مركز الرفع...');
+      try {
+        const url = await uploadMedia(file, (msg) => showToast(msg));
         const type = file.type.startsWith('video') ? 'video' : 'image';
-        sendChatMessage('', base64, type);
-      };
-      reader.readAsDataURL(file);
+        sendChatMessage('', url, type);
+        showToast('✅ تم إرسال الوسائط بنجاح');
+      } catch (err) {
+        showToast('⚠️ تعذر الرفع، يرجى المحاولة لاحقاً');
+      }
       input.value = '';
     }
   };
 
-  window.handleDMMedia = (input) => {
+  window.handleDMMedia = async (input) => {
     const file = input.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const base64 = e.target?.result as string;
+      showToast('⏳ جاري رفع الوسائط إلى مركز الرفع...');
+      try {
+        const url = await uploadMedia(file, (msg) => showToast(msg));
         const type = file.type.startsWith('video') ? 'video' : 'image';
-        sendDMMessage('', base64, type);
-      };
-      reader.readAsDataURL(file);
+        sendDMMessage('', url, type);
+        showToast('✅ تم إرسال الوسائط بنجاح');
+      } catch (err) {
+        showToast('⚠️ تعذر الرفع، يرجى المحاولة لاحقاً');
+      }
       input.value = '';
     }
   };
@@ -727,7 +757,7 @@ function setupGlobalWindowHandlers() {
     // Show/hide owner buttons
     const isOwner = currentUser.role === 'owner';
     const ownerOnlyIds = [
-      'btn-security-settings', 'btn-database-settings', 'btn-chat-settings', 'btn-owner-premium',
+      'btn-security-settings', 'btn-database-settings', 'btn-upload-settings', 'btn-chat-settings', 'btn-owner-premium',
       'btn-maintenance', 'btn-theme-settings', 'btn-bg-settings',
       'btn-anim-settings', 'btn-effects-settings', 'btn-advanced', 'btn-warning-history'
     ];
@@ -1017,6 +1047,61 @@ function setupGlobalWindowHandlers() {
         window.closeDatabaseSettings();
       }
     });
+  };
+
+  // Upload Settings Handlers
+  window.openUploadSettings = () => {
+    const modal = document.getElementById('upload-settings-modal');
+    if (!modal) return;
+    const urlInput = document.getElementById('upload-url-input') as HTMLInputElement;
+    const currentUrl = getUploadApiUrl();
+    if (urlInput) urlInput.value = currentUrl;
+    modal.classList.add('active');
+  };
+
+  window.closeUploadSettings = () => {
+    const modal = document.getElementById('upload-settings-modal');
+    if (modal) modal.classList.remove('active');
+  };
+
+  window.saveUploadSettings = () => {
+    const urlInput = document.getElementById('upload-url-input') as HTMLInputElement;
+    if (urlInput) {
+      saveUploadApiUrl(urlInput.value);
+      alert('✅ تم حفظ رابط مركز رفع الصور والفيديوهات بنجاح!');
+      window.closeUploadSettings();
+    }
+  };
+
+  window.selectUploadPreset = (url: string) => {
+    const urlInput = document.getElementById('upload-url-input') as HTMLInputElement;
+    if (urlInput) urlInput.value = url;
+  };
+
+  window.quickLoginAs = (type: 'owner' | 'guest') => {
+    if (type === 'owner') {
+      const ownerUser = getUsers().find(u => u.role === 'owner') || {
+        id: 'user_owner_001',
+        name: 'المالك فيسي 👑',
+        phone: '+966500000001',
+        role: 'owner',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+        status: 'online',
+        lastSeen: Date.now(),
+        color: '#FFD700',
+        glow: 'gold',
+        nameAnim: 'name-anim-gold',
+        customBubble: 'king',
+        customFrame: 'king',
+        capabilities: { canDM: true, canMedia: true, canStatus: true, canChat: true }
+      };
+      saveCurrentUser(ownerUser);
+      initApplication();
+    } else {
+      const randomGuest = 'عضو_' + Math.floor(100 + Math.random() * 900);
+      performLogin(randomGuest);
+      initApplication();
+    }
   };
 
   // Login Button Click

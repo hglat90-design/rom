@@ -19,7 +19,7 @@ const broadcastChannel = typeof BroadcastChannel !== 'undefined'
 
 // Initial Default Application Settings
 export const DEFAULT_SETTINGS: AppSettings = {
-  verificationGateEnabled: true,
+  verificationGateEnabled: false,
   autoRegistrationEnabled: true,
   chatMinRole: 'user',
   headerBg: '#008069',

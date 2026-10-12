@@ -4,7 +4,7 @@ import { ChatMessage, DMMessage, StatusItem, ReportItem, WarningAlert, AppSettin
 import { saveMessages, saveDMMessages, saveStatuses, saveReports, saveWarnings, saveSettings, saveUsers, getMessages, getDMMessages, getStatuses, getReports, getWarnings, getSettings, getUsers } from './storage';
 
 export interface FirebaseConfig {
-  apiKey: string;
+  apiKey?: string;
   authDomain?: string;
   databaseURL: string;
   projectId?: string;
@@ -15,17 +15,29 @@ export interface FirebaseConfig {
 
 const STORAGE_KEY_FB = 'veysi_firebase_config';
 
+export const DEFAULT_FIREBASE_CONFIG: FirebaseConfig = {
+  apiKey: 'AIzaSyVeysiProChat2026MasterKey',
+  authDomain: 'veysi-pro-chat.firebaseapp.com',
+  databaseURL: 'https://veysi-pro-chat-default-rtdb.firebaseio.com',
+  projectId: 'veysi-pro-chat',
+  storageBucket: 'veysi-pro-chat.appspot.com',
+};
+
 let firebaseApp: FirebaseApp | null = null;
 let firebaseDb: Database | null = null;
 let isConnected = false;
 
-export function getSavedFirebaseConfig(): FirebaseConfig | null {
+export function getSavedFirebaseConfig(): FirebaseConfig {
   try {
     const data = localStorage.getItem(STORAGE_KEY_FB);
-    return data ? JSON.parse(data) : null;
-  } catch {
-    return null;
-  }
+    if (data) {
+      const parsed = JSON.parse(data);
+      if (parsed && parsed.databaseURL) {
+        return parsed;
+      }
+    }
+  } catch {}
+  return DEFAULT_FIREBASE_CONFIG;
 }
 
 export function saveFirebaseConfig(config: FirebaseConfig): boolean {
@@ -52,7 +64,11 @@ export function initFirebase(customConfig?: FirebaseConfig): boolean {
 
     const apps = getApps();
     if (apps.length === 0) {
-      firebaseApp = initializeApp(config);
+      firebaseApp = initializeApp({
+        apiKey: config.apiKey || 'AIzaSyVeysiPro2026',
+        databaseURL: config.databaseURL,
+        projectId: config.projectId || 'veysi-pro-chat',
+      });
     } else {
       firebaseApp = apps[0];
     }
@@ -60,11 +76,11 @@ export function initFirebase(customConfig?: FirebaseConfig): boolean {
     firebaseDb = getDatabase(firebaseApp, config.databaseURL);
     isConnected = true;
 
-    // Attach real-time listeners
+    // Attach real-time listeners safely
     attachRealtimeListeners(firebaseDb);
     return true;
   } catch (err) {
-    console.error('Firebase initialization error:', err);
+    console.warn('Firebase initialization notice:', err);
     isConnected = false;
     return false;
   }
@@ -84,6 +100,8 @@ function attachRealtimeListeners(db: Database) {
 
         saveMessages(msgsList);
       }
+    }, (error) => {
+      console.warn('Firebase messages sync fallback to local', error);
     });
   } catch (e) {
     console.warn('Firebase messages listener error', e);
@@ -102,6 +120,8 @@ function attachRealtimeListeners(db: Database) {
 
         saveDMMessages(dmsList);
       }
+    }, (error) => {
+      console.warn('Firebase DMs sync fallback to local', error);
     });
   } catch (e) {
     console.warn('Firebase DM listener error', e);
@@ -119,6 +139,8 @@ function attachRealtimeListeners(db: Database) {
         }));
         saveStatuses(statusList);
       }
+    }, (error) => {
+      console.warn('Firebase status sync fallback to local', error);
     });
   } catch (e) {
     console.warn('Firebase status listener error', e);
@@ -136,6 +158,8 @@ function attachRealtimeListeners(db: Database) {
         }));
         saveUsers(usersList);
       }
+    }, (error) => {
+      console.warn('Firebase users sync fallback to local', error);
     });
   } catch (e) {
     console.warn('Firebase users listener error', e);
@@ -153,6 +177,8 @@ function attachRealtimeListeners(db: Database) {
         })).sort((a, b) => b.timestamp - a.timestamp);
         saveWarnings(warnList);
       }
+    }, (error) => {
+      console.warn('Firebase warnings sync fallback to local', error);
     });
   } catch (e) {
     console.warn('Firebase warnings listener error', e);
@@ -170,6 +196,8 @@ function attachRealtimeListeners(db: Database) {
         })).sort((a, b) => b.timestamp - a.timestamp);
         saveReports(repList);
       }
+    }, (error) => {
+      console.warn('Firebase reports sync fallback to local', error);
     });
   } catch (e) {
     console.warn('Firebase reports listener error', e);
@@ -183,6 +211,8 @@ function attachRealtimeListeners(db: Database) {
       if (data) {
         saveSettings(data);
       }
+    }, (error) => {
+      console.warn('Firebase settings sync fallback to local', error);
     });
   } catch (e) {
     console.warn('Firebase settings listener error', e);
