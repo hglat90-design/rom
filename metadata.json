@@ -1,0 +1,6 @@
+{
+  "name": "فيسي برو - Veysi Pro",
+  "description": "تطبيق الدردشة ونظام البلاغات المتطور فيسي برو (Veysi Pro) مع غرف الدردشة والرسائل الخاصة والحالات وإدارة الصلاحيات.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>فيسي برو - Veysi Pro</title>
+  <meta name="description" content="تطبيق الدردشة ونظام البلاغات المتطور فيسي برو (Veysi Pro) مع غرف الدردشة والرسائل الخاصة والحالات وإدارة الصلاحيات." />
+  <meta property="og:title" content="فيسي برو - Veysi Pro" />
+  <meta property="og:description" content="تطبيق الدردشة ونظام البلاغات المتطور فيسي برو (Veysi Pro) مع غرف الدردشة والرسائل الخاصة والحالات وإدارة الصلاحيات." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#008069">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+
+<div class="app-container" id="app">
+
+  <!-- Verification Gate Screen -->
+  <div id="verify-screen">
+    <div class="verify-logo">💬</div>
+    <div class="verify-title">فيسي برو</div>
+    <div class="verify-subtitle">🔐 دخول حصري بتوثيق عبر كود البوت</div>
+    <div class="verify-card">
+      <div class="verify-steps-indicator">
+        <div class="verify-step-dot active" id="vstep1"><span>1</span></div>
+        <div class="verify-step-dot" id="vstep2"><span>2</span></div>
+      </div>
+      <div id="verify-msg" class="verify-msg"></div>
+      <div id="verify-step-start">
+        <div class="verify-hint">
+          <strong>⚠️ تحذير أمني:</strong>
+          الدخول إلى الغرفة يتم <b>حصرياً</b> عبر توثيق رقم الهاتف من بوت تليجرام الرسمي.
+        </div>
+        <button class="verify-btn verify-btn-tg" id="verify-start-btn" onclick="initTelegramVerification(event)">
+          🚀 بدء التوثيق عبر بوت تليجرام
+        </button>
+        <button class="verify-btn verify-btn-secondary" onclick="skipVerificationIfAllowed()" id="verify-skip-btn" style="margin-top:14px;background:linear-gradient(135deg,#ff9800,#f57c00);color:#fff;border-color:transparent;font-weight:800;box-shadow:0 6px 20px rgba(255,152,0,.35)">
+          ⚡ تخطي التوثيق والدخول بالاسم
+        </button>
+      </div>
+      <div id="verify-step-link" style="display:none;">
+        <div class="verify-telegram-box">
+          <h3>🤖 الخطوة الأخيرة</h3>
+          <p>اضغط على الزر أدناه لفتح بوت تليجرام الرسمي، ثم اضغط داخل البوت على زر <b>"مشاركة رقم الهاتف الموثق"</b>.</p>
+          <a href="https://t.me/veysi_otp_bot" target="_blank" rel="noopener noreferrer" class="verify-btn verify-btn-tg" style="text-decoration:none;display:block;">
+            💬 فتح البوت الآن
+          </a>
+        </div>
+        <button class="verify-btn" id="verify-check-btn" onclick="checkTelegramContactAndLogin(event)">
+          ✅ تم مشاركة الرقم، دخول تلقائي 🚀
+        </button>
+        <button class="verify-btn verify-btn-secondary" onclick="goToVerifyStep1()">
+          ⬅️ رجوع
+        </button>
+      </div>
+      <div id="verify-step-success" style="display:none;">
+        <div class="verify-user-info">
+          <div style="font-size:52px;margin-bottom:10px;">🎉</div>
+          <div style="font-size:18px;font-weight:900;margin-bottom:8px;color:#fff;">تم التوثيق بنجاح!</div>
+          <div>📱 رقمك الموثق:</div>
+          <div class="phone" id="verified-phone-display">-</div>
+          <div style="margin-top:10px;font-size:11px;color:#a5d6a7;">✓ جاري الانتقال لشاشة الدخول...</div>
+        </div>
+      </div>
+    </div>
+    <div class="verify-footer">
+      <div class="lock">🔒 اتصال آمن ومشفر 100%</div>
+      <div>الدخول محمي ببصمة الجهاز + توثيق رقم الهاتف</div>
+    </div>
+  </div>
+
+  <!-- Device Block Overlay -->
+  <div class="device-block-overlay" id="device-block-overlay">
+    <div class="dbi">🚫</div>
+    <h1>جهاز غير مصرح به</h1>
+    <p id="device-block-reason">تم اكتشاف محاولة نسخ أو تلاعب بالبيانات.</p>
+    <p style="font-size:12px;opacity:.8;">للاستفسار، تواصل مع مالك التطبيق.</p>
+    <div class="db-badge">🔒 حماية تلقائية ضد النسخ</div>
+    <button onclick="resetDeviceAndRetry()" style="margin-top:20px;padding:12px 24px;background:linear-gradient(135deg,#ff9800,#f57c00);color:#fff;border:0;border-radius:12px;font-family:'Cairo',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">
+      🔄 إعادة تعيين والمحاولة من جديد
+    </button>
+  </div>
+
+  <!-- Pending Approval Screen -->
+  <div id="pending-approval-screen">
+    <div class="pa-icon">⏳</div>
+    <h1>في انتظار موافقة الإدارة</h1>
+    <p>طلب تسجيلك قيد المراجعة من قِبل الإدارة. سيتم إعلامك عند الموافقة على انضمامك.</p>
+    <div class="pa-info" id="pending-info-box">
+      <strong>📋 تفاصيل طلبك:</strong>
+      <div id="pending-details-content">جاري التحميل...</div>
+    </div>
+    <button onclick="checkPendingApprovalStatus()" class="verify-btn" style="max-width:300px;background:linear-gradient(135deg,#f9a825,#f57c00);">🔄 التحقق من الحالة</button>
+    <button onclick="cancelPendingRequest()" class="verify-btn verify-btn-secondary" style="max-width:300px;margin-top:8px">✖️ إلغاء الطلب</button>
+  </div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="spinner"></div>
+    <p style="margin-top:12px;color:#666;font-size:14px;">جاري التحقق...</p>
+  </div>
+
+  <!-- Login Screen -->
+  <div id="login-screen">
+    <h2 style="color:var(--primary);margin-bottom:16px;font-weight:900;font-size:24px;">💬 فيسي برو</h2>
+    <div class="login-hint">
+      <strong>✅ رقم موثق:</strong> <span id="login-phone-badge" style="direction:ltr;display:inline-block;color:#0d47a1;font-weight:900;">-</span><br>
+      يجب إدخال <strong>اسمك</strong> للدخول إلى الغرفة.
+    </div>
+    <div class="login-error-box" id="login-error-box">
+      <strong>❌ خطأ في الاسم:</strong>
+      <div id="login-error-text"></div>
+    </div>
+    <input type="text" id="username-input" class="login-input" placeholder="اكتب اسمك هنا..." autocomplete="off" maxlength="30">
+    <button id="login-btn" class="login-btn">🚀 دخول</button>
+    <p style="margin-top:8px;font-size:11px;color:#999;">سيتم حفظ جلستك في هذا الجهاز</p>
+  </div>
+
+  <!-- Ban Screen -->
+  <div id="ban-screen">
+    <div style="font-size:60px;">⛔</div>
+    <h1 style="font-size:22px;font-weight:900;">تم حظرك</h1>
+    <p style="font-size:14px;">حسابك وجهازك محظوران من استخدام التطبيق.</p>
+  </div>
+
+  <!-- Maintenance Screen -->
+  <div id="maintenance-screen">
+    <div style="font-size:80px;">🔧</div>
+    <h1>التطبيق في صيانة</h1>
+    <p id="maintenance-text">التطبيق تحت الصيانة المؤقتة، يرجى المحاولة لاحقاً.</p>
+  </div>
+
+  <!-- Deleted Screen -->
+  <div id="deleted-screen">
+    <div style="font-size:80px;">🗑️</div>
+    <h1 style="font-size:24px;font-weight:900;color:#ff3b30;margin:16px 0 8px;">تم حذف حسابك</h1>
+    <p style="font-size:14px;color:#aaa;max-width:300px;line-height:1.6;">لقد تم حذف حسابك نهائياً مع جميع بياناتك.</p>
+    <button onclick="location.reload()" style="margin-top:24px;padding:12px 24px;background:linear-gradient(135deg,#ff3b30,#b71c1c);color:#fff;border:0;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;">🔄 تسجيل الدخول من جديد</button>
+  </div>
+
+  <!-- Top App Header -->
+  <header>
+    <div class="header-title">
+      <span>💬 الغرفة</span>
+      <button id="clear-chat-btn" onclick="clearAllChat()">🗑️</button>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="pending-reg-btn" onclick="openPendingRegistrations()" style="display:none;position:relative;" title="طلبات التسجيل">
+        📥<span id="pending-badge" class="notif-badge">0</span>
+      </button>
+      <button class="icon-btn" id="reports-btn" onclick="toggleReportsModal()" style="display:none;" title="لوحة البلاغات">
+        📋<span class="notif-badge" id="reports-badge">0</span>
+      </button>
+      <button class="icon-btn" id="dm-btn" onclick="openDMList()" title="الرسائل الخاصة" style="display:inline-flex;">
+        💌<span class="notif-badge" id="dm-badge">0</span>
+      </button>
+      <button class="icon-btn" id="dm-monitor-btn" onclick="openDMMonitor()" title="مراقبة الخاص" style="display:inline-flex;">🕵️</button>
+      <button class="icon-btn" id="sound-btn" onclick="toggleSoundQuick()" title="الأصوات">🔊</button>
+      <button class="icon-btn" id="fcm-btn" onclick="requestNotificationPermission()" title="تفعيل الإشعارات">📲</button>
+      <button class="icon-btn" onclick="openNotifications()" id="notif-btn">🔔<span class="notif-badge" id="notif-badge">0</span></button>
+      <button class="icon-btn" onclick="openProfile()">👤</button>
+      <button id="btn-users" class="icon-btn" onclick="toggleUsers()">
+        <span>👥</span>
+        <span id="online-badge" class="notif-badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <div id="maintenance-badge"></div>
+  <div id="mute-banner">🔇 مكتوم | <span id="mute-countdown">--:--</span></div>
+
+  <!-- Status / Stories Screen -->
+  <div id="status-screen">
+    <div class="status-header">
+      <h3>📸 الحالات</h3>
+      <button class="modal-close" onclick="closeStatusScreen()" style="color:#fff;font-size:18px;">✕</button>
+    </div>
+    <div class="status-list" id="status-list">
+      <div style="text-align:center;padding:30px 0;color:#999;font-size:14px;">📭 لا توجد حالات</div>
+    </div>
+    <button class="add-status-fab active" id="add-status-btn" onclick="openAddStatus()">➕</button>
+  </div>
+
+  <!-- Add Status Modal -->
+  <div id="add-status-modal" onclick="if(event.target===this) closeAddStatus()">
+    <div class="add-status-box">
+      <h3>📸 إضافة حالة</h3>
+      <div class="status-options">
+        <button id="status-type-text" class="active" onclick="selectStatusType('text')"><span class="icon">📝</span>نص</button>
+        <button id="status-type-media" onclick="selectStatusType('media')"><span class="icon">🖼️</span>وسائط</button>
+      </div>
+      <div id="status-text-area" class="status-input-area active">
+        <textarea id="status-text-input" placeholder="اكتب حالتك..." maxlength="500"></textarea>
+      </div>
+      <div id="status-media-area" class="status-input-area">
+        <div class="file-upload-area" onclick="document.getElementById('status-file-input').click()">
+          <span class="icon">📤</span>
+          <div class="text">اختر صورة أو فيديو</div>
+          <div class="filename" id="selected-filename">📎 الملف</div>
+        </div>
+        <input type="file" id="status-file-input" accept="image/*,video/*" style="display:none" onchange="handleStatusFile(this)">
+      </div>
+      <div class="status-actions">
+        <button class="btn-cancel" onclick="closeAddStatus()">إلغاء</button>
+        <button class="btn-publish" onclick="publishStatus()">📤 نشر</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Fullscreen Viewer -->
+  <div id="status-viewer">
+    <button class="viewer-close" onclick="closeStatusViewer()">✕</button>
+    <button class="viewer-nav prev" onclick="prevStatus()">❮</button>
+    <button class="viewer-nav next" onclick="nextStatus()">❯</button>
+    <div class="viewer-content" id="status-viewer-content"></div>
+    <div class="viewer-info" id="status-viewer-info"></div>
+  </div>
+
+  <!-- Main Chat Messages Area -->
+  <div id="chat-messages">
+    <div id="loading-more">⏳ جاري التحميل...</div>
+  </div>
+
+  <!-- Chat Input Form -->
+  <form id="chat-form" onsubmit="sendMessage(event)">
+    <div id="reply-bar">
+      <div class="reply-header">
+        <span class="reply-sender" id="reply-sender-name">رد على...</span>
+        <button type="button" class="reply-close" onclick="cancelReply()">✕</button>
+      </div>
+      <div class="reply-content" id="reply-content-text">...</div>
+    </div>
+    <div id="chat-form-row">
+      <label for="file-input" id="media-btn" title="صورة/فيديو" style="display:flex;">📎</label>
+      <button type="button" id="alert-btn" onclick="openAlertComposer()" title="إرسال تنبيه">🚨</button>
+      <button type="button" id="youtube-btn" onclick="openYouTubeModal()">▶</button>
+      <input type="file" id="file-input" accept="image/*,video/*" onchange="handleFile(this)">
+      <input type="text" id="message-input" placeholder="اكتب رسالة..." autocomplete="off">
+      <button type="submit" id="send-btn">➤</button>
+    </div>
+  </form>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <button class="nav-item active" id="nav-chat" onclick="switchTab('chat')">
+      <span class="nav-icon">💬</span>
+      <span class="nav-label">دردشة</span>
+    </button>
+    <button class="nav-item" id="nav-status" onclick="switchTab('status')">
+      <span class="nav-icon">📸</span>
+      <span class="nav-label">حالات</span>
+      <span class="nav-badge" id="status-unseen-count">0</span>
+    </button>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeAllModals()"></div>
+
+  <!-- Users Slide Modal -->
+  <div class="modal-slide" id="users-modal">
+    <div class="modal-header">
+      <h3>👥 الأعضاء</h3>
+      <button class="modal-close" onclick="toggleUsers()">✕</button>
+    </div>
+    <div style="padding:8px;">
+      <input type="text" id="user-search" class="search-box" placeholder="🔍 بحث عن عضو..." onkeyup="filterUsers()">
+    </div>
+    <div id="users-list"></div>
+  </div>
+
+  <!-- DM Conversations List Modal -->
+  <div class="modal-slide" id="dm-list-modal">
+    <div class="modal-header" style="background:#9c27b0;color:#fff;">
+      <h3 style="color:#fff;">💌 الرسائل الخاصة</h3>
+      <button class="modal-close" onclick="closeDMList()" style="color:#fff;">✕</button>
+    </div>
+    <div style="padding:8px;">
+      <input type="text" id="dm-search" class="search-box" placeholder="🔍 بحث في المحادثات..." onkeyup="filterDMUsers()">
+    </div>
+    <div id="dm-users-list" style="flex:1;overflow-y:auto;"></div>
+  </div>
+
+  <!-- 1-on-1 DM Chat Modal -->
+  <div id="dm-chat-modal">
+    <div id="dm-chat-header">
+      <button class="back-btn" onclick="closeDMChat()">←</button>
+      <img id="dm-chat-avatar" src="" alt="">
+      <div style="flex:1;min-width:0;">
+        <div class="dm-name" id="dm-chat-name">...</div>
+        <div class="dm-role" id="dm-chat-role"></div>
+      </div>
+      <button class="dm-clear-btn" onclick="clearCurrentDMChat()" title="مسح المحادثة">🗑️</button>
+    </div>
+    <div id="dm-reply-bar" class="dm-reply-bar">
+      <div class="dm-reply-header">
+        <span class="dm-reply-sender" id="dm-reply-sender-name">رد على...</span>
+        <button type="button" class="dm-reply-close" onclick="cancelDMReply()">✕</button>
+      </div>
+      <div class="dm-reply-content" id="dm-reply-content-text">...</div>
+    </div>
+    <div id="dm-chat-messages"></div>
+    <form id="dm-chat-form" onsubmit="sendDMMessage(event)">
+      <label for="dm-file-input" id="dm-media-btn" class="dm-media-btn active" title="صورة/فيديو">📎</label>
+      <input type="file" id="dm-file-input" accept="image/*,video/*" style="display:none" onchange="handleDMMedia(this)">
+      <input type="text" id="dm-message-input" placeholder="اكتب رسالة خاصة..." autocomplete="off">
+      <button type="submit" id="dm-send-btn">➤</button>
+    </form>
+  </div>
+
+  <!-- DM Monitor Modal (Owner/Admin) -->
+  <div class="modal-slide" id="dm-monitor-modal">
+    <div class="modal-header" style="background:#1a237e;color:#fff;">
+      <h3 style="color:#fff;">🕵️ مراقبة المحادثات الخاصة</h3>
+      <button class="modal-close" onclick="closeDMMonitor()" style="color:#fff;">✕</button>
+    </div>
+    <div style="padding:8px;">
+      <input type="text" id="dm-monitor-search" class="search-box" placeholder="🔍 بحث عن مستخدم..." onkeyup="filterDMMonitor()">
+    </div>
+    <div id="dm-monitor-list" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;"></div>
+  </div>
+
+  <!-- DM Monitor View Modal -->
+  <div class="modal-slide" id="dm-monitor-view-modal">
+    <div class="modal-header" style="background:#1a237e;color:#fff;">
+      <h3 id="dm-monitor-view-title" style="color:#fff;">💬 المحادثة</h3>
+      <button class="modal-close" onclick="closeDMMonitorView()" style="color:#fff;">✕</button>
+    </div>
+    <div class="modal-body" id="dm-monitor-view-body"></div>
+  </div>
+
+  <!-- Notifications Modal -->
+  <div class="modal-slide" id="notifications-modal">
+    <div class="modal-header">
+      <h3>🔔 الإشعارات</h3>
+      <button class="modal-close" onclick="closeNotifications()">✕</button>
+    </div>
+    <div class="modal-body" id="notifications-list">
+      <div style="text-align:center;color:#999;padding:30px 0;">📭 لا توجد إشعارات</div>
+    </div>
+  </div>
+
+  <!-- Reports Modal -->
+  <div class="modal-slide" id="reports-modal">
+    <div class="modal-header">
+      <h3>📋 لوحة البلاغات <span id="reports-count">(0)</span></h3>
+      <button class="modal-close" onclick="toggleReportsModal()">✕</button>
+    </div>
+    <div style="padding:6px 10px;">
+      <div class="filter-tabs" style="display:flex;gap:6px;margin-bottom:8px;">
+        <button class="active" onclick="filterReports('pending', this)" style="padding:4px 10px;border-radius:12px;border:1px solid #ccc;background:#fff;cursor:pointer;">⏳ معلقة</button>
+        <button onclick="filterReports('resolved', this)" style="padding:4px 10px;border-radius:12px;border:1px solid #ccc;background:#fff;cursor:pointer;">✅ محلولة</button>
+        <button onclick="filterReports('rejected', this)" style="padding:4px 10px;border-radius:12px;border:1px solid #ccc;background:#fff;cursor:pointer;">❌ مرفوضة</button>
+        <button onclick="filterReports('all', this)" style="padding:4px 10px;border-radius:12px;border:1px solid #ccc;background:#fff;cursor:pointer;">📊 الكل</button>
+      </div>
+    </div>
+    <div class="modal-body" id="reports-list"></div>
+  </div>
+
+  <!-- Warning Broadcast History Modal -->
+  <div class="modal-slide" id="warning-history-modal">
+    <div class="modal-header" style="background:linear-gradient(135deg,#ff3b30,#ff6b35);color:#fff;">
+      <h3 style="color:#fff;">📜 سجل التحذيرات</h3>
+      <button class="modal-close" onclick="closeWarningHistory()" style="color:#fff;">✕</button>
+    </div>
+    <div style="padding:8px;">
+      <button onclick="confirmDeleteAllWarnings()" style="width:100%;padding:8px;background:#e53935;color:#fff;border:0;border-radius:8px;font-weight:700;cursor:pointer;margin-bottom:8px;">🧹 مسح جميع التحذيرات</button>
+    </div>
+    <div class="modal-body" id="warning-history-list"></div>
+  </div>
+
+  <!-- Pending Registrations Modal -->
+  <div class="modal-slide" id="pending-registrations-modal">
+    <div class="modal-header" style="background:linear-gradient(135deg,#f9a825,#f57c00);color:#fff;">
+      <h3 style="color:#fff;">📥 طلبات التسجيل المعلقة</h3>
+      <button class="modal-close" onclick="closePendingRegistrations()" style="color:#fff;">✕</button>
+    </div>
+    <div style="padding:8px;">
+      <input type="text" id="pending-reg-search" class="search-box" placeholder="🔍 بحث بالاسم..." onkeyup="filterPendingRegistrations()">
+    </div>
+    <div class="modal-body" id="pending-registrations-list"></div>
+  </div>
+
+  <!-- Role Promotion Popup -->
+  <div class="modal-popup" id="role-modal">
+    <div class="popup-box">
+      <h3>⚙️ تغيير الرتبة</h3>
+      <div style="display:flex;flex-direction:column;gap:6px;margin:12px 0;">
+        <button onclick="setRole('user')" class="login-btn" style="background:#9e9e9e;padding:10px;font-size:13px;">عادي</button>
+        <button onclick="setRole('trusted')" class="login-btn" style="background:linear-gradient(135deg, #FFCC80, #E65100);padding:10px;font-size:13px;">✅ موثوق</button>
+        <button onclick="setRole('mod')" class="login-btn" style="background:linear-gradient(135deg, #2196F3, #0D47A1);padding:10px;font-size:13px;">🛡️ مشرف</button>
+        <button onclick="setRole('manager')" class="login-btn" style="background:linear-gradient(135deg, #9C27B0, #4A148C);padding:10px;font-size:13px;">💎 مدير</button>
+        <button onclick="setRole('owner')" class="login-btn" style="background:linear-gradient(135deg, #FFD700, #E65100);color:#3E2723;padding:10px;font-size:13px;">👑 مالك</button>
+      </div>
+      <button onclick="document.getElementById('role-modal').classList.remove('active')" class="login-btn" style="background:#f0f0f0;color:#555;padding:8px;font-size:13px;">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- Mute Popup -->
+  <div class="modal-popup" id="mute-modal">
+    <div class="popup-box">
+      <h3>🔇 كتم المستخدم</h3>
+      <div style="display:flex;flex-direction:column;gap:6px;margin:12px 0;">
+        <button onclick="applyMute(10)" class="login-btn" style="background:#ff9800;padding:10px;font-size:13px;">10 دقائق</button>
+        <button onclick="applyMute(60)" class="login-btn" style="background:#f57c00;padding:10px;font-size:13px;">ساعة</button>
+        <button onclick="applyMute(1440)" class="login-btn" style="background:#d32f2f;padding:10px;font-size:13px;">يوم كامل</button>
+      </div>
+      <button onclick="document.getElementById('mute-modal').classList.remove('active')" class="login-btn" style="background:#f0f0f0;color:#555;padding:8px;font-size:13px;">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- Resolve Report Popup -->
+  <div class="modal-popup" id="resolve-modal">
+    <div class="popup-box">
+      <h3>⚙️ اتخاذ إجراء بشأن البلاغ</h3>
+      <p style="color:#777;margin:6px 0;font-size:13px;">المستخدم: <strong id="resolve-target-name"></strong></p>
+      <div style="display:flex;flex-direction:column;gap:6px;margin:10px 0;">
+        <button onclick="resolveReport('ban')" class="login-btn" style="background:#d32f2f;padding:8px;font-size:13px;">🚫 حظر (Ban)</button>
+        <button onclick="resolveReport('mute')" class="login-btn" style="background:#ff9800;padding:8px;font-size:13px;">🔇 كتم (Mute)</button>
+        <button onclick="resolveReport('none')" class="login-btn" style="background:#607d8b;padding:8px;font-size:13px;">❌ رفض البلاغ</button>
+      </div>
+      <textarea id="resolve-comment-input" rows="2" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-family:inherit;" placeholder="ملاحظة الإدارة..."></textarea>
+      <button onclick="document.getElementById('resolve-modal').classList.remove('active')" class="login-btn" style="background:#f0f0f0;color:#555;padding:8px;font-size:13px;margin-top:8px;">إلغاء</button>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div class="modal-popup" id="profile-modal">
+    <div class="popup-box">
+      <h3 style="font-size:18px;font-weight:700;">👤 الملف الشخصي</h3>
+      <img id="prof-img" src="" class="user-avatar" style="width:70px;height:70px;margin:12px auto;display:block;border:3px solid var(--primary);border-radius:50%;object-fit:cover;">
+      <input type="text" id="prof-name" class="login-input" placeholder="اسمك" style="margin-bottom:8px;padding:10px;font-size:14px;" maxlength="30">
+      <button onclick="saveProfile()" class="login-btn" style="padding:10px;font-size:14px;margin-bottom:6px;">💾 حفظ التغييرات</button>
+
+      <!-- Owner Admin Controls -->
+      <button id="btn-security-settings" class="btn-security-settings" onclick="openSecuritySettings()">🛡️ الإعدادات الأمنية</button>
+      <button id="btn-theme-settings" class="btn-theme-settings" onclick="openThemeSettings()">🎨 ألوان الواجهة</button>
+      <button id="btn-bg-settings" class="btn-bg-settings" onclick="openBgSettings()">🖼️ خلفيات الدردشة</button>
+      <button id="btn-effects-settings" class="btn-effects-settings" onclick="openEffectsSettings()">🎆 التأثيرات المتحركة</button>
+      <button id="btn-warning-history" class="btn-warning-history" onclick="openWarningHistory()">📜 سجل التحذيرات</button>
+
+      <button onclick="deleteAccount()" class="btn-delete-account">🗑️ حذف حسابي</button>
+      <button onclick="logout()" class="login-btn" style="background:#f44336;margin-top:8px;padding:10px;font-size:13px;">🚪 تسجيل الخروج</button>
+      <button onclick="closeProfile()" class="login-btn" style="background:#f0f0f0;color:#555;margin-top:8px;padding:8px;font-size:13px;">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- Security Settings Modal -->
+  <div class="modal-popup" id="security-settings-modal">
+    <div class="popup-box" style="max-width:480px;">
+      <h3 style="font-size:18px;font-weight:900;color:#2e7d32;margin-bottom:8px;">🛡️ الإعدادات الأمنية</h3>
+      <div class="verify-status-card" id="verify-status-card">
+        <div class="vsc-header">
+          <div class="vsc-icon">🟢</div>
+          <div class="vsc-info">
+            <div class="vsc-title">بوابة التوثيق عبر البوت</div>
+            <div class="vsc-desc">يلزم توثيق رقم الهاتف عبر @veysi_otp_bot قبل الدخول.</div>
+          </div>
+        </div>
+        <button class="vsc-big-toggle" onclick="toggleVerificationGate()">تبديل حالة البوابة</button>
+      </div>
+
+      <div class="auto-reg-card" id="auto-reg-card">
+        <div class="arc-header">
+          <div class="arc-icon">✅</div>
+          <div class="arc-info">
+            <div class="arc-title">التسجيل التلقائي</div>
+            <div class="arc-desc">السماح بالدخول المباشر بدون موافقة يدوية.</div>
+          </div>
+        </div>
+        <button class="arc-big-toggle" onclick="toggleAutoRegistration()">تبديل حالة الموافقة</button>
+      </div>
+
+      <button onclick="document.getElementById('security-settings-modal').classList.remove('active')" class="login-btn" style="background:#f0f0f0;color:#555;padding:10px;font-size:13px;margin-top:12px;">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- Alert / Warning Composer Modal -->
+  <div class="modal-popup" id="alert-composer-modal">
+    <div class="popup-box" style="max-width:460px;">
+      <h3 style="color:#e74c3c;">🚨 إرسال تحذير عاجل</h3>
+      <p style="font-size:12px;color:#999;margin-bottom:12px;">سيظهر التحذير كشاشة كاملة لجميع المستخدمين ويلزم تأكيده.</p>
+      <textarea id="alert-text-input" class="ac-textarea" placeholder="اكتب نص التحذير هنا..." rows="3" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;font-family:inherit;"></textarea>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        <button class="login-btn" style="background:linear-gradient(135deg,#ff3b30,#ff6b35);" onclick="sendChatAlert()">🚨 إرسال فوراً</button>
+        <button class="login-btn" style="background:#f0f0f0;color:#555;" onclick="closeAlertComposer()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme Settings Modal -->
+  <div class="modal-popup" id="theme-settings-modal">
+    <div class="popup-box" style="max-width:480px;">
+      <h3>🎨 ألوان الواجهة</h3>
+      <div class="theme-preview" id="theme-preview">
+        <div class="tp-header" id="tp-header"><span>💬 الغرفة</span><span>👤</span></div>
+        <div class="tp-body">معاينة الألوان الحالية</div>
+        <div class="tp-bottom" id="tp-bottom"><span>💬 دردشة</span><span>📸 حالات</span></div>
+      </div>
+      <div style="margin:12px 0;text-align:right;">
+        <label style="font-size:12px;font-weight:700;">🔝 لون الهيدر:</label>
+        <input type="color" id="theme-header-bg" value="#008069" style="width:100%;height:38px;border-radius:8px;border:1px solid #ddd;">
+        <div class="theme-presets" id="theme-header-presets"></div>
+      </div>
+      <div style="margin:12px 0;text-align:right;">
+        <label style="font-size:12px;font-weight:700;">🔻 لون الشريط السفلي:</label>
+        <input type="color" id="theme-bottom-bg" value="#ffffff" style="width:100%;height:38px;border-radius:8px;border:1px solid #ddd;">
+        <div class="theme-presets" id="theme-bottom-presets"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        <button class="login-btn" onclick="saveThemeSettings()">💾 حفظ الألوان</button>
+        <button class="login-btn" style="background:#f0f0f0;color:#555;" onclick="closeThemeSettings()">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Wallpaper Settings Modal -->
+  <div class="modal-popup" id="bg-settings-modal">
+    <div class="popup-box" style="max-width:480px;">
+      <h3 style="color:#6a1b9a;">🖼️ خلفيات الدردشة</h3>
+      <p style="font-size:11px;color:#999;margin-bottom:12px;">اختر خلفية الدردشة العامة أو الخاصة:</p>
+      <div style="text-align:right;font-size:12px;font-weight:700;">🌐 الدردشة العامة:</div>
+      <div class="bg-preset-grid" id="general-bg-grid"></div>
+      <div style="text-align:right;font-size:12px;font-weight:700;margin-top:12px;">💌 الدردشة الخاصة:</div>
+      <div class="bg-preset-grid" id="dm-bg-grid"></div>
+      <button onclick="document.getElementById('bg-settings-modal').classList.remove('active')" class="login-btn" style="background:#f0f0f0;color:#555;padding:8px;margin-top:12px;">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- Floating Particles Effects Modal -->
+  <div class="modal-popup" id="effects-settings-modal">
+    <div class="popup-box" style="max-width:480px;">
+      <h3 style="color:#f9a825;">🎆 التأثيرات المتحركة</h3>
+      <p style="font-size:11px;color:#999;margin-bottom:12px;">تأثيرات بصرية عائمة في خلفية الدردشة:</p>
+      <div style="text-align:right;font-size:12px;font-weight:700;">🌐 الغرفة العامة:</div>
+      <div class="effect-preview-grid" id="general-effect-grid"></div>
+      <div style="text-align:right;font-size:12px;font-weight:700;margin-top:12px;">💌 الغرفة الخاصة:</div>
+      <div class="effect-preview-grid" id="dm-effect-grid"></div>
+      <button onclick="document.getElementById('effects-settings-modal').classList.remove('active')" class="login-btn" style="background:#f0f0f0;color:#555;padding:8px;margin-top:12px;">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- Fullscreen Emergency Warning Overlay -->
+  <div id="warning-overlay">
+    <div class="warning-fullscreen-card">
+      <div class="warning-icon-wrap">🚨</div>
+      <div class="warning-title-fullscreen">تنبيه عاجل من الإدارة</div>
+      <div class="warning-subtitle-fullscreen">يرجى قراءة التنبيه والموافقة عليه للمتابعة</div>
+      <div class="warning-sender-row">
+        <img id="warning-sender-img" src="" alt="">
+        <div class="warning-sender-info">
+          <div class="wsn-name" id="warning-sender-name">الإدارة</div>
+          <div class="wsn-role" id="warning-sender-role">👑 مالك</div>
+        </div>
+      </div>
+      <div class="warning-message-box" id="warning-msg-text">...</div>
+      <button class="warning-ack-btn" id="warning-ack-btn">✅ قرأت وفهمت التنبيه</button>
+    </div>
+  </div>
+
+  <!-- Lightbox Media Viewer -->
+  <div id="media-viewer">
+    <div class="viewer-header">
+      <span>معاينة الوسائط</span>
+      <button class="modal-close" onclick="closeMediaViewer()" style="color:#fff;">✕</button>
+    </div>
+    <div class="viewer-body"></div>
+  </div>
+
+</div>
+
+<script type="module" src="./src/main.ts"></script>
+</body>
+</html>
