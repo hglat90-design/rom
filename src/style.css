@@ -94,6 +94,9 @@ body {
 }
 
 #loading-screen {
+  display: none;
+}
+#loading-screen.active {
   display: flex;
 }
 

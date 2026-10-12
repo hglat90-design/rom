@@ -24,46 +24,48 @@ export function checkAuthStateOnStartup(): void {
   const settings = getSettings();
   const currentUser = getCurrentUser();
 
-  // Hide loading screen after 400ms
-  setTimeout(() => {
-    if (loadingScreen) loadingScreen.style.display = 'none';
+  // Immediately hide loading screen
+  if (loadingScreen) {
+    loadingScreen.style.display = 'none';
+    loadingScreen.classList.remove('active');
+  }
 
-    // 1. Check if user is logged in
-    if (currentUser) {
-      // Check if banned
-      if (currentUser.isBanned) {
-        if (banScreen) banScreen.style.display = 'flex';
-        return;
-      }
-
-      // Check maintenance mode
-      if (settings.maintenanceMode) {
-        const isTester = settings.testers.includes(currentUser.id) || currentUser.role === 'owner';
-        if (!isTester) {
-          if (maintenanceScreen) {
-            const mText = document.getElementById('maintenance-text');
-            if (mText) mText.textContent = settings.maintenanceMessage;
-            maintenanceScreen.style.display = 'flex';
-          }
-          return;
-        }
-      }
-
-      // User is verified and active!
-      // Keep screens hidden, app is visible
+  // 1. Check if user is logged in
+  if (currentUser) {
+    // Check if banned
+    if (currentUser.isBanned) {
+      if (banScreen) banScreen.style.display = 'flex';
       return;
     }
 
-    // 2. Not logged in: Check verification gate
-    if (settings.verificationGateEnabled && !verifiedPhoneNumber) {
-      if (verifyScreen) {
-        verifyScreen.style.display = 'flex';
-        verifyScreen.classList.add('active');
+    // Check maintenance mode
+    if (settings.maintenanceMode) {
+      const isTester = settings.testers.includes(currentUser.id) || currentUser.role === 'owner';
+      if (!isTester) {
+        if (maintenanceScreen) {
+          const mText = document.getElementById('maintenance-text');
+          if (mText) mText.textContent = settings.maintenanceMessage;
+          maintenanceScreen.style.display = 'flex';
+        }
+        return;
       }
-    } else {
-      if (loginScreen) loginScreen.style.display = 'flex';
     }
-  }, 400);
+
+    // User is verified and active!
+    return;
+  }
+
+  // 2. Not logged in: Check verification gate
+  if (settings.verificationGateEnabled && !verifiedPhoneNumber) {
+    if (verifyScreen) {
+      verifyScreen.style.display = 'flex';
+      verifyScreen.classList.add('active');
+    }
+  } else {
+    if (loginScreen) {
+      loginScreen.style.display = 'flex';
+    }
+  }
 }
 
 // Telegram Bot Verification Simulation

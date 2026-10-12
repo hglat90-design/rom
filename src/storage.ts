@@ -197,6 +197,7 @@ export function addMessage(msg: ChatMessage): void {
   const messages = getMessages();
   messages.push(msg);
   saveMessages(messages);
+  import('./firebase').then(fb => fb.syncMessageToFirebase(msg)).catch(() => {});
 }
 
 export function getDMMessages(): DMMessage[] {
@@ -217,6 +218,7 @@ export function addDMMessage(msg: DMMessage): void {
   const dms = getDMMessages();
   dms.push(msg);
   saveDMMessages(dms);
+  import('./firebase').then(fb => fb.syncDMToFirebase(msg)).catch(() => {});
 }
 
 export function getStatuses(): StatusItem[] {
@@ -236,6 +238,13 @@ export function saveStatuses(statuses: StatusItem[]): void {
   broadcastChange('statuses_updated', statuses);
 }
 
+export function addStatus(status: StatusItem): void {
+  const all = getStatuses();
+  all.push(status);
+  saveStatuses(all);
+  import('./firebase').then(fb => fb.syncStatusToFirebase(status)).catch(() => {});
+}
+
 export function getReports(): ReportItem[] {
   try {
     const data = localStorage.getItem(STORAGE_KEYS.REPORTS);
@@ -250,6 +259,13 @@ export function saveReports(reports: ReportItem[]): void {
   broadcastChange('reports_updated', reports);
 }
 
+export function addReport(report: ReportItem): void {
+  const reports = getReports();
+  reports.unshift(report);
+  saveReports(reports);
+  import('./firebase').then(fb => fb.syncReportToFirebase(report)).catch(() => {});
+}
+
 export function getWarnings(): WarningAlert[] {
   try {
     const data = localStorage.getItem(STORAGE_KEYS.WARNINGS);
@@ -262,6 +278,13 @@ export function getWarnings(): WarningAlert[] {
 export function saveWarnings(warnings: WarningAlert[]): void {
   localStorage.setItem(STORAGE_KEYS.WARNINGS, JSON.stringify(warnings));
   broadcastChange('warnings_updated', warnings);
+}
+
+export function addWarning(warn: WarningAlert): void {
+  const warnings = getWarnings();
+  warnings.unshift(warn);
+  saveWarnings(warnings);
+  import('./firebase').then(fb => fb.syncWarningToFirebase(warn)).catch(() => {});
 }
 
 export function getPendingRegistrations(): PendingRegistration[] {

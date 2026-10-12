@@ -437,6 +437,7 @@
 
       <!-- Owner Admin Controls -->
       <button id="btn-security-settings" class="btn-security-settings" onclick="openSecuritySettings()">🛡️ الإعدادات الأمنية</button>
+      <button id="btn-database-settings" class="btn-advanced" onclick="openDatabaseSettings()" style="background:linear-gradient(135deg,#ff8f00,#e65100);display:flex;align-items:center;justify-content:center;gap:6px;">🔥 إعدادات قاعدة البيانات (Firebase)</button>
       <button id="btn-theme-settings" class="btn-theme-settings" onclick="openThemeSettings()">🎨 ألوان الواجهة</button>
       <button id="btn-bg-settings" class="btn-bg-settings" onclick="openBgSettings()">🖼️ خلفيات الدردشة</button>
       <button id="btn-effects-settings" class="btn-effects-settings" onclick="openEffectsSettings()">🎆 التأثيرات المتحركة</button>
@@ -570,8 +571,59 @@
     <div class="viewer-body"></div>
   </div>
 
+  <!-- Database Settings Modal -->
+  <div class="modal-popup" id="database-settings-modal">
+    <div class="popup-box" style="max-width:480px;text-align:right;">
+      <h3 style="text-align:center;font-size:18px;font-weight:900;color:#e65100;margin-bottom:8px;">🔥 ربط قاعدة البيانات (Firebase)</h3>
+      <div id="db-conn-status" style="text-align:center;font-size:13px;padding:8px;background:#f5f5f5;border-radius:10px;margin-bottom:12px;"></div>
+      
+      <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:12px;">
+        لربط محادثاتك ورسائلك وحالاتك مباشرة بقاعدة بياناتك السحابية (Firebase Realtime Database)، اكتب رابط قاعدة البيانات هنا:
+      </p>
+
+      <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;">🌐 رابط قاعدة البيانات (databaseURL):</label>
+      <input type="text" id="db-url-input" class="login-input" placeholder="https://my-project-default-rtdb.firebaseio.com" style="margin-bottom:10px;padding:10px;font-size:13px;text-align:left;direction:ltr;">
+
+      <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;">🔑 مفتاح API (apiKey - اختياري):</label>
+      <input type="text" id="db-key-input" class="login-input" placeholder="AIzaSy..." style="margin-bottom:10px;padding:10px;font-size:13px;text-align:left;direction:ltr;">
+
+      <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;">📁 معرف المشروع (projectId - اختياري):</label>
+      <input type="text" id="db-proj-input" class="login-input" placeholder="my-chat-app" style="margin-bottom:10px;padding:10px;font-size:13px;text-align:left;direction:ltr;">
+
+      <label style="display:block;font-size:12px;font-weight:700;margin-bottom:4px;">📋 أو الصق كود إعدادات Firebase JSON كاملاً هنا:</label>
+      <textarea id="db-json-input" rows="3" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:8px;font-family:monospace;font-size:11px;direction:ltr;margin-bottom:12px;" placeholder='{ "databaseURL": "https://...", "apiKey": "..." }'></textarea>
+
+      <div style="display:flex;gap:8px;">
+        <button class="login-btn" style="background:linear-gradient(135deg,#ff8f00,#e65100);padding:10px;font-size:14px;font-weight:800;" onclick="saveDatabaseSettings()">💾 حفظ وربط قاعدة البيانات</button>
+        <button class="login-btn" style="background:#f0f0f0;color:#555;padding:10px;font-size:14px;" onclick="closeDatabaseSettings()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script type="module" src="./src/main.ts"></script>
+<script>
+  // Failsafe auto-dismiss loading screen
+  (function() {
+    function dismissLoading() {
+      var ls = document.getElementById('loading-screen');
+      if (ls) {
+        ls.style.display = 'none';
+        ls.classList.remove('active');
+      }
+      var cu = localStorage.getItem('veysi_current_user');
+      if (!cu) {
+        var vs = document.getElementById('verify-screen');
+        var log = document.getElementById('login-screen');
+        if (vs && !vs.classList.contains('active') && (!log || log.style.display !== 'flex')) {
+          vs.style.display = 'flex';
+          vs.classList.add('active');
+        }
+      }
+    }
+    setTimeout(dismissLoading, 300);
+  })();
+</script>
 </body>
 </html>

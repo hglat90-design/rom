@@ -217,6 +217,9 @@ declare global {
     submitReport: () => void;
     closeReportModal: () => void;
     selectQuickReason: (btn: HTMLElement, reason: string) => void;
+    openDatabaseSettings: () => void;
+    closeDatabaseSettings: () => void;
+    saveDatabaseSettings: () => void;
   }
 }
 
@@ -228,13 +231,21 @@ let pendingFontBase64: string | null = null;
 let pendingStatusFileBase64: string | null = null;
 let pendingStatusFileType: 'text' | 'media' = 'text';
 
-// Initialize the app on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
+function boot() {
   setupGlobalWindowHandlers();
   initApplication();
-});
+}
+
+// Rock-solid boot pattern: run immediately if DOM is already ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
 
 function initApplication() {
+  import('./firebase').then(fb => fb.initFirebase()).catch(() => {});
+
   const settings = getSettings();
   applyAppSettingsToDOM(settings);
 
@@ -716,7 +727,7 @@ function setupGlobalWindowHandlers() {
     // Show/hide owner buttons
     const isOwner = currentUser.role === 'owner';
     const ownerOnlyIds = [
-      'btn-security-settings', 'btn-chat-settings', 'btn-owner-premium',
+      'btn-security-settings', 'btn-database-settings', 'btn-chat-settings', 'btn-owner-premium',
       'btn-maintenance', 'btn-theme-settings', 'btn-bg-settings',
       'btn-anim-settings', 'btn-effects-settings', 'btn-advanced', 'btn-warning-history'
     ];
@@ -930,6 +941,82 @@ function setupGlobalWindowHandlers() {
     settings.autoRegistrationEnabled = !settings.autoRegistrationEnabled;
     saveSettings(settings);
     alert(`التسجيل التلقائي: ${settings.autoRegistrationEnabled ? 'مفعّل (دخول مباشر)' : 'معطّل (يتطلب موافقة)'}`);
+  };
+
+  // Database (Firebase) Settings Handlers
+  window.openDatabaseSettings = () => {
+    const modal = document.getElementById('database-settings-modal');
+    if (!modal) return;
+
+    import('./firebase').then(fb => {
+      const cfg = fb.getSavedFirebaseConfig();
+      const statusEl = document.getElementById('db-conn-status');
+      const urlInput = document.getElementById('db-url-input') as HTMLInputElement;
+      const keyInput = document.getElementById('db-key-input') as HTMLInputElement;
+      const projInput = document.getElementById('db-proj-input') as HTMLInputElement;
+
+      if (statusEl) {
+        statusEl.innerHTML = fb.isFirebaseActive()
+          ? '<span style="color:#2e7d32;font-weight:900;">🟢 متصل بقاعدة بيانات Firebase</span>'
+          : '<span style="color:#e65100;font-weight:900;">🟡 يعمل حالياً بالتخزين المحلي السريع (Local Storage)</span>';
+      }
+
+      if (cfg) {
+        if (urlInput) urlInput.value = cfg.databaseURL || '';
+        if (keyInput) keyInput.value = cfg.apiKey || '';
+        if (projInput) projInput.value = cfg.projectId || '';
+      }
+    });
+
+    modal.classList.add('active');
+  };
+
+  window.closeDatabaseSettings = () => {
+    const modal = document.getElementById('database-settings-modal');
+    if (modal) modal.classList.remove('active');
+  };
+
+  window.saveDatabaseSettings = () => {
+    const urlInput = document.getElementById('db-url-input') as HTMLInputElement;
+    const keyInput = document.getElementById('db-key-input') as HTMLInputElement;
+    const projInput = document.getElementById('db-proj-input') as HTMLInputElement;
+    const jsonInput = document.getElementById('db-json-input') as HTMLTextAreaElement;
+
+    let configToSave = {
+      databaseURL: urlInput ? urlInput.value.trim() : '',
+      apiKey: keyInput ? keyInput.value.trim() : '',
+      projectId: projInput ? projInput.value.trim() : '',
+    };
+
+    if (jsonInput && jsonInput.value.trim()) {
+      try {
+        const parsed = JSON.parse(jsonInput.value.trim());
+        configToSave = {
+          databaseURL: parsed.databaseURL || configToSave.databaseURL,
+          apiKey: parsed.apiKey || configToSave.apiKey,
+          projectId: parsed.projectId || configToSave.projectId,
+        };
+      } catch {
+        alert('تنسيق كود JSON غير صالح، تم استخدام الحقول الفردية.');
+      }
+    }
+
+    if (!configToSave.databaseURL) {
+      alert('يرجى كتابة رابط قاعدة البيانات databaseURL (مثال: https://my-app-default-rtdb.firebaseio.com)');
+      return;
+    }
+
+    import('./firebase').then(fb => {
+      const ok = fb.saveFirebaseConfig(configToSave);
+      if (ok) {
+        alert('✅ تم حفظ إعدادات قاعدة البيانات وربطها بنجاح!');
+        window.closeDatabaseSettings();
+        window.location.reload();
+      } else {
+        alert('⚠️ تم حفظ الرابط، وسيتم الاتصال تلقائياً عند توفر الإنترنت.');
+        window.closeDatabaseSettings();
+      }
+    });
   };
 
   // Login Button Click

@@ -1,5 +1,5 @@
 import { PendingRegistration, ReportItem, Role, User, WarningAlert } from './types';
-import { getCurrentUser, getPendingRegistrations, getReports, getSettings, getUsers, getWarnings, saveCurrentUser, savePendingRegistrations, saveReports, saveSettings, saveUsers, saveWarnings } from './storage';
+import { addReport, addWarning, getCurrentUser, getPendingRegistrations, getReports, getSettings, getUsers, getWarnings, saveCurrentUser, savePendingRegistrations, saveReports, saveSettings, saveUsers, saveWarnings } from './storage';
 import { playAlertSound } from './audio';
 import { formatTime } from './chat';
 
@@ -45,9 +45,7 @@ export function broadcastWarning(targetType: 'all' | 'user' | 'role', targetId: 
     readers: {},
   };
 
-  const warnings = getWarnings();
-  warnings.unshift(newWarning);
-  saveWarnings(warnings);
+  addWarning(newWarning);
   checkActiveWarningForCurrentUser();
 }
 
@@ -277,9 +275,7 @@ export function submitReport(
     timestamp: Date.now(),
   };
 
-  const reports = getReports();
-  reports.unshift(newReport);
-  saveReports(reports);
+  addReport(newReport);
   updateReportsBadge();
   alert('تم إرسال بلاغك بنجاح وسيتعامل معه المشرفون فوراً.');
 }

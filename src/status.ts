@@ -1,5 +1,5 @@
 import { StatusItem } from './types';
-import { getCurrentUser, getStatuses, saveStatuses } from './storage';
+import { addStatus, getCurrentUser, getStatuses, saveStatuses } from './storage';
 import { formatTime } from './chat';
 
 let currentViewingStatuses: StatusItem[] = [];
@@ -193,9 +193,7 @@ export function publishStatus(type: 'text' | 'media', content: string): boolean 
     seenBy: [currentUser.id],
   };
 
-  const all = getStatuses();
-  all.push(newStatus);
-  saveStatuses(all);
+  addStatus(newStatus);
   renderStatusesList();
   return true;
 }
