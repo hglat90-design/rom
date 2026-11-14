@@ -4486,6 +4486,37 @@ async function replyGuest(k) {
 }
 
 
+/* ---------- ✅ (v79F) الحساب الموحد — واجهة شات العراق الحريه ----------
+   نفس الجهاز = نفس الحساب في الواجهة والدردشة (نفس البصمة ونفس سجل الأجهزة appData/deviceLock):
+   عند فتح الدردشة على جهاز مرتبط بحساب سُجّل من الواجهة أو الدردشة → دخول تلقائي فوري
+   بدون أي تسجيل ثاني ولا شاشة دخول — لا حسابات مكررة أبداً.
+   الأمان محفوظ في قاعدة البيانات نفسها: جهاز محظور → شاشة الحظر، حساب محذوف → لا يُعاد */
+async function vUniAutoDeviceLogin() {
+    try {
+        const cands = vDevCandidates();
+        for (const k of cands) {
+            const bd = (await db.ref('appData/bannedDevices/' + k).once('value')).val();
+            if (bd) { showBanScreenWithReason(bd.reason || '', bd.by || ''); return true; }
+        }
+        for (const k of cands) {
+            const lock = (await db.ref('appData/deviceLock/' + k).once('value')).val();
+            if (lock && lock.fp) {
+                const u = (await db.ref('users/' + lock.fp).once('value')).val();
+                if (u && u.name && u.createdAt !== undefined) {
+                    window.__vDevKey = k;
+                    const s = await checkSecurity(lock.fp, u.name || '');
+                    if (s.banned) { const b = (await db.ref('bans/' + lock.fp).once('value')).val() || {}; showBanScreenWithReason(b.reason || '', b.by || ''); return true; }
+                    setSession(lock.fp, u);
+                    if (k !== getHardwareFp()) { try { localStorage.setItem('vpro_hw_id', k); } catch (e) {} }
+                    enterChat();
+                    return true;
+                }
+            }
+        }
+    } catch (e) {}
+    return false;
+}
+
 async function init() {
     document.getElementById('loading-screen').style.display = 'none';
     myFP = await getDeviceFingerprint();
@@ -4569,6 +4600,9 @@ async function init() {
             setTimeout(() => { showLoginError('الاسم المحفوظ غير صالح. ' + validation.reason); }, 200);
         }
     } else {
+        /* ✅ (v79F) الحساب الموحد: تعرّف تلقائي على حساب هذا الجهاز المسجّل من واجهة شات العراق الحريه */
+        const autoHit = await vUniAutoDeviceLogin();
+        if (autoHit) return;
         document.getElementById('login-screen').style.display = 'flex';
         refreshDeviceBadge();
     }
@@ -4612,6 +4646,7 @@ document.getElementById('alert-text-input')?.addEventListener('input', function(
 
 function enterChat() {
     document.getElementById('login-screen').style.display = 'none';
+    try { localStorage.setItem('uni_session', '1'); } catch (e) {}   /* ✅ (v79F) جلسة موحدة مع واجهة شات العراق الحريه */
     document.getElementById('pending-approval-screen').classList.remove('active');
     const gsScr = document.getElementById('guest-support-screen'); if (gsScr) gsScr.classList.remove('active');
     startHeartbeat(); startPresenceChecker(); startDeletionWatcher(); startForceLogoutWatcher();
