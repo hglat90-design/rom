@@ -1,5 +1,31 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+<!-- ✅✅✅ v49FAppealSystem — نظام فك الحظر والمرافعات الاحترافي المتقدم (طلب المالك):
+     ✅✅✅ v49F — ترقية احترافية فوق v48F:
+       💬 سبب الحظر الحقيقي يظهر الآن على شاشة الحظر في كل المسارات (فحص الجهاز + فحص الحساب)
+       🎧 بطاقة الزائر تُظهر «⛔ جهاز محظور» أو «📨 مرافعة معلقة» وزر الفك يظهر في الحالتين
+       📨 بطاقات المرافعات تُظهر حالة الجهاز (ما زال محظوراً / تم فكه) ليقرر الملك بسرعة
+       ⚡ كل مزايا v48F كما هي دون أي تغيير: المرافعات، فك الحظر للأجهزة والمحذوفين نهائياً،
+          الرسائل النظامية، عدّادات كشف الحسابات، سجل الإدارة
+     --- v48F الأصلي: -->
+<!-- v48FAppealSystem (تاريخي):
+     المشكلة: عندما يحذف/يحظر الملك حساب مستخدم يُقفل جهازه نهائياً (appData/bannedDevices) — وعند
+     تواصل المحضور مع الملك عبر «تواصل مع الإدارة» لا يوجد أي زر لفك الحظر في كل اللوحة، لأن فك
+     الحظر القديم يقرأ بصمة الجهاز من سجل الحساب المحذوف فيفشل صمتاً ويبقى الجهاز محظوراً للأبد.
+     الحل الاحترافي الكامل (v48F):
+       📨 نظام مرافعات كامل: شاشة الحظر فيها نموذج «إرسال طلب فك الحظر» — الطلب يصل للملك لحظياً
+          بشارة، ويقبله ✅ فيُفك الحظر فوراً ويصل إشعار النجاح للمحضور لحظياً بنافذة خضراء وزر دخول،
+          أو يرفضه ✗ مع رد مكتوب يصل للمحضور في نفس المكان — والحالة حية ودائمة التحديث بلا تحديث صفحة
+       ⛔ قسم «الأجهزة المحظورة» في كشف الحسابات: كل جهاز محظور له زر «فك الحظر» بضغطة واحدة —
+          يعمل حتى للحسابات المحذوفة نهائياً (يقرأ الجهاز مباشرة من bannedDevices لا من سجل الحساب)
+          + ينظف قفل الجهاز العتيق المرتبط بحساب محذوف ليستطيع إنشاء حساب جديد بعد الفك
+       🎧 بطاقات رسائل الزوار: تُظهر شارة «⛔ جهاز محظور» + زر «فك الحظر» بجوار الرد مباشرة
+       ✅ فك الحظر يرسل رسالة نظام للزائر داخل محادثة التواصل + يوثّق في سجل الإدارة
+          + عدّاد زر كشف الحسابات يجمع الرسائل غير المقروءة والطلبات المعلقة
+       🔒 سبب الحظر الحقيقي يُكتب على الجهاز المحظور (كان نصاً عاماً ثابتاً) + حظر من البلاغات
+          يقفل الجهاز أيضاً (كان يترك ثغرة تسجيل حساب جديد من نفس الجهاز المحظور)
+       ↩️ المحضور الذي يفتح «تواصل مع الإدارة» يعود لشاشة الحظر عند الرجوع (كان يعود لشاشة الدخول)
+     فوق كل مزايا v46F وv2F دون أي تغيير فيها -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
@@ -864,6 +890,11 @@
         .acc-fp{font-size:9.5px;color:#90a4ae;direction:ltr;text-align:left;cursor:pointer;font-family:monospace;word-break:break-all}
         .acc-multibanner{background:linear-gradient(135deg,#fff5f5,#ffebee);border:2px solid #ef5350;border-radius:14px;padding:12px 14px;margin-bottom:10px}
         .acc-guestmsg{background:#f7fafc;border:1.5px solid #cfd8dc;border-radius:12px;padding:10px 12px;margin-bottom:8px}
+        /* ✅ (v48F) CSS نظام فك الحظر والمرافعات */
+        .acc-appeal{background:linear-gradient(135deg,#fff,#fff8e1);border:1.5px solid #ffb74d;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+        .acc-appeal.done{background:#fff;border-color:#cfd8dc;opacity:.88}
+        .acc-appeal .ap-text{background:#fff8e1;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.8;color:#4e342e;margin-bottom:6px;word-break:break-word}
+        .acc-bandevice{background:#fff;border:1.5px solid #ef9a9a;border-radius:14px;padding:10px 12px;margin-bottom:8px}
 
 
         .auto-reg-card{background:linear-gradient(135deg,#fff,#f3e5f5);border:2px solid #9c27b0;border-radius:16px;padding:16px;margin-bottom:14px;text-align:right;font-family:var(--font-main)}
@@ -990,7 +1021,18 @@
         <div id="ban-reason-box" style="display:none;background:rgba(255,82,82,.12);border:1.5px solid rgba(255,82,82,.4);border-radius:14px;padding:12px 16px;margin:14px auto 6px;max-width:380px;width:100%;font-size:13px;color:#ffcdd2;line-height:1.8;text-align:right;">
             <i>💬</i> <strong style="color:#ff8a80;">سبب الحظر من الإدارة:</strong><br><span id="ban-reason-text"></span>
         </div>
-        <button onclick="openGuestSupport('محظور')" style="margin-top:18px;padding:12px 22px;background:linear-gradient(135deg,#00897b,#00695c);color:#fff;border:0;border-radius:12px;font-family:var(--font-main);font-weight:700;font-size:14px;cursor:pointer;">🎧 تواصل مع الإدارة</button>
+        <div id="ban-appeal-area" style="max-width:380px;width:100%;margin:8px auto 0;">
+            <div id="appeal-status-box"></div>
+            <div id="appeal-form-box" style="display:none;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;margin-top:10px;text-align:right;">
+                <div style="font-size:12.5px;color:#ffd54f;font-weight:700;margin-bottom:8px;">📨 طلب فك الحظر — يصل للإدارة فوراً وتصلك الموافقة أو الرد هنا مباشرة دون تحديث الصفحة</div>
+                <textarea id="appeal-text-input" rows="3" maxlength="1000" placeholder="اكتب طلبك للإدارة... اشرح بوضوح لماذا تستحق فك الحظر" style="width:100%;padding:10px;border:1.5px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(0,0,0,.25);color:#fff;font-family:var(--font-main);font-size:13px;outline:0;resize:vertical;text-align:right;"></textarea>
+                <div style="display:flex;gap:8px;margin-top:8px;align-items:center;">
+                    <button id="appeal-send-btn" onclick="submitBanAppeal()" style="flex:1;padding:11px;background:linear-gradient(135deg,#ffca28,#ff8f00);color:#3e2723;border:0;border-radius:10px;font-family:var(--font-main);font-weight:800;font-size:13.5px;cursor:pointer;">📨 إرسال طلب فك الحظر</button>
+                    <small id="appeal-char-counter" style="color:#90a4ae;font-size:10.5px;direction:ltr;white-space:nowrap;">0 / 1000</small>
+                </div>
+            </div>
+        </div>
+        <button onclick="openGuestSupport('محظور')" style="margin-top:14px;padding:12px 22px;background:linear-gradient(135deg,#00897b,#00695c);color:#fff;border:0;border-radius:12px;font-family:var(--font-main);font-weight:700;font-size:14px;cursor:pointer;">🎧 تواصل مع الإدارة</button>
     </div>
 
     <div id="maintenance-screen">
@@ -2869,7 +2911,7 @@ async function checkPendingApprovalStatus() {
             const devGate = await vDevGate(myName);   /* ✅ (v46F) قفل الجهاز أولاً */
             if (devGate === 'blocked') return;
             const s = await checkSecurity(myFP, myName);
-            if (s.banned) { isBanned = true; document.getElementById('ban-screen').style.display = 'flex'; return; }
+            if (s.banned) { isBanned = true; showBanScreenWithReason(s.banReason || '', s.banBy || ''); return; }   /* ✅ (v49F) السبب الحقيقي على شاشة الحظر */
             if (s.muted) isMuted = true;
             await linkFingerprint(myFP, myName);
             await db.ref('pending_registrations/' + myFP).remove().catch(() => {});
@@ -2904,7 +2946,7 @@ function startPendingApprovalListener() {
                 const devGate = await vDevGate(myName);   /* ✅ (v46F) قفل الجهاز أولاً */
                 if (devGate === 'blocked') return;
                 const s = await checkSecurity(myFP, myName);
-                if (s.banned) { isBanned = true; document.getElementById('ban-screen').style.display = 'flex'; return; }
+                if (s.banned) { isBanned = true; showBanScreenWithReason(s.banReason || '', s.banBy || ''); return; }   /* ✅ (v49F) السبب الحقيقي على شاشة الحظر */
                 if (s.muted) isMuted = true;
                 await linkFingerprint(myFP, myName);
                 document.getElementById('pending-approval-screen').classList.remove('active');
@@ -3835,7 +3877,7 @@ async function vDevGate(wantedName) {
         let hitKey = null;
         for (const k of cands) {
             const bd = await db.ref('appData/bannedDevices/' + k).once('value');
-            if (bd.exists()) { isBanned = true; document.getElementById('ban-screen').style.display = 'flex'; return 'blocked'; }
+            if (bd.exists()) { isBanned = true; const _bdv = bd.val() || {}; showBanScreenWithReason(_bdv.reason || '', _bdv.by || ''); return 'blocked'; }   /* ✅ (v49F) سبب الحظر الحقيقي يظهر الآن */
             if (!hitKey) {
                 const ls = await db.ref('appData/deviceLock/' + k).once('value');
                 if (ls.exists() && (ls.val() || {}).fp) hitKey = k;
@@ -3867,13 +3909,13 @@ function vDevBind() {
         db.ref('users/' + myFP + '/hwFp').set(hw).catch(() => {});
     } catch (e) {}
 }
-async function vDevBanDevice(uid, name) { try { const hw = (await db.ref('users/' + uid + '/hwFp').once('value')).val(); if (hw) await db.ref('appData/bannedDevices/' + hw).set({ at: Date.now(), reason: 'حظر/حذف من الإدارة', name: name || '' }); } catch (e) {} }
+async function vDevBanDevice(uid, name, reason) { try { const hw = (await db.ref('users/' + uid + '/hwFp').once('value')).val(); if (hw) await db.ref('appData/bannedDevices/' + hw).set({ at: Date.now(), reason: (reason || 'حظر/حذف من الإدارة'), name: name || '', by: myName || '' }); } catch (e) {} }
 async function vDevUnbanDevice(uid) { try { const hw = (await db.ref('users/' + uid + '/hwFp').once('value')).val(); if (hw) await db.ref('appData/bannedDevices/' + hw).remove(); } catch (e) {} }
 async function getDeviceFingerprint() { try { const f = await FingerprintJS.load(), r = await f.get(); return 'fp_' + r.visitorId } catch (e) { try { return 'fp_hw' + __hwHash(getHardwareFp()); } catch (e2) { return 'fp_fallback_' + Math.random().toString(36).substr(2, 9) } } }
 async function checkSecurity(fp, name) {
     const c = { banned: false, muted: false };
-    try { const dk = window.__vDevKey || getHardwareFp(); const bd = await db.ref('appData/bannedDevices/' + dk).once('value'); if (bd.exists()) { c.banned = true; c.deviceBanned = true; return c; } } catch (e) {}
-    const b = await db.ref('bans/' + fp).once('value'); if (b.exists()) { c.banned = true; return c }
+    try { const dk = window.__vDevKey || getHardwareFp(); const bd = await db.ref('appData/bannedDevices/' + dk).once('value'); if (bd.exists()) { const _bdv = bd.val() || {}; c.banned = true; c.deviceBanned = true; c.banReason = _bdv.reason || ''; c.banBy = _bdv.by || ''; return c; } } catch (e) {}
+    const b = await db.ref('bans/' + fp).once('value'); if (b.exists()) { const _bv = b.val() || {}; c.banned = true; c.banReason = _bv.reason || ''; c.banBy = _bv.by || ''; return c }
     const m = await db.ref('mutes/' + fp).once('value'); if (m.exists()) { const d = m.val(); if (d.endTime > Date.now() || d.endTime === 9999999999999) { c.muted = true; muteEndTime = d.endTime } }
     return c;
 }
@@ -4121,6 +4163,7 @@ function showBanScreenWithReason(reason, by) {
         else box.style.display = 'none';
     }
     document.getElementById('ban-screen').style.display = 'flex';
+    try { startAppealWatcher(); } catch (e) {}   /* ✅ (v48F) مراقب الطلب وفك الحظر لحظياً */
 }
 function setSession(fp, user) {
     myFP = fp; try { localStorage.setItem('fp', myFP); } catch (e) {}
@@ -4286,6 +4329,7 @@ function startBanWatcher() {
         if (isBeingDeleted) return;
         const b = s.val();
         if (b) { const bb = (typeof b === 'object' && b) ? b : {}; showBanScreenWithReason(bb.reason || '', bb.by || ''); }
+        else if (banScreenVisible()) { try { maybeShowUnbanSuccess(); } catch (e) {} }   /* ✅ (v48F) فُك حظر الحساب لحظياً — نافذة النجاح */
     });
 }
 
@@ -4294,12 +4338,13 @@ let __gsListener = null;
 function guestChannelKey() { try { return window.__vDevKey || getHardwareFp(); } catch (e) { return 'hw_unknown'; } }
 function openGuestSupport(ctx) {
     hideAllAuthScreens();
+    window.__gsCtx = ctx || '';   /* ✅ (v48F) تذكر مصدر الفتح — المحضور يعود لشاشة الحظر */
     const scr = document.getElementById('guest-support-screen');
     if (!scr) return;
     scr.classList.add('active');
     const sub = document.getElementById('gs-sub');
     if (sub) { if (ctx === 'محظور') sub.textContent = 'أنت محظور — اكتب اعتراضك للإدارة هنا وسيصلك الرد في نفس المكان.'; else sub.textContent = 'اكتب رسالتك للإدارة وسيصلك الرد هنا فوراً — حتى قبل الدخول أو إنشاء حساب.'; }
-    const dk = guestChannelKey();
+    const dk = window.__appealDevKey || guestChannelKey();   /* ✅ (v48F) مفتاح موحد مع نظام المرافعات */
     try {
         db.ref('support_guests/' + dk).update({ hw: dk, lastSeenGuest: Date.now(), ua: (navigator.userAgent || '').substring(0, 120) }).catch(() => {});
         if (__gsListener) { try { db.ref('support_guests/' + dk).off('value', __gsListener); } catch (e) {} }
@@ -4310,9 +4355,11 @@ function openGuestSupport(ctx) {
 function closeGuestSupport() {
     const scr = document.getElementById('guest-support-screen');
     if (scr) scr.classList.remove('active');
-    const dk = guestChannelKey();
+    const dk = window.__appealDevKey || guestChannelKey();   /* ✅ (v48F) مفتاح موحد مع نظام المرافعات */
     if (__gsListener) { try { db.ref('support_guests/' + dk).off('value', __gsListener); } catch (e) {} __gsListener = null; }
-    document.getElementById('login-screen').style.display = 'flex';
+    if (window.__gsCtx === 'محظور') { try { showBanScreenWithReason('', ''); } catch (e) {} }   /* ✅ (v48F) المحضور يعود لشاشة الحظر لا شاشة الدخول */
+    else { document.getElementById('login-screen').style.display = 'flex'; }
+    window.__gsCtx = '';
 }
 function renderGsList(data) {
     const list = document.getElementById('gs-list'); if (!list) return;
@@ -4330,7 +4377,7 @@ async function sendGuestSupportMsg() {
     const inp = document.getElementById('gs-input'); if (!inp) return;
     const text = (inp.value || '').trim(); if (!text) return;
     inp.value = '';
-    const dk = guestChannelKey();
+    const dk = window.__appealDevKey || guestChannelKey();   /* ✅ (v48F) مفتاح موحد مع نظام المرافعات */
     const storedName = (localStorage.getItem('name') || '').trim();
     try {
         await db.ref('support_guests/' + dk + '/msgs').push({ from: 'guest', text: text.substring(0, 2000), at: Date.now(), name: storedName || 'زائر' });
@@ -4339,7 +4386,7 @@ async function sendGuestSupportMsg() {
 }
 
 /* ---------- صلاحيات المالك اللحظية: الحظر/الكتم/رسائل الزوار ---------- */
-let bansCache = {}, mutesCache = {}, supportGuestsCache = {};
+let bansCache = {}, mutesCache = {}, supportGuestsCache = {}, bannedDevicesCache = {}, banAppealsCache = {};   /* ✅ (v48F) أجهزة محظورة + مرافعات */
 function listenOwnerSecurity() {
     if (window.__ownerSecOn) return; window.__ownerSecOn = true;
     db.ref('bans').on('value', s => { bansCache = s.val() || {}; if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });
@@ -4349,11 +4396,14 @@ function listenOwnerSecurity() {
         updateGuestBadge();
         if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList();
     });
+    db.ref('appData/bannedDevices').on('value', s => { bannedDevicesCache = s.val() || {}; updateGuestBadge(); if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v48F) الأجهزة المحظورة لحظياً */
+    db.ref('banAppeals').on('value', s => { banAppealsCache = s.val() || {}; updateGuestBadge(); if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v48F) طلبات فك الحظر لحظياً */
 }
 function updateGuestBadge() {
     const badge = document.getElementById('guest-badge'); if (!badge) return;
     let unread = 0;
     Object.keys(supportGuestsCache).forEach(k => { const g = supportGuestsCache[k]; if (g && g.lastFrom === 'guest' && (g.lastAt || 0) > (g.seenAt || 0)) unread++; });
+    Object.keys(banAppealsCache || {}).forEach(k => { const a = banAppealsCache[k]; if (a && a.status === 'pending') unread++; });   /* ✅ (v48F) الطلبات المعلقة تدخل العدّاد */
     badge.textContent = unread;
     badge.style.display = unread > 0 ? 'inline-flex' : 'none';
 }
@@ -4398,6 +4448,8 @@ function renderAccountsList() {
     const devMap = {};
     users.forEach(u => { const hw = u.hwFp || ('fp:' + u.uid); if (!devMap[hw]) devMap[hw] = []; devMap[hw].push(u); });
     const multiDevs = Object.keys(devMap).filter(d => devMap[d].length > 1 && d.indexOf('fp:') !== 0);
+    const bannedDevCount = Object.keys(bannedDevicesCache || {}).length;   /* ✅ (v48F) */
+    const pendingAppealsCount = Object.keys(banAppealsCache || {}).filter(k => (banAppealsCache[k] || {}).status === 'pending').length;   /* ✅ (v48F) */
     /* فلترة البحث */
     let filtered = users;
     if (q) filtered = users.filter(u => String(u.name || '').toLowerCase().includes(q) || String(u.hwFp || '').toLowerCase().includes(q) || String(u.uid || '').toLowerCase().includes(q));
@@ -4407,24 +4459,85 @@ function renderAccountsList() {
         + '<div class="acc-stat"><b>' + onlineCount + '</b><span>متصل الآن</span></div>'
         + '<div class="acc-stat"><b>' + Object.keys(devMap).length + '</b><span>الأجهزة</span></div>'
         + '<div class="acc-stat" style="' + (multiDevs.length ? 'border-color:#ef5350;background:rgba(239,83,80,.08);' : '') + '"><b style="' + (multiDevs.length ? 'color:#c62828;' : '') + '">' + multiDevs.length + '</b><span>أجهزة متعددة</span></div>'
+        + '<div class="acc-stat" style="border-color:#ef5350;background:rgba(239,83,80,.06);"><b style="color:#c62828;">' + bannedDevCount + '</b><span>أجهزة محظورة</span></div>'
+        + '<div class="acc-stat" style="border-color:#fb8c00;background:rgba(255,152,0,.07);"><b style="color:#e65100;">' + pendingAppealsCount + '</b><span>طلبات معلقة</span></div>'
         + '</div>';
+    /* ✅ (v48F) طلبات فك الحظر — المرافعات */
+    const appealKeys = Object.keys(banAppealsCache || {}).sort((a, b) => {
+        const A = banAppealsCache[a] || {}, B = banAppealsCache[b] || {};
+        const pa = A.status === 'pending' ? 0 : 1, pb = B.status === 'pending' ? 0 : 1;
+        if (pa !== pb) return pa - pb;
+        return (Number(B.at) || 0) - (Number(A.at) || 0);
+    });
+    if (appealKeys.length) {
+        const pendN = appealKeys.filter(k => (banAppealsCache[k] || {}).status === 'pending').length;
+        html += '<div style="font-size:13px;font-weight:900;color:#e65100;margin:8px 0 8px;">📨 طلبات فك الحظر (' + appealKeys.length + ')' + (pendN ? ' — ' + pendN + ' معلق' : '') + '</div><div style="font-size:10.5px;color:#8d6e63;margin:-4px 0 8px;">اضغط ✅ قبول فيُفك الحظر فوراً ويصله إشعار النجاح لحظياً — يعمل حتى لو كان حسابه محذوفاً نهائياً</div>';
+        appealKeys.forEach(k => {
+            const a = banAppealsCache[k] || {};
+            const st = a.status || 'pending';
+            const isPend = st === 'pending';
+            const chip = isPend ? '<span class="acc-chip" style="background:rgba(255,152,0,.15);color:#e65100;">⏳ قيد المراجعة</span>'
+                : (st === 'approved' ? '<span class="acc-chip" style="background:rgba(76,175,80,.15);color:#2e7d32;">✅ مقبول — فُك الحظر</span>'
+                : '<span class="acc-chip" style="background:rgba(211,47,47,.15);color:#c62828;">❌ مرفوض</span>');
+            const safeHw = String(k).replace(/[^a-zA-Z0-9_]/g, '');
+            const nmSafe = escAttr(a.name || 'زائر');
+            html += '<div class="acc-appeal ' + (isPend ? 'pend' : 'done') + '">'
+                + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px;">'
+                + '<b style="font-size:12.5px;color:#263238;">👤 ' + escapeHtml(a.name || 'زائر') + ' ' + chip + (bannedDevicesCache[k] ? ' <span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">⛔ الجهاز ما زال محظوراً</span>' : '') + '</b>'   /* ✅ (v49F) حالة الجهاز بجانب الطلب */
+                + '<small style="color:#90a4ae;">' + (a.at ? new Date(Number(a.at)).toLocaleString('ar-EG') : '') + '</small></div>'
+                + '<div class="ap-text">📝 ' + escapeHtml(String(a.text || '')).substring(0, 400) + '</div>'
+                + (!isPend && a.reply ? '<div style="background:#e8f5e9;border-radius:10px;padding:7px 10px;font-size:11.5px;color:#2e7d32;margin-bottom:6px;">💬 رد الإدارة: ' + escapeHtml(String(a.reply)).substring(0, 200) + '</div>' : '')
+                + '<div class="acc-fp" onclick="copyAccText(\'' + safeHw + '\')" title="بصمة الجهاز — اضغط للنسخ">🖥️ ' + escAttr(k) + '</div>'
+                + '<div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;">'
+                + (isPend
+                    ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="approveAppeal" data-uc-uid="' + safeHw + '" data-uc-name="' + nmSafe + '">✅ قبول وفك الحظر</button>'
+                      + '<button class="ctrl-btn" style="background:linear-gradient(135deg,#ef5350,#b71c1c);color:#fff;" data-uc-action="rejectAppeal" data-uc-uid="' + safeHw + '" data-uc-name="' + nmSafe + '">✗ رفض مع رد</button>'
+                    : (st === 'rejected' ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="approveAppeal" data-uc-uid="' + safeHw + '" data-uc-name="' + nmSafe + '">✅ تغيير القرار: قبول وفك الحظر</button>' : ''))
+                + '</div></div>';
+        });
+    }
+    /* ✅ (v48F) الأجهزة المحظورة — فك الحظر بضغطة واحدة حتى للحسابات المحذوفة نهائياً */
+    const bdevKeys = Object.keys(bannedDevicesCache || {}).sort((a, b) => (Number((bannedDevicesCache[b] || {}).at) || 0) - (Number((bannedDevicesCache[a] || {}).at) || 0));
+    if (bdevKeys.length) {
+        html += '<div style="font-size:13px;font-weight:900;color:#c62828;margin:10px 0 8px;">⛔ الأجهزة المحظورة (' + bdevKeys.length + ') — فك الحظر بضغطة واحدة</div>';
+        bdevKeys.forEach(k => {
+            const d = bannedDevicesCache[k] || {};
+            const ap = (banAppealsCache || {})[k];
+            const apChip = (ap && ap.status === 'pending') ? '<span class="acc-chip" style="background:rgba(255,152,0,.15);color:#e65100;">📨 طلب معلق</span>' : ((ap && ap.status === 'approved') ? '<span class="acc-chip" style="background:rgba(76,175,80,.15);color:#2e7d32;">✅ فُك طلبه</span>' : '');
+            const safeHw = String(k).replace(/[^a-zA-Z0-9_]/g, '');
+            html += '<div class="acc-bandevice">'
+                + '<div style="display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center;">'
+                + '<b style="font-size:12.5px;color:#b71c1c;">🖥️ ' + escapeHtml(d.name || 'جهاز بدون اسم') + ' ' + apChip + '</b>'
+                + '<small style="color:#90a4ae;">' + (d.at ? new Date(Number(d.at)).toLocaleString('ar-EG') : '') + '</small></div>'
+                + (d.reason ? '<div style="font-size:11px;color:#c62828;margin-top:4px;">💬 السبب: ' + escapeHtml(String(d.reason)) + '</div>' : '')
+                + '<div class="acc-fp" onclick="copyAccText(\'' + safeHw + '\')" title="بصمة الجهاز — اضغط للنسخ">' + escAttr(k) + '</div>'
+                + '<div style="display:flex;gap:6px;margin-top:7px;">'
+                + '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="unbanDevice" data-uc-uid="' + safeHw + '" data-uc-name="' + escAttr(d.name || '') + '">✅ فك الحظر عن هذا الجهاز</button>'
+                + '</div></div>';
+        });
+    }
     /* رسائل الزوار */
     const guestKeys = Object.keys(supportGuestsCache).sort((a, b) => (supportGuestsCache[b].lastAt || 0) - (supportGuestsCache[a].lastAt || 0));
     if (guestKeys.length) {
         html += '<div style="font-size:13px;font-weight:900;color:#00695c;margin:6px 0 8px;">🎧 رسائل الزوار من شاشة الدخول (' + guestKeys.length + ')</div>';
         guestKeys.forEach(k => {
             const g = supportGuestsCache[k] || {};
+            const bannedNow = !!((bannedDevicesCache || {})[k]);   /* ✅ (v49F) */
+            const appealPend = !!((banAppealsCache || {})[k]) && (banAppealsCache[k] || {}).status === 'pending';   /* ✅ (v49F) */
+            const guestBanned = bannedNow || appealPend;
+            const safeGw = String(k).replace(/[^a-zA-Z0-9_]/g, '');
             const msgs = g.msgs || {};
             const keys = Object.keys(msgs).sort((a, b) => (msgs[a].at || 0) - (msgs[b].at || 0));
             const last3 = keys.slice(-3);
             html += '<div class="acc-guestmsg">'
                 + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">'
-                + '<b style="font-size:12.5px;color:#37474f;">👤 ' + escapeHtml(g.name || 'زائر') + ' <small style="color:#90a4ae;font-weight:400;direction:ltr;">' + escapeHtml(String(k).substring(0, 14)) + '</small></b>'
+                + '<b style="font-size:12.5px;color:#37474f;">👤 ' + escapeHtml(g.name || 'زائر') + (bannedNow ? ' <span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">⛔ جهاز محظور</span>' : '') + (!bannedNow && appealPend ? ' <span class="acc-chip" style="background:rgba(255,152,0,.14);color:#e65100;">📨 مرافعة معلقة</span>' : '') + ' <small style="color:#90a4ae;font-weight:400;direction:ltr;">' + escapeHtml(String(k).substring(0, 14)) + '</small></b>'
                 + '<small style="color:#90a4ae;">' + (g.lastAt ? new Date(g.lastAt).toLocaleString('ar-EG') : '') + '</small></div>'
                 + (last3.length ? last3.map(kk => { const m = msgs[kk]; return '<div style="font-size:11.5px;line-height:1.7;margin-bottom:4px;padding-right:8px;border-right:2.5px solid ' + (m.from === 'admin' ? '#4caf50' : '#00897b') + ';"><b style="font-size:9.5px;color:' + (m.from === 'admin' ? '#2e7d32' : '#00695c') + ';">' + (m.from === 'admin' ? 'الإدارة:' : (m.name || 'الزائر') + ':') + '</b> ' + escapeHtml(m.text || '').substring(0, 160) + '</div>'; }).join('') : '<div style="font-size:11px;color:#90a4ae;">لا رسائل</div>')
                 + '<div style="display:flex;gap:6px;margin-top:8px;">'
                 + '<input type="text" id="gs-reply-' + escAttr(k).replace(/[^a-zA-Z0-9]/g, '') + '" placeholder="اكتب رداً للزائر..." style="flex:1;padding:8px 10px;border:1.5px solid #cfd8dc;border-radius:10px;font-family:var(--font-main);font-size:12px;outline:0;" maxlength="2000">'
                 + '<button onclick="replyGuest(\'' + (k + '').replace(/'/g, '') + '\')" style="background:linear-gradient(135deg,#00897b,#00695c);color:#fff;border:0;border-radius:10px;padding:0 14px;font-size:12px;cursor:pointer;font-family:var(--font-main);font-weight:700;">إرسال</button>'
+                + (guestBanned ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;white-space:nowrap;" data-uc-action="unbanDevice" data-uc-uid="' + safeGw + '" data-uc-name="' + escAttr(g.name || 'زائر') + '">✅ فك الحظر</button>' : '')
                 + '</div></div>';
         });
     }
@@ -4485,37 +4598,179 @@ async function replyGuest(k) {
     } catch (e) { alert('❌ ' + (e.message || e)); }
 }
 
-
-/* ---------- ✅ (v79F) الحساب الموحد — واجهة شات العراق الحريه ----------
-   نفس الجهاز = نفس الحساب في الواجهة والدردشة (نفس البصمة ونفس سجل الأجهزة appData/deviceLock):
-   عند فتح الدردشة على جهاز مرتبط بحساب سُجّل من الواجهة أو الدردشة → دخول تلقائي فوري
-   بدون أي تسجيل ثاني ولا شاشة دخول — لا حسابات مكررة أبداً.
-   الأمان محفوظ في قاعدة البيانات نفسها: جهاز محظور → شاشة الحظر، حساب محذوف → لا يُعاد */
-async function vUniAutoDeviceLogin() {
+/* ============================== ✅✅✅ (v48F) نظام فك الحظر والمرافعات الاحترافي ==============================
+   جهة المحضور:
+   • شاشة الحظر فيها نموذج «إرسال طلب فك الحظر» — الطلب يُكتب في banAppeals/{بصمة الجهاز المحظورة} ويصل للملك لحظياً
+   • الحالة حية على شاشة الحظر: ⏳ قيد المراجعة / ✅ قبول + فك فعلي / ❌ رفض مع رد الإدارة — بلا تحديث صفحة
+   • مراقب فك الحظر اللحظي: بمجرد فك الحظر من اللوحة تظهر نافذة النجاح الخضراء «تم فك الحظر» ثم شاشة الدخول
+   • الطلب يُرسل أيضاً رسالة داخل محادثة تواصل الإدارة (support_guests) ليراها الملك ويرد عليها
+   جهة الملك (كشف الحسابات والأجهزة):
+   • قسم «📨 طلبات فك الحظر»: قبول (فك فوري + رسالة نظام للزائر + توثيق) أو رفض (رد مكتوب يصل للمحضور)
+   • قسم «⛔ الأجهزة المحظورة»: زر «فك الحظر» لكل جهاز — يعمل حتى للحسابات المحذوفة نهائياً
+     (يقرأ الجهاز مباشرة من bannedDevices لا من سجل الحساب المحذوف) + ينظف قفل الجهاز العتيق
+   • بطاقات رسائل الزوار تُظهر شارة «⛔ محظور» وزر «✅ فك الحظر» بجوار الرد مباشرة
+   ========================================================================================================= */
+var __appealLastData = null, __appealDevRefs = {}, __appealBanRefs = {}, __unbanSuccessShown = false, __appealLastSent = 0, __appealWasApproved = false;
+function banScreenVisible() { const el = document.getElementById('ban-screen'); return !!(el && el.style.display === 'flex'); }
+async function resolveBannedDevKey() {
+    /* بصمة الجهاز المحظور الفعلية — أول مرشح محظور، وإلا مفتاح القناة العادي */
     try {
-        const cands = vDevCandidates();
+        const cands = vDevCandidates() || [];
         for (const k of cands) {
-            const bd = (await db.ref('appData/bannedDevices/' + k).once('value')).val();
-            if (bd) { showBanScreenWithReason(bd.reason || '', bd.by || ''); return true; }
+            const bd = await db.ref('appData/bannedDevices/' + k).once('value');
+            if (bd.exists()) return k;
         }
-        for (const k of cands) {
-            const lock = (await db.ref('appData/deviceLock/' + k).once('value')).val();
-            if (lock && lock.fp) {
-                const u = (await db.ref('users/' + lock.fp).once('value')).val();
-                if (u && u.name && u.createdAt !== undefined) {
-                    window.__vDevKey = k;
-                    const s = await checkSecurity(lock.fp, u.name || '');
-                    if (s.banned) { const b = (await db.ref('bans/' + lock.fp).once('value')).val() || {}; showBanScreenWithReason(b.reason || '', b.by || ''); return true; }
-                    setSession(lock.fp, u);
-                    if (k !== getHardwareFp()) { try { localStorage.setItem('vpro_hw_id', k); } catch (e) {} }
-                    enterChat();
-                    return true;
-                }
+    } catch (e) {}
+    try { return window.__vDevKey || getHardwareFp(); } catch (e) { return 'hw_unknown'; }
+}
+async function startAppealWatcher() {
+    if (window.__appealWatcherOn) { renderBanAppealArea(__appealLastData); return; }
+    window.__appealWatcherOn = true;
+    try {
+        const dk = await resolveBannedDevKey();
+        window.__appealDevKey = dk;
+        db.ref('banAppeals/' + dk).on('value', s => { __appealLastData = s.val(); renderBanAppealArea(__appealLastData); });
+        (vDevCandidates() || [dk]).forEach(k => {
+            if (__appealDevRefs[k]) { try { db.ref('appData/bannedDevices/' + k).off('value', __appealDevRefs[k]); } catch (e) {} }
+            __appealDevRefs[k] = db.ref('appData/bannedDevices/' + k).on('value', snap => { if (!snap.exists() && banScreenVisible()) maybeShowUnbanSuccess(); });
+        });
+        if (myFP) {
+            if (__appealBanRefs[myFP]) { try { db.ref('bans/' + myFP).off('value', __appealBanRefs[myFP]); } catch (e) {} }
+            __appealBanRefs[myFP] = db.ref('bans/' + myFP).on('value', s => { if (!s.exists() && banScreenVisible()) maybeShowUnbanSuccess(); });
+        }
+        const first = await db.ref('banAppeals/' + dk).once('value');
+        __appealLastData = first.val();
+        renderBanAppealArea(__appealLastData);
+    } catch (e) {}
+}
+async function maybeShowUnbanSuccess() {
+    if (__unbanSuccessShown || isBeingDeleted || !banScreenVisible()) return;
+    try {
+        for (const k of (vDevCandidates() || [])) {
+            const bd = await db.ref('appData/bannedDevices/' + k).once('value');
+            if (bd.exists()) return;
+        }
+        if (myFP) { const bb = await db.ref('bans/' + myFP).once('value'); if (bb.exists()) return; }
+        __unbanSuccessShown = true;
+        try { playStatusSound(); } catch (e) {}
+        try { if (navigator.vibrate) navigator.vibrate([120, 60, 120, 60, 240]); } catch (e) {}
+        await vDevAlert('🎉 تهانينا!\nتم فك الحظر عن جهازك من قبل الإدارة.\nاضغط «حسناً» وستعود لشاشة الدخول لتدخل حسابك بشكل طبيعي.', '✅ تم فك الحظر');
+        try { location.reload(); } catch (e) {}
+    } catch (e) {}
+}
+function renderBanAppealArea(appeal) {
+    const statusBox = document.getElementById('appeal-status-box');
+    const formBox = document.getElementById('appeal-form-box');
+    if (!statusBox || !formBox) return;
+    const a = appeal || null;
+    const st = a ? (a.status || 'pending') : '';
+    if (st === 'approved') {
+        statusBox.innerHTML = '<div style="background:rgba(34,197,94,.14);border:1.5px solid rgba(34,197,94,.5);border-radius:14px;padding:12px 16px;margin-top:10px;font-size:13px;color:#a5f3c4;line-height:1.9;text-align:right;">'
+            + '<b style="color:#4ade80;">✅ تم قبول طلبك وفُك الحظر عن جهازك!</b><br><span style="font-size:11.5px;color:#c8e6c9;">ستظهر لك نافذة النجاح خلال لحظات تلقائياً — أو حدّث الصفحة للدخول.</span></div>';
+        if (!__appealWasApproved) {
+            __appealWasApproved = true;
+            try { playStatusSound(); } catch (e) {}
+            try { if (navigator.vibrate) navigator.vibrate([120, 60, 120, 60, 240]); } catch (e) {}
+            setTimeout(() => { try { maybeShowUnbanSuccess(); } catch (e) {} }, 600);
+        }
+    } else if (st === 'rejected') {
+        statusBox.innerHTML = '<div style="background:rgba(255,82,82,.12);border:1.5px solid rgba(255,82,82,.45);border-radius:14px;padding:12px 16px;margin-top:10px;font-size:13px;color:#ffcdd2;line-height:1.9;text-align:right;">'
+            + '<b style="color:#ff8a80;">❌ تم رفض طلب فك الحظر</b>'
+            + (a.reply ? '<br><b style="color:#ffab91;">💬 رد الإدارة:</b> ' + escapeHtml(String(a.reply)) : '')
+            + '<br><small style="color:#b0bec5;">يمكنك تعديل طلبك وإعادة إرساله من النموذج بالأسفل.</small></div>';
+    } else if (st === 'pending') {
+        statusBox.innerHTML = '<div style="background:rgba(255,202,40,.1);border:1.5px solid rgba(255,202,40,.4);border-radius:14px;padding:12px 16px;margin-top:10px;font-size:13px;color:#ffe082;line-height:1.9;text-align:right;">'
+            + '<b style="color:#ffd54f;">⏳ طلبك قيد المراجعة من الإدارة الآن</b><br>'
+            + '<span style="font-size:11.5px;color:#cfd8dc;">أُرسل: ' + (a.at ? new Date(Number(a.at)).toLocaleString('ar-EG') : '—') + ' — سيصلك القرار هنا فوراً بلا تحديث</span>'
+            + (a.text ? '<div style="margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.18);font-size:11.5px;color:#b0bec5;">📝 ' + escapeHtml(String(a.text)).substring(0, 300) + '</div>' : '') + '</div>';
+    } else { statusBox.innerHTML = ''; }
+    formBox.style.display = (st === 'approved') ? 'none' : 'block';
+    const btn = document.getElementById('appeal-send-btn');
+    if (btn) btn.textContent = (st === 'pending') ? '📨 تحديث الطلب المرسل' : ((st === 'rejected') ? '📨 إعادة إرسال الطلب' : '📨 إرسال طلب فك الحظر');
+    const inp = document.getElementById('appeal-text-input');
+    if (inp && !inp.value && a && a.text) inp.value = String(a.text).substring(0, 1000);
+}
+async function submitBanAppeal() {
+    const inp = document.getElementById('appeal-text-input'); if (!inp) return;
+    const text = (inp.value || '').trim();
+    if (text.length < 3) { alert('✍️ اكتب طلبك أولاً (3 أحرف على الأقل) — اشرح بوضوح لماذا تستحق فك الحظر'); return; }
+    const now = Date.now();
+    if (now - __appealLastSent < 60000) { alert('⏳ انتظر دقيقة واحدة بين إرسال الطلبات'); return; }
+    __appealLastSent = now;
+    const dk = window.__appealDevKey || await resolveBannedDevKey();
+    const storedName = ((localStorage.getItem('name') || '')).trim() || 'زائر';
+    const uid = (localStorage.getItem('fp') || myFP || '');
+    const btn = document.getElementById('appeal-send-btn');
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ جاري الإرسال...'; }
+    try {
+        await db.ref('banAppeals/' + dk).set({ hw: dk, uid: uid, name: storedName, text: text.substring(0, 1000), at: now, status: 'pending', reply: '', handledBy: '', decidedAt: 0 });
+        await db.ref('support_guests/' + dk + '/msgs').push({ from: 'guest', text: '📨 طلب فك الحظر: ' + text.substring(0, 900), at: now, name: storedName, appeal: true });
+        await db.ref('support_guests/' + dk).update({ name: storedName, lastFrom: 'guest', lastAt: now, hw: dk, lastSeenGuest: now });
+        __appealLastData = { hw: dk, uid: uid, name: storedName, text: text.substring(0, 1000), at: now, status: 'pending', reply: '', handledBy: '', decidedAt: 0 };
+        renderBanAppealArea(__appealLastData);
+        alert('✅ تم إرسال طلبك للإدارة بنجاح!\nستصلك الموافقة أو الرد في نفس المكان لحظياً دون تحديث الصفحة.');
+    } catch (e) { alert('❌ ' + (e.message || e)); __appealLastSent = 0; }
+    if (btn) { btn.disabled = false; renderBanAppealArea(__appealLastData); }
+}
+/* ---- جهة الملك: فك الحظر وإدارة المرافعات ---- */
+async function vKingCleanupDeviceLock(hw) {
+    /* تنظيف قفل جهاز مرتبط بحساب محذوف — حتى يستطيع صاحبه إنشاء حساب جديد بعد الفك */
+    try {
+        const lock = (await db.ref('appData/deviceLock/' + hw).once('value')).val() || null;
+        if (lock && lock.fp) {
+            const u = (await db.ref('users/' + lock.fp).once('value')).val();
+            if (!u || !u.name || u.createdAt === undefined) {
+                await db.ref('appData/deviceLock/' + hw).remove();
+                await db.ref('bans/' + lock.fp).remove();
+                return true;
             }
         }
     } catch (e) {}
     return false;
 }
+async function vKingNotifyGuest(hw, text) {
+    try {
+        const now = Date.now();
+        await db.ref('support_guests/' + hw + '/msgs').push({ from: 'admin', text: text, at: now, name: myName || 'الإدارة', system: true });
+        await db.ref('support_guests/' + hw).update({ lastFrom: 'admin', lastAt: now, seenAt: now });
+    } catch (e) {}
+}
+async function unbanDeviceByKing(hw, name, viaAppeal) {
+    if (!isOwner()) return alert('⛔ للمالك فقط');
+    const key = String(hw || '').replace(/[^a-zA-Z0-9_]/g, '');
+    if (!key) return;
+    if (!confirm('✅ فك الحظر عن جهاز ' + (name || key) + '؟\nسيستطيع صاحبه الدخول أو إنشاء حساب فوراً وسيصل له إشعار النجاح لحظياً.')) return;
+    try {
+        await db.ref('appData/bannedDevices/' + key).remove();
+        await vKingCleanupDeviceLock(key);
+        const ap = (banAppealsCache || {})[key];
+        if (ap && ap.status !== 'approved') {
+            await db.ref('banAppeals/' + key).update({ status: 'approved', decidedAt: Date.now(), handledBy: myName || 'الإدارة', reply: ap.reply || '✅ تم قبول طلبك وفك الحظر — مرحباً بعودتك!' });
+        }
+        await vKingNotifyGuest(key, '✅ تم فك الحظر عن جهازك من قبل الإدارة' + (name ? ' (' + name + ')' : '') + ' — يمكنك الدخول أو إنشاء حسابك الآن. مرحباً بعودتك! 🎉');
+        try { await logAdminAction(viaAppeal ? 'appeal_approve_unban' : 'unban_device', key, name || '', {}); } catch (e) {}
+        alert('✅ تم فك الحظر بنجاح!\nسيصل إشعار النجاح لصاحب الجهاز لحظياً ويمكنه الدخول فوراً.');
+        if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList();
+    } catch (e) { alert('❌ ' + (e.message || e)); }
+}
+async function approveBanAppeal(hw, name) { await unbanDeviceByKing(hw, name, true); }
+async function rejectBanAppeal(hw, name) {
+    if (!isOwner()) return alert('⛔ للمالك فقط');
+    const key = String(hw || '').replace(/[^a-zA-Z0-9_]/g, '');
+    if (!key) return;
+    let reply = prompt('✗ رفض طلب فك الحظر' + (name ? ' من «' + name + '»' : '') + '\nاكتب رداً اختيارياً يصل للمحضور (سبب الرفض) أو اتركه فارغاً:');
+    if (reply === null) return;
+    reply = reply.trim();
+    const now = Date.now();
+    try {
+        await db.ref('banAppeals/' + key).update({ status: 'rejected', decidedAt: now, handledBy: myName || 'الإدارة', reply: reply || 'تم رفض الطلب من قبل الإدارة' });
+        await vKingNotifyGuest(key, '❌ تم رفض طلب فك الحظر' + (reply ? ': ' + reply : '') + ' — يمكنك تعديل طلبك وإعادة إرساله.');
+        try { await logAdminAction('appeal_reject', key, name || '', { reply: reply }); } catch (e) {}
+        if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList();
+    } catch (e) { alert('❌ ' + (e.message || e)); }
+}
+
+
 
 async function init() {
     document.getElementById('loading-screen').style.display = 'none';
@@ -4546,6 +4801,9 @@ async function init() {
             case 'deleteUnknownUser':         deleteUnknownUser(uid); break;
             case 'banUser':                   banUser(uid, name); break;
             case 'unbanUser':                 unbanUser(uid, name); break;
+            case 'unbanDevice':               unbanDeviceByKing(uid, name, false); break;   /* ✅ (v48F) فك حظر جهاز */
+            case 'approveAppeal':             approveBanAppeal(uid, name); break;   /* ✅ (v48F) قبول طلب فك الحظر */
+            case 'rejectAppeal':              rejectBanAppeal(uid, name); break;   /* ✅ (v48F) رفض طلب فك الحظر */
             case 'openMuteMenu':              openMuteMenu(uid, name); break;
             case 'unmuteUser':                unmuteUser(uid, name); break;
             case 'openRoleMenu':              openRoleMenu(uid, name); break;
@@ -4600,9 +4858,6 @@ async function init() {
             setTimeout(() => { showLoginError('الاسم المحفوظ غير صالح. ' + validation.reason); }, 200);
         }
     } else {
-        /* ✅ (v79F) الحساب الموحد: تعرّف تلقائي على حساب هذا الجهاز المسجّل من واجهة شات العراق الحريه */
-        const autoHit = await vUniAutoDeviceLogin();
-        if (autoHit) return;
         document.getElementById('login-screen').style.display = 'flex';
         refreshDeviceBadge();
     }
@@ -4640,13 +4895,13 @@ document.getElementById('username-input')?.addEventListener('input', function() 
     if (this.value.trim().length > 0) { const v = validateName(this.value); if (v.valid) hideLoginError(); }
 });
 document.getElementById('gs-input')?.addEventListener('keypress', e => { if (e.key === 'Enter') sendGuestSupportMsg(); });
+document.getElementById('appeal-text-input')?.addEventListener('input', function() { const c = document.getElementById('appeal-char-counter'); if (c) c.textContent = this.value.length + ' / 1000'; });   /* ✅ (v48F) عدّاد أحرف الطلب */
 document.getElementById('alert-text-input')?.addEventListener('input', function() {
     const counter = document.getElementById('alert-char-counter'); if (counter) counter.textContent = this.value.length + ' / 300';
 });
 
 function enterChat() {
     document.getElementById('login-screen').style.display = 'none';
-    try { localStorage.setItem('uni_session', '1'); } catch (e) {}   /* ✅ (v79F) جلسة موحدة مع واجهة شات العراق الحريه */
     document.getElementById('pending-approval-screen').classList.remove('active');
     const gsScr = document.getElementById('guest-support-screen'); if (gsScr) gsScr.classList.remove('active');
     startHeartbeat(); startPresenceChecker(); startDeletionWatcher(); startForceLogoutWatcher();
@@ -5350,7 +5605,7 @@ async function permanentDeleteUser(uid, name) {
     if (!confirm('⚠️ تأكيد أخير!')) return;
     const targetAvatar = allUsersData[uid]?.avatar || DEFAULT_ICON;
     try { await logAdminAction('delete_user', uid, name, { target_role: tr }); } catch(e) {}
-    try { await vDevBanDevice(uid, name); } catch(e) {}   /* ✅ (v46F) حذف إداري = قفل جهاز نهائي */
+    try { await vDevBanDevice(uid, name, '🗑️ حذف إداري نهائي — تواصل مع الإدارة لطلب فك القفل'); } catch(e) {}   /* ✅ (v46F/v48F) حذف إداري = قفل جهاز نهائي + سبب واضح */
     try { await db.ref('force_logout/' + uid).set({ reason: 'تم حذف حسابك من قبل المالك', type: 'deleted', by: myName, at: Date.now() }); } catch(e) {}
     await new Promise(r => setTimeout(r, 800));
     try { await purgeUserEverywhere(uid, name, targetAvatar); } catch(e) {}
@@ -5366,7 +5621,7 @@ async function deleteUnknownUser(uid) {
     const targetAvatar = u.avatar || DEFAULT_ICON;
     try {
         await logAdminAction('delete_unknown_user', uid, displayName, {});
-        try { await vDevBanDevice(uid, displayName); } catch(e) {}   /* ✅ (v46F) قفل جهاز */
+        try { await vDevBanDevice(uid, displayName, '🗑️ حذف إداري لحساب مجهول — تواصل مع الإدارة لطلب فك القفل'); } catch(e) {}   /* ✅ (v46F/v48F) قفل جهاز + سبب واضح */
         await db.ref('force_logout/' + uid).set({ reason: 'تم حذف حسابك', type: 'deleted', by: myName, at: Date.now() });
         await new Promise(r => setTimeout(r, 800));
         await purgeUserEverywhere(uid, u.name, targetAvatar);
@@ -5865,9 +6120,8 @@ async function executeChangeName() {
         closeProfileActions();
     } catch (e) { alert('❌ ' + e.message); }
 }
-async function banUser(u, n) { const tr = allUsersData[u]?.role || 'user'; if (!canBan(myRole, tr)) return alert('⛔'); if (!confirm('⚠️ حظر "' + n + '"؟')) return; const _r = (prompt('سبب الحظر (اختياري — يظهر للمحظور على شاشة الحظر):') || '').trim(); await db.ref('bans/' + u).set({ by: myName, at: Date.now(), reason: _r }); await vDevBanDevice(u, n); await logAdminAction('ban', u, n, { target_role: tr, reason: _r }); alert("✅"); }
-async function unbanUser(u, n) { if (!isOwner()) return alert('⛔'); if (!confirm('فك الحظر عن "' + n + '"؟')) return; await db.ref('bans/' + u).remove(); await vDevUnbanDevice(u); await logAdminAction('unban', u, n, {}); alert("✅"); }
-async function unbanUser(u, n) { if (!isOwner()) return alert('⛔'); if (!confirm('فك الحظر عن "' + n + '"؟')) return; await db.ref('bans/' + u).remove(); await vDevUnbanDevice(u); await logAdminAction('unban', u, n, {}); alert("✅"); }
+async function banUser(u, n) { const tr = allUsersData[u]?.role || 'user'; if (!canBan(myRole, tr)) return alert('⛔'); if (!confirm('⚠️ حظر "' + n + '"؟')) return; const _r = (prompt('سبب الحظر (اختياري — يظهر للمحظور على شاشة الحظر):') || '').trim(); await db.ref('bans/' + u).set({ by: myName, at: Date.now(), reason: _r }); await vDevBanDevice(u, n, _r || '🚫 حظر من قبل الإدارة'); await logAdminAction('ban', u, n, { target_role: tr, reason: _r }); alert("✅"); }
+async function unbanUser(u, n) { if (!isOwner()) return alert('⛔'); if (!confirm('فك الحظر عن "' + n + '"؟')) return; await db.ref('bans/' + u).remove(); await vDevUnbanDevice(u); try { const hwU = (await db.ref('users/' + u + '/hwFp').once('value')).val(); if (hwU) { await vKingCleanupDeviceLock(hwU); const apU = (banAppealsCache || {})[hwU]; if (apU && apU.status === 'pending') await db.ref('banAppeals/' + hwU).update({ status: 'approved', decidedAt: Date.now(), handledBy: myName || 'الإدارة', reply: apU.reply || '✅ تم قبول طلبك وفك الحظر — مرحباً بعودتك!' }); } } catch (eU) {}   /* ✅ (v48F) فك الحظر يقبل الطلب المعلق وينظف قفل الجهاز */ await logAdminAction('unban', u, n, {}); alert('✅ تم فك الحظر — الحساب والجهاز معاً'); }
 function openMuteMenu(u, n) { const tr = allUsersData[u]?.role || 'user'; if (!canMute(myRole, tr)) return alert('⛔'); targetUserForAction = { uid: u, name: n }; document.getElementById('mute-target-name').textContent = n; document.getElementById('mute-modal').classList.add('active'); }
 async function applyMute(m) { const et = m === 999999 ? 9999999999999 : Date.now() + m * 6e4; const data = { endTime: et, by: myName, at: Date.now() }; const { uid, name } = targetUserForAction; await db.ref('mutes/' + uid).set(data); await logAdminAction('mute', uid, name, {}); document.getElementById('mute-modal').classList.remove('active'); alert("✅"); }
 async function unmuteUser(u, n) { if (!confirm('فك الكتم عن "' + n + '"؟')) return; await db.ref('mutes/' + u).remove(); await logAdminAction('unmute', u, n, {}); alert("✅"); }
@@ -6236,7 +6490,7 @@ async function resolveReport(action) {
     const updates = { status: action === 'none' ? 'rejected' : 'resolved', actionTaken: action, ownerComment: comment || null, resolvedAt: Date.now() };
     try {
         await db.ref('reports/' + reportId).update(updates);
-        if (action !== 'none') { let targetUid = report.targetId; if (targetUid.startsWith('legacy_')) alert('⚠️ تم حل البلاغ.'); else { if (action === 'ban') { await db.ref('bans/' + targetUid).set({ by: myName, at: Date.now(), reason: (comment || 'حظر نتيجة بلاغ موثق') }); await logAdminAction('report_ban', targetUid, report.targetName, {}); } else if (action === 'mute') { await db.ref('mutes/' + targetUid).set({ endTime: Date.now() + 3600000, by: myName, at: Date.now() }); await logAdminAction('report_mute', targetUid, report.targetName, {}); } } }
+        if (action !== 'none') { let targetUid = report.targetId; if (targetUid.startsWith('legacy_')) alert('⚠️ تم حل البلاغ.'); else { if (action === 'ban') { await db.ref('bans/' + targetUid).set({ by: myName, at: Date.now(), reason: (comment || 'حظر نتيجة بلاغ موثق') }); try { await vDevBanDevice(targetUid, report.targetName, comment || 'حظر نتيجة بلاغ موثق'); } catch (e) {}   /* ✅ (v48F) حظر البلاغات يقفل الجهاز — إغلاق ثغرة التسجيل من نفس الجهاز */ await logAdminAction('report_ban', targetUid, report.targetName, {}); } else if (action === 'mute') { await db.ref('mutes/' + targetUid).set({ endTime: Date.now() + 3600000, by: myName, at: Date.now() }); await logAdminAction('report_mute', targetUid, report.targetName, {}); } } }
         else await logAdminAction('report_reject', report.targetId, report.targetName, {});
         document.getElementById('resolve-modal').classList.remove('active'); alert('✅'); renderReports(); updateReportsBadge();
     } catch (e) { alert('❌ ' + e.message); }
