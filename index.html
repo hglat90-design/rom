@@ -1,5 +1,21 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+<!-- ✅✅✅ v50F ProAdminPanel — لوحة كشف الحسابات الاحترافية الموحدة (طلب المالك):
+     ✅✅✅ v50F — إعادة بناء كاملة لقسم «كشف الحسابات والأجهزة» بتنظيم احترافي جدًا:
+       🗂️ لوحة مجزأة بتبويبات منظمة: 🎧 المحادثات / 📨 طلبات الفك / ⛔ الأجهزة المحظورة /
+          👥 الحسابات / ⚠️ أجهزة متعددة — كل قسم في تبويبه مع عدّاد حي لكل تبويب
+       🖥️ البحث بالبصمة يفتح «ملف الجهاز» الكامل: يظهر فقط الحساب المتعلق ببصمة الجهاز
+          + حالة الجهاز (محظور/مقفول/مرافعة) + محادثته + كل أزرار الحل في مكان واحد
+       🎧 بطاقات المحادثات احترافية: المحادثة كاملة قابلة للتوسيع (كل ما يرسله الزائر
+          يظهر للملك بلا حذف ولا اختصار) + شارة غير مقروء + فقاعات رسائل بأسماء وأوقات
+       ⚡ كل مشكلة زر لحالها بضغطة واحدة بجوار المحادثة نفسها: فك حظر الجهاز / فك حظر
+          الحساب / فك الكتم / فك قفل الجهاز / فتح صلاحية تغيير الاسم / حظر / كتم / رتبة /
+          تنبيه / حذف نهائي — تظهر الأزرار المطلوبة فقط حسب حالة صاحب المحادثة
+       👤 الزائر ملزم بإدخال اسمه إجباريًا قبل التواصل (تحقق حقيقي) — الملك يعرف من هو
+          ومن صاحب الحساب مع كل رسالة، والاسم محفوظ ومرفق بالطلب وبالمرافعة أيضًا
+       🧹 أدوات تنظيف المحادثات: حذف أي محادثة 🗑️ بضغطة + تنظيف جماعي ذكي
+          (المقروءة فقط / الأقدم من 7 أيام / الفارغة بدون رسائل) فلا يصبح تراكم
+     --- فوق كل مزايا v49F وv48F دون أي تغيير فيها -->
 <!-- ✅✅✅ v49FAppealSystem — نظام فك الحظر والمرافعات الاحترافي المتقدم (طلب المالك):
      ✅✅✅ v49F — ترقية احترافية فوق v48F:
        💬 سبب الحظر الحقيقي يظهر الآن على شاشة الحظر في كل المسارات (فحص الجهاز + فحص الحساب)
@@ -895,6 +911,36 @@
         .acc-appeal.done{background:#fff;border-color:#cfd8dc;opacity:.88}
         .acc-appeal .ap-text{background:#fff8e1;border-radius:10px;padding:8px 10px;font-size:12px;line-height:1.8;color:#4e342e;margin-bottom:6px;word-break:break-word}
         .acc-bandevice{background:#fff;border:1.5px solid #ef9a9a;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+        /* ✅ (v50F) CSS لوحة كشف الحسابات الاحترافية — تبويبات + محادثات كاملة + أزرار حل */
+        #accounts-modal .ctrl-btn{width:auto;min-width:26px;height:30px;border-radius:10px;padding:0 11px;font-size:11.5px;font-weight:800;white-space:nowrap;flex-shrink:0}   /* إصلاح: أزرار النص داخل لوحة الحسابات حبة مستطيلة بدل الدائرة القاصّة */
+        .acc-tabs{display:flex;gap:4px;overflow-x:auto;padding:8px 10px 0;border-bottom:1.5px solid #e0e7e5;background:#f6f9f8;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+        .acc-tabs::-webkit-scrollbar{display:none}
+        .acc-tab{flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:8px 13px;border-radius:10px 10px 0 0;background:transparent;border:0;border-bottom:2.5px solid transparent;font-size:11px;font-weight:800;color:#546e7a;cursor:pointer;font-family:var(--font-main);white-space:nowrap;transition:all .2s}
+        .acc-tab.active{background:#fff;color:#00695c;border-bottom-color:#00897b}
+        .acc-tab .at-badge{background:#e53935;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;font-weight:900;min-width:17px;text-align:center;line-height:1.4}
+        .acc-tab .at-badge.gray{background:#b0bec5}
+        .acc-tab .at-badge.teal{background:#00897b}
+        .acc-conv{background:#fff;border:1.5px solid #e0e7e5;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+        .acc-conv.unread{border-color:#ef5350;background:#fffafa;box-shadow:0 1px 6px rgba(239,83,80,.08)}
+        .acc-conv .ac-msgs{max-height:250px;overflow-y:auto;background:#f5f8f7;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px;margin-top:6px}
+        .acc-conv .ac-b{max-width:88%;padding:6px 10px;border-radius:11px;font-size:11.5px;line-height:1.7;word-break:break-word;white-space:pre-wrap}
+        .acc-conv .ac-b.g{align-self:flex-start;background:linear-gradient(135deg,#00897b,#00695c);color:#fff;border-bottom-left-radius:3px}
+        .acc-conv .ac-b.a{align-self:flex-end;background:#e8f5e9;color:#1b5e20;border-bottom-right-radius:3px}
+        .acc-conv .ac-b.sys{align-self:center;background:#fff8e1;color:#795548;font-size:10.5px;max-width:95%;text-align:center;border-radius:9px}
+        .acc-conv .ac-b small{display:block;font-size:8.5px;opacity:.75;margin-top:2px}
+        .acc-solver{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;align-items:center}
+        .acc-solver .as-label{width:100%;font-size:10px;font-weight:900;color:#37474f;margin-bottom:-2px}
+        .acc-linkacc{display:flex;align-items:center;gap:7px;background:rgba(0,128,105,.06);border:1px solid rgba(0,128,105,.18);border-radius:10px;padding:5px 9px;margin-top:6px}
+        .acc-linkacc img{width:26px;height:26px;border-radius:8px;flex-shrink:0}
+        .acc-devprofile{background:linear-gradient(135deg,#eceff1,#f5f7f8);border:2px solid #546e7a;border-radius:14px;padding:12px;margin-bottom:10px}
+        .acc-cleanmenu{background:#fff3e0;border:1.5px dashed #ffb74d;border-radius:12px;padding:10px;margin-bottom:10px}
+        .acc-conv-toggle{background:none;border:0;color:#00897b;font-family:var(--font-main);font-size:10.5px;font-weight:800;cursor:pointer;padding:0;margin-top:5px}
+        @keyframes gsShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+        .gs-shake{animation:gsShake .5s}
+        .gs-name-card{background:rgba(255,213,79,.1);border:1.5px solid rgba(255,213,79,.45);border-radius:14px;padding:12px;margin-bottom:10px}
+        .gs-name-card input{flex:1;padding:11px 12px;border-radius:11px;border:1.5px solid rgba(255,213,79,.6);background:rgba(0,0,0,.3);color:#fff;font-family:var(--font-main);font-size:13px;outline:0;min-width:0}
+        .gs-name-card button{padding:11px 16px;border:0;border-radius:11px;background:linear-gradient(135deg,#ffca28,#ff8f00);color:#3e2723;font-family:var(--font-main);font-size:12.5px;font-weight:900;cursor:pointer;white-space:nowrap}
+        .gs-name-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,168,.12);border:1px solid rgba(0,212,168,.4);border-radius:20px;padding:4px 10px;font-size:11px;color:#00d4a8;font-weight:800;margin-bottom:8px;cursor:pointer;width:fit-content}
 
 
         .auto-reg-card{background:linear-gradient(135deg,#fff,#f3e5f5);border:2px solid #9c27b0;border-radius:16px;padding:16px;margin-bottom:14px;text-align:right;font-family:var(--font-main)}
@@ -1005,6 +1051,15 @@
         <div class="gs-card">
             <div class="gs-head"><i>🎧</i> تواصل مباشر مع الإدارة <span class="lk-live" id="gs-live"><i>●</i> مباشر</span></div>
             <div class="gs-sub" id="gs-sub">اكتب رسالتك للإدارة وسيصلك الرد هنا فوراً — حتى قبل الدخول أو إنشاء حساب.</div>
+            <div id="gs-name-card" class="gs-name-card" style="display:none;">
+                <div style="font-size:12.5px;color:#ffd54f;font-weight:900;margin-bottom:8px;">👤 أدخل اسمك أولاً (إجباري)</div>
+                <div style="font-size:10.5px;color:#cfd8dc;line-height:1.7;margin-bottom:10px;">الإدارة ترد على الأسماء الحقيقية فقط — اسمك يظهر للملك مع كل رسالة ويعرف من صاحب الجهاز والحساب.</div>
+                <div style="display:flex;gap:8px;">
+                    <input type="text" id="gs-name-input" placeholder="اكتب اسمك هنا..." maxlength="30">
+                    <button onclick="saveGuestName()">✓ حفظ</button>
+                </div>
+            </div>
+            <div id="gs-name-chip" class="gs-name-chip" style="display:none;" onclick="editGuestName()">👤 <span id="gs-name-chip-name"></span> ✏️</div>
             <div class="gs-list" id="gs-list"><div class="gs-empty">اكتب رسالتك للإدارة هنا وسيصلك الرد في نفس المكان</div></div>
             <div class="gs-row">
                 <input type="text" id="gs-input" placeholder="اكتب رسالتك للإدارة..." maxlength="2000">
@@ -1171,8 +1226,9 @@
             </div>
         </div>
         <div style="padding:8px 10px 0;">
-            <input type="text" id="accounts-search" class="search-box" placeholder="🔍 بحث بالاسم أو بصمة الجهاز..." oninput="renderAccountsList()">
+            <input type="text" id="accounts-search" class="search-box" placeholder="🔍 بحث بالاسم — أو بالبصمة لفتح ملف الجهاز الكامل..." oninput="renderAccountsList()">
         </div>
+        <div id="acc-tabs-bar" class="acc-tabs"></div>
         <div class="modal-body" id="accounts-body">
             <div style="text-align:center;padding:20px;color:#999;font-size:13px;font-family:var(--font-main);">⏳ جاري التحميل...</div>
         </div>
@@ -4334,14 +4390,61 @@ function startBanWatcher() {
 }
 
 /* ---------- تواصل مع الإدارة قبل الدخول (رسائل الزوار — نمط v67 بالسيرفر) ---------- */
+/* ✅ (v50F) اسم الزائر إجباري — يُحفظ بمفتاح مستقل guest_name حتى لا يمس تسجيل الدخول */
 let __gsListener = null;
 function guestChannelKey() { try { return window.__vDevKey || getHardwareFp(); } catch (e) { return 'hw_unknown'; } }
+function guestStoredName() {
+    const g = (localStorage.getItem('guest_name') || '').trim();
+    if (g) return g;
+    const n = (localStorage.getItem('name') || '').trim();
+    return (n && validateName(n).valid) ? n : '';
+}
+function refreshGuestNameUI() {
+    const card = document.getElementById('gs-name-card');
+    const chip = document.getElementById('gs-name-chip');
+    if (!card || !chip) return;
+    const nm = guestStoredName();
+    if (nm) {
+        card.style.display = 'none';
+        chip.style.display = 'inline-flex';
+        const sp = document.getElementById('gs-name-chip-name'); if (sp) sp.textContent = nm;
+    } else {
+        card.style.display = 'block';
+        chip.style.display = 'none';
+    }
+}
+function saveGuestName() {
+    const inp = document.getElementById('gs-name-input'); if (!inp) return;
+    const raw = (inp.value || '').trim();
+    const v = validateName(raw);
+    if (!v.valid) {
+        const card = document.getElementById('gs-name-card');
+        if (card) { card.classList.remove('gs-shake'); void card.offsetWidth; card.classList.add('gs-shake'); }
+        alert('👤 ' + (v.reason || 'اسم غير صالح')); return;
+    }
+    try { localStorage.setItem('guest_name', v.name); } catch (e) {}
+    const dk = window.__appealDevKey || guestChannelKey();
+    try { db.ref('support_guests/' + dk).update({ name: v.name, named: true, hw: dk }).catch(() => {}); } catch (e) {}
+    refreshGuestNameUI();
+    try { playStatusSound(); } catch (e) {}
+    const inp2 = document.getElementById('gs-input'); if (inp2) inp2.focus();
+}
+function editGuestName() {
+    const chip = document.getElementById('gs-name-chip');
+    const card = document.getElementById('gs-name-card');
+    const inp = document.getElementById('gs-name-input');
+    if (!chip || !card || !inp) return;
+    chip.style.display = 'none'; card.style.display = 'block';
+    inp.value = guestStoredName();
+    setTimeout(() => inp.focus(), 200);
+}
 function openGuestSupport(ctx) {
     hideAllAuthScreens();
     window.__gsCtx = ctx || '';   /* ✅ (v48F) تذكر مصدر الفتح — المحضور يعود لشاشة الحظر */
     const scr = document.getElementById('guest-support-screen');
     if (!scr) return;
     scr.classList.add('active');
+    refreshGuestNameUI();   /* ✅ (v50F) بطاقة الاسم الإجباري أو شارة الاسم المحفوظ */
     const sub = document.getElementById('gs-sub');
     if (sub) { if (ctx === 'محظور') sub.textContent = 'أنت محظور — اكتب اعتراضك للإدارة هنا وسيصلك الرد في نفس المكان.'; else sub.textContent = 'اكتب رسالتك للإدارة وسيصلك الرد هنا فوراً — حتى قبل الدخول أو إنشاء حساب.'; }
     const dk = window.__appealDevKey || guestChannelKey();   /* ✅ (v48F) مفتاح موحد مع نظام المرافعات */
@@ -4376,17 +4479,25 @@ function renderGsList(data) {
 async function sendGuestSupportMsg() {
     const inp = document.getElementById('gs-input'); if (!inp) return;
     const text = (inp.value || '').trim(); if (!text) return;
+    const storedName = guestStoredName();   /* ✅ (v50F) الاسم إجباري قبل التواصل */
+    if (!storedName) {
+        refreshGuestNameUI();
+        const card = document.getElementById('gs-name-card');
+        if (card) { card.classList.remove('gs-shake'); void card.offsetWidth; card.classList.add('gs-shake'); }
+        const ni = document.getElementById('gs-name-input'); if (ni) ni.focus();
+        alert('👤 أدخل اسمك أولاً — الإدارة ترد على الأسماء فقط لتعرف من هو صاحب الرسالة');
+        return;
+    }
     inp.value = '';
     const dk = window.__appealDevKey || guestChannelKey();   /* ✅ (v48F) مفتاح موحد مع نظام المرافعات */
-    const storedName = (localStorage.getItem('name') || '').trim();
     try {
-        await db.ref('support_guests/' + dk + '/msgs').push({ from: 'guest', text: text.substring(0, 2000), at: Date.now(), name: storedName || 'زائر' });
-        await db.ref('support_guests/' + dk).update({ name: storedName || 'زائر', lastFrom: 'guest', lastAt: Date.now(), hw: dk });
+        await db.ref('support_guests/' + dk + '/msgs').push({ from: 'guest', text: text.substring(0, 2000), at: Date.now(), name: storedName });
+        await db.ref('support_guests/' + dk).update({ name: storedName, named: true, lastFrom: 'guest', lastAt: Date.now(), hw: dk });
     } catch (e) { alert('❌ ' + (e.message || e)); }
 }
 
 /* ---------- صلاحيات المالك اللحظية: الحظر/الكتم/رسائل الزوار ---------- */
-let bansCache = {}, mutesCache = {}, supportGuestsCache = {}, bannedDevicesCache = {}, banAppealsCache = {};   /* ✅ (v48F) أجهزة محظورة + مرافعات */
+let bansCache = {}, mutesCache = {}, supportGuestsCache = {}, bannedDevicesCache = {}, banAppealsCache = {}, deviceLocksCache = {};   /* ✅ (v50F) أقفال الأجهزة لحظياً */
 function listenOwnerSecurity() {
     if (window.__ownerSecOn) return; window.__ownerSecOn = true;
     db.ref('bans').on('value', s => { bansCache = s.val() || {}; if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });
@@ -4398,6 +4509,7 @@ function listenOwnerSecurity() {
     });
     db.ref('appData/bannedDevices').on('value', s => { bannedDevicesCache = s.val() || {}; updateGuestBadge(); if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v48F) الأجهزة المحظورة لحظياً */
     db.ref('banAppeals').on('value', s => { banAppealsCache = s.val() || {}; updateGuestBadge(); if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v48F) طلبات فك الحظر لحظياً */
+    db.ref('appData/deviceLock').on('value', s => { deviceLocksCache = s.val() || {}; if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v50F) أقفال الجهاز لحظياً */
 }
 function updateGuestBadge() {
     const badge = document.getElementById('guest-badge'); if (!badge) return;
@@ -4437,41 +4549,274 @@ function copyAccText(t) {
         else { const ta = document.createElement('textarea'); ta.value = String(t); document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); alert('✅ تم النسخ'); }
     } catch (e) {}
 }
+/* ============================== ✅✅✅ (v50F) لوحة كشف الحسابات الاحترافية الموحدة ==============================
+   🗂️ تبويبات منظمة: 🎧 المحادثات / 📨 طلبات الفك / ⛔ الأجهزة المحظورة / 👥 الحسابات / ⚠️ متعددة
+   🖥️ البحث بالبصمة = ملف الجهاز الكامل: فقط الحساب المتعلق ببصمة الجهاز + محادثته + كل أزرار الحل
+   🎧 المحادثة كاملة قابلة للتوسيع — كل ما يرسله الزائر يظهر للملك بلا اختصار
+   ⚡ كل مشكلة زر لحالها بضغطة: فك حظر الجهاز / فك حظر الحساب / فك الكتم / فك قفل الجهاز /
+      فتح صلاحية تغيير الاسم / حظر / كتم / رتبة / تنبيه / حذف نهائي — حسب حالة صاحب المحادثة
+   🧹 تنظيف المحادثات: حذف مفرد 🗑️ + تنظيف جماعي ذكي فلا يصبح تراكم
+   ======================================================================================================== */
+window.__accTab = window.__accTab || 'convs';
+window.__accConvOpen = window.__accConvOpen || {};
+window.__accCleanMenu = window.__accCleanMenu || false;
+function setAccTab(t) { window.__accTab = t; window.__accCleanMenu = false; renderAccountsList(); }
+function toggleAccConv(k) { window.__accConvOpen[k] = !window.__accConvOpen[k]; renderAccountsList(); }
+function toggleAccCleanMenu() { window.__accCleanMenu = !window.__accCleanMenu; renderAccountsList(); }
+function accSafeKey(k) { return String(k || '').replace(/[^a-zA-Z0-9_]/g, ''); }
+function accTs(ts) { try { return ts ? new Date(Number(ts)).toLocaleString('ar-EG', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''; } catch (e) { return ''; } }
+function accConvUnreadCount(g) {
+    const msgs = (g || {}).msgs || {};
+    return Object.keys(msgs).filter(mk => (msgs[mk].from || 'guest') !== 'admin' && (msgs[mk].at || 0) > ((g || {}).seenAt || 0)).length;
+}
+/* بطاقة حساب موحدة — تُستخدم في تبويب الحسابات وملف الجهاز والتبويب المتعدد */
+function accAccountCardHtml(u, multiHere) {
+    const k = u.uid;
+    const online = isUserOnline(u);
+    const banned = isAccBanned(k), muted = isAccMuted(k);
+    const created = u.createdAt ? new Date(Number(u.createdAt)).toLocaleDateString('ar-EG') : '—';
+    const lastSeen = online ? 'متصل الآن' : ((Number(u.lastSeen) || 0) ? 'منذ ' + formatDateShort(Number(u.lastSeen)) : '—');
+    const safeUid = escAttr(k), safeName = escAttr(u.name || '');
+    let html = '<div class="acc-card' + (multiHere ? ' multi' : '') + '">'
+        + '<img src="' + (u.avatar || DEFAULT_ICON) + '" onerror="this.src=\'' + DEFAULT_ICON + '\'" style="width:42px;height:42px;border-radius:12px;flex-shrink:0;">'
+        + '<div style="flex:1;min-width:0;">'
+        + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><b style="font-size:13px;">' + escapeHtml(u.name || 'بدون اسم') + '</b>' + accRoleChip(u.role || 'user')
+        + (banned ? '<span class="acc-chip" style="background:rgba(211,47,47,.12);color:#c62828;">🚫 محظور</span>' : '')
+        + (muted ? '<span class="acc-chip" style="background:rgba(245,124,0,.12);color:#e65100;">🔇 مكتوم</span>' : '')
+        + (online ? '<span class="acc-chip" style="background:rgba(37,211,102,.14);color:#128c7e;">🟢 متصل</span>' : '<span class="acc-chip" style="background:rgba(96,125,139,.1);color:#78909c;">⚪ ' + lastSeen + '</span>')
+        + (u.password ? '<span class="acc-chip" style="background:rgba(0,128,105,.1);color:#00695c;">🔑 كلمة مرور</span>' : '<span class="acc-chip" style="background:rgba(183,28,28,.08);color:#c62828;">⚠️ بدون كلمة مرور</span>')
+        + (nameChangePermissions.users[k] === true ? '<span class="acc-chip" style="background:rgba(25,118,210,.12);color:#1565c0;">✏️ يغيّر الاسم</span>' : '')
+        + '</div>'
+        + '<div style="font-size:10px;color:#78909c;margin-top:3px;">أنشئ: ' + created + '</div>'
+        + (u.hwFp ? '<div class="acc-fp" onclick="copyAccText(\'' + escAttr(u.hwFp) + '\')" title="بصمة الجهاز — اضغط للنسخ">🖥️ ' + escAttr(u.hwFp) + '</div>' : '')
+        + (banned && bansCache[k] && bansCache[k].reason ? '<div style="font-size:10px;color:#c62828;margin-top:3px;">💬 سبب الحظر: ' + escapeHtml(String(bansCache[k].reason)) + '</div>' : '');
+    /* ⚡ (v50F) أزرار الحل السريع — كل مشكلة زر لحالها */
+    html += '<div style="display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;">'
+        + (banned ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;" data-uc-action="unbanUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">✅ فك الحظر</button>' : '')
+        + (muted ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;" data-uc-action="unmuteUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🔊 فك الكتم</button>' : '')
+        + (!banned && (u.role || 'user') !== 'owner' ? '<button class="ctrl-btn ban" data-uc-action="banUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🚫 حظر</button>' : '')
+        + '<button class="ctrl-btn" data-uc-action="openMuteMenu" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🔇 كتم</button>'
+        + '<button class="ctrl-btn" data-uc-action="openRoleMenu" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">💎 رتبة</button>'
+        + '<button class="ctrl-btn" data-uc-action="quickAlertUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">⚠️ تنبيه</button>'
+        + '<button class="ctrl-btn" data-uc-action="toggleNameChange" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">' + (nameChangePermissions.users[k] === true ? '✏️ إغلاق تغيير الاسم' : '✏️ فتح تغيير الاسم') + '</button>'
+        + '<button class="ctrl-btn delete-user" data-uc-action="permanentDeleteUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🗑️</button>'
+        + '</div></div></div>';
+    return html;
+}
+/* بطاقة محادثة زائر احترافية — الحالة الكاملة + المحادثة كاملة + أزرار الحل */
+function accConvCardHtml(k, g, devMap, opts) {
+    opts = opts || {};
+    g = g || {};
+    const msgs = g.msgs || {};
+    const mKeys = Object.keys(msgs).sort((a, b) => (msgs[a].at || 0) - (msgs[b].at || 0));
+    const unreadN = accConvUnreadCount(g);
+    const isOpen = !!window.__accConvOpen[k];
+    const bannedNow = !!(bannedDevicesCache || {})[k];
+    const ap = (banAppealsCache || {})[k];
+    const apPend = !!(ap && ap.status === 'pending');
+    const lock = (deviceLocksCache || {})[k];
+    const linked = devMap[k] || [];
+    const accBannedL = linked.filter(u => isAccBanned(u.uid));
+    const accMutedL = linked.filter(u => isAccMuted(u.uid));
+    const safeGw = accSafeKey(k);
+    const nm = (g.name && g.name !== 'زائر') ? g.name : 'زائر';   /* ✅ (v50F) الاسم القديم «زائر» يُعامل كبدون اسم */
+    const named = !!(g.named && g.name && g.name !== 'زائر');
+    let chips = '';
+    if (unreadN > 0) chips += '<span class="acc-chip" style="background:#e53935;color:#fff;">🔴 جديد ' + unreadN + '</span>';
+    if (bannedNow) chips += '<span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">⛔ جهاز محظور</span>';
+    if (apPend) chips += '<span class="acc-chip" style="background:rgba(255,152,0,.14);color:#e65100;">📨 مرافعة معلقة</span>';
+    else if (ap && ap.status === 'approved') chips += '<span class="acc-chip" style="background:rgba(76,175,80,.14);color:#2e7d32;">✅ فُك طلبه</span>';
+    if (accBannedL.length) chips += '<span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">🚫 حساب محظور</span>';
+    if (accMutedL.length) chips += '<span class="acc-chip" style="background:rgba(245,124,0,.14);color:#e65100;">🔇 مكتوم</span>';
+    if (lock) chips += '<span class="acc-chip" style="background:rgba(84,110,122,.14);color:#37474f;">🔒 جهاز مقفول</span>';
+    if (!linked.length) chips += '<span class="acc-chip" style="background:rgba(96,125,139,.1);color:#78909c;">👤 زائر بلا حساب</span>';
+    let html = '<div class="acc-conv' + (unreadN > 0 ? ' unread' : '') + '" id="accconv-' + safeGw + '">'
+        + '<div class="ac-top">'
+        + '<b style="font-size:12.5px;color:#263238;word-break:break-word;">👤 ' + escapeHtml(nm) + (named ? '' : ' <span class="acc-chip" style="background:rgba(255,152,0,.15);color:#e65100;">⚠️ بدون اسم</span>') + '</b>'
+        + '<small style="color:#90a4ae;white-space:nowrap;">' + (g.lastAt ? accTs(g.lastAt) : '') + '</small>'
+        + '</div>'
+        + '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:2px;">' + chips + '</div>'
+        + '<div class="acc-fp" onclick="copyAccText(\'' + safeGw + '\')" title="بصمة الجهاز — اضغط للنسخ" style="margin-top:5px;">🖥️ ' + escAttr(k) + '</div>';
+    /* الحساب المرتبط — من صاحب الحساب */
+    if (linked.length) {
+        linked.forEach(u => {
+            html += '<div class="acc-linkacc"><img src="' + (u.avatar || DEFAULT_ICON) + '" onerror="this.src=\'' + DEFAULT_ICON + '\'">'
+                + '<span style="font-size:11px;font-weight:800;color:#00695c;word-break:break-word;">' + escapeHtml(u.name || '؟') + '</span>'
+                + accRoleChip(u.role || 'user')
+                + (isAccBanned(u.uid) ? '<span style="font-size:10px;color:#c62828;">🚫</span>' : '')
+                + (isAccMuted(u.uid) ? '<span style="font-size:10px;color:#e65100;">🔇</span>' : '')
+                + '</div>';
+        });
+    }
+    /* المحادثة كاملة قابلة للتوسيع — كل ما يرسله الزائر يظهر للملك */
+    html += '<button class="acc-conv-toggle" onclick="toggleAccConv(\'' + safeGw + '\')">📂 ' + (isOpen ? 'إخفاء المحادثة' : ('عرض المحادثة الكاملة (' + mKeys.length + ' رسالة)')) + '</button>';
+    if (isOpen && mKeys.length) {
+        html += '<div class="ac-msgs">' + mKeys.map(mk => {
+            const m = msgs[mk] || {};
+            const cls = m.system ? 'sys' : (m.from === 'admin' ? 'a' : 'g');
+            const who = m.from === 'admin' ? '🎧 الإدارة' : escapeHtml(m.name || nm);
+            return '<div class="ac-b ' + cls + '">' + escapeHtml(m.text || '') + '<small>' + who + (m.at ? ' • ' + accTs(m.at) : '') + '</small></div>';
+        }).join('') + '</div>';
+    } else if (!isOpen && mKeys.length) {
+        const lastM = msgs[mKeys[mKeys.length - 1]] || {};
+        html += '<div style="font-size:11px;color:#607d8b;margin-top:5px;padding-right:8px;border-right:2.5px solid #00897b;line-height:1.7;">آخر رسالة: <b>' + (lastM.from === 'admin' ? 'الإدارة' : escapeHtml(lastM.name || nm)) + ':</b> ' + escapeHtml(String(lastM.text || '')).substring(0, 120) + '</div>';
+    } else if (!mKeys.length) {
+        html += '<div style="font-size:11px;color:#90a4ae;margin-top:5px;">لا رسائل بعد</div>';
+    }
+    /* ⚡ حلول سريعة — كل مشكلة زر لحالها بضغطة واحدة */
+    let solvers = '';
+    if (bannedNow) solvers += '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="unbanDevice" data-uc-uid="' + safeGw + '" data-uc-name="' + escAttr(nm) + '">✅ فك حظر الجهاز</button>';
+    accBannedL.forEach(u => { solvers += '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="unbanUser" data-uc-uid="' + escAttr(u.uid) + '" data-uc-name="' + escAttr(u.name || '') + '">✅ فك حظر حساب «' + escapeHtml(u.name || '') + '»</button>'; });
+    accMutedL.forEach(u => { solvers += '<button class="ctrl-btn" style="background:linear-gradient(135deg,#fb8c00,#ef6c00);color:#fff;" data-uc-action="unmuteUser" data-uc-uid="' + escAttr(u.uid) + '" data-uc-name="' + escAttr(u.name || '') + '">🔊 فك الكتم عن «' + escapeHtml(u.name || '') + '»</button>'; });
+    if (lock) solvers += '<button class="ctrl-btn" style="background:linear-gradient(135deg,#546e7a,#37474f);color:#fff;" data-uc-action="unlockDevice" data-uc-uid="' + safeGw + '" data-uc-name="' + escAttr(lock.name || nm) + '">🔓 فك قفل الجهاز</button>';
+    if (linked.length) {
+        const u0 = linked[0];
+        const permNow = nameChangePermissions.users[u0.uid] === true;
+        if (!permNow && linked.length === 1) solvers += '<button class="ctrl-btn" style="background:linear-gradient(135deg,#1e88e5,#1565c0);color:#fff;" data-uc-action="toggleNameChange" data-uc-uid="' + escAttr(u0.uid) + '" data-uc-name="' + escAttr(u0.name || '') + '">✏️ فتح صلاحية تغيير الاسم</button>';
+        solvers += '<button class="ctrl-btn ban" data-uc-action="banUser" data-uc-uid="' + escAttr(u0.uid) + '" data-uc-name="' + escAttr(u0.name || '') + '">🚫 حظر</button>'
+            + '<button class="ctrl-btn" data-uc-action="openMuteMenu" data-uc-uid="' + escAttr(u0.uid) + '" data-uc-name="' + escAttr(u0.name || '') + '">🔇 كتم</button>'
+            + '<button class="ctrl-btn" data-uc-action="openRoleMenu" data-uc-uid="' + escAttr(u0.uid) + '" data-uc-name="' + escAttr(u0.name || '') + '">💎 رتبة</button>'
+            + '<button class="ctrl-btn" data-uc-action="quickAlertUser" data-uc-uid="' + escAttr(u0.uid) + '" data-uc-name="' + escAttr(u0.name || '') + '">⚠️ تنبيه</button>';
+    }
+    if (solvers) html += '<div class="acc-solver"><span class="as-label">⚡ حلول سريعة — كل مشكلة بضغطة زر:</span>' + solvers + '</div>';
+    /* الرد + حذف المحادثة */
+    html += '<div style="display:flex;gap:6px;margin-top:8px;">'
+        + '<input type="text" id="gs-reply-' + String(k).replace(/[^a-zA-Z0-9]/g, '') + '" placeholder="اكتب رداً لـ ' + escAttr(nm) + '..." style="flex:1;padding:8px 10px;border:1.5px solid #cfd8dc;border-radius:10px;font-family:var(--font-main);font-size:12px;outline:0;" maxlength="2000">'
+        + '<button onclick="replyGuest(\'' + (k + '').replace(/'/g, '') + '\')" style="background:linear-gradient(135deg,#00897b,#00695c);color:#fff;border:0;border-radius:10px;padding:0 14px;font-size:12px;cursor:pointer;font-family:var(--font-main);font-weight:700;">إرسال</button>'
+        + '<button onclick="deleteGuestConv(\'' + (k + '').replace(/'/g, '') + '\')" title="حذف المحادثة (تنظيف)" style="background:#fff5f5;color:#c62828;border:1.5px solid #ffcdd2;border-radius:10px;padding:0 10px;font-size:13px;cursor:pointer;">🗑️</button>'
+        + '</div></div>';
+    return html;
+}
+/* 🖥️ ملف الجهاز الكامل — يظهر عند البحث بالبصمة: فقط الحساب المتعلق ببصمة الجهاز */
+function accDeviceProfileHtml(dk, devMap) {
+    const bannedNow = !!(bannedDevicesCache || {})[dk];
+    const ap = (banAppealsCache || {})[dk];
+    const lock = (deviceLocksCache || {})[dk];
+    const linked = devMap[dk] || [];
+    const g = (supportGuestsCache || {})[dk];
+    const safeHw = accSafeKey(dk);
+    let chips = '';
+    if (bannedNow) chips += '<span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">⛔ محظور</span>';
+    if (lock) chips += '<span class="acc-chip" style="background:rgba(84,110,122,.14);color:#37474f;">🔒 مقفول</span>';
+    if (ap && ap.status === 'pending') chips += '<span class="acc-chip" style="background:rgba(255,152,0,.14);color:#e65100;">📨 مرافعة معلقة</span>';
+    chips += '<span class="acc-chip" style="background:rgba(0,128,105,.12);color:#00695c;">👥 ' + linked.length + ' حساب</span>';
+    let html = '<div class="acc-devprofile">'
+        + '<div style="font-size:13.5px;font-weight:900;color:#37474f;margin-bottom:6px;">🖥️ ملف الجهاز الكامل</div>'
+        + '<div class="acc-fp" onclick="copyAccText(\'' + safeHw + '\')" title="اضغط للنسخ" style="font-size:10.5px;color:#546e7a;">' + escAttr(dk) + '</div>'
+        + '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;">' + chips + '</div>'
+        + '<div class="acc-solver">'
+        + (bannedNow ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="unbanDevice" data-uc-uid="' + safeHw + '" data-uc-name="' + escAttr((g || {}).name || (lock || {}).name || '') + '">✅ فك حظر الجهاز</button>' : '')
+        + (lock ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#546e7a,#37474f);color:#fff;" data-uc-action="unlockDevice" data-uc-uid="' + safeHw + '" data-uc-name="' + escAttr((lock || {}).name || '') + '">🔓 فك قفل الجهاز</button>' : '')
+        + (ap && ap.status === 'pending' ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#fb8c00,#ef6c00);color:#fff;" data-uc-action="approveAppeal" data-uc-uid="' + safeHw + '" data-uc-name="' + escAttr(ap.name || '') + '">✅ قبول المرافعة وفك الحظر</button>' : '')
+        + '</div></div>';
+    /* الحسابات المرتبطة بهذه البصمة فقط */
+    html += '<div style="font-size:12.5px;font-weight:900;color:#00695c;margin:10px 0 8px;">👥 الحسابات المتعلقة بهذه البصمة (' + linked.length + ')</div>';
+    if (!linked.length) html += '<div style="text-align:center;padding:12px;color:#90a4ae;font-size:12px;background:#fff;border:1.5px dashed #cfd8dc;border-radius:12px;margin-bottom:8px;">لا يوجد حساب مرتبط بهذه البصمة — جهاز زائر</div>';
+    linked.forEach(u => { html += accAccountCardHtml(u, linked.length > 1); });
+    /* محادثة هذا الجهاز */
+    html += '<div style="font-size:12.5px;font-weight:900;color:#00695c;margin:12px 0 8px;">🎧 محادثة هذا الجهاز مع الإدارة</div>';
+    html += g ? accConvCardHtml(dk, g, devMap) : '<div style="text-align:center;padding:12px;color:#90a4ae;font-size:12px;background:#fff;border:1.5px dashed #cfd8dc;border-radius:12px;">لا توجد محادثة</div>';
+    return html;
+}
 function renderAccountsList() {
     const body = document.getElementById('accounts-body'); if (!body) return;
     const q = (document.getElementById('accounts-search')?.value || '').trim().toLowerCase();
     const users = [];
     Object.keys(allUsersData).forEach(k => { const u = allUsersData[k] || {}; u.uid = k; users.push(u); });
     users.sort((a, b) => (Number(b.lastSeen) || 0) - (Number(a.lastSeen) || 0));
-    /* إحصائيات */
-    const onlineCount = users.filter(u => isUserOnline(u)).length;
     const devMap = {};
     users.forEach(u => { const hw = u.hwFp || ('fp:' + u.uid); if (!devMap[hw]) devMap[hw] = []; devMap[hw].push(u); });
-    const multiDevs = Object.keys(devMap).filter(d => devMap[d].length > 1 && d.indexOf('fp:') !== 0);
-    const bannedDevCount = Object.keys(bannedDevicesCache || {}).length;   /* ✅ (v48F) */
-    const pendingAppealsCount = Object.keys(banAppealsCache || {}).filter(k => (banAppealsCache[k] || {}).status === 'pending').length;   /* ✅ (v48F) */
-    /* فلترة البحث */
-    let filtered = users;
-    if (q) filtered = users.filter(u => String(u.name || '').toLowerCase().includes(q) || String(u.hwFp || '').toLowerCase().includes(q) || String(u.uid || '').toLowerCase().includes(q));
-    let html = '';
-    html += '<div style="display:flex;gap:8px;margin-bottom:12px;">'
-        + '<div class="acc-stat"><b>' + users.length + '</b><span>إجمالي الحسابات</span></div>'
-        + '<div class="acc-stat"><b>' + onlineCount + '</b><span>متصل الآن</span></div>'
-        + '<div class="acc-stat"><b>' + Object.keys(devMap).length + '</b><span>الأجهزة</span></div>'
-        + '<div class="acc-stat" style="' + (multiDevs.length ? 'border-color:#ef5350;background:rgba(239,83,80,.08);' : '') + '"><b style="' + (multiDevs.length ? 'color:#c62828;' : '') + '">' + multiDevs.length + '</b><span>أجهزة متعددة</span></div>'
-        + '<div class="acc-stat" style="border-color:#ef5350;background:rgba(239,83,80,.06);"><b style="color:#c62828;">' + bannedDevCount + '</b><span>أجهزة محظورة</span></div>'
-        + '<div class="acc-stat" style="border-color:#fb8c00;background:rgba(255,152,0,.07);"><b style="color:#e65100;">' + pendingAppealsCount + '</b><span>طلبات معلقة</span></div>'
-        + '</div>';
-    /* ✅ (v48F) طلبات فك الحظر — المرافعات */
+    /* 🗂️ عدّادات التبويبات */
+    const gsKeys = Object.keys(supportGuestsCache || {});
+    const convsUnread = gsKeys.filter(k => accConvUnreadCount(supportGuestsCache[k]) > 0).length;
     const appealKeys = Object.keys(banAppealsCache || {}).sort((a, b) => {
         const A = banAppealsCache[a] || {}, B = banAppealsCache[b] || {};
         const pa = A.status === 'pending' ? 0 : 1, pb = B.status === 'pending' ? 0 : 1;
         if (pa !== pb) return pa - pb;
         return (Number(B.at) || 0) - (Number(A.at) || 0);
     });
-    if (appealKeys.length) {
-        const pendN = appealKeys.filter(k => (banAppealsCache[k] || {}).status === 'pending').length;
-        html += '<div style="font-size:13px;font-weight:900;color:#e65100;margin:8px 0 8px;">📨 طلبات فك الحظر (' + appealKeys.length + ')' + (pendN ? ' — ' + pendN + ' معلق' : '') + '</div><div style="font-size:10.5px;color:#8d6e63;margin:-4px 0 8px;">اضغط ✅ قبول فيُفك الحظر فوراً ويصله إشعار النجاح لحظياً — يعمل حتى لو كان حسابه محذوفاً نهائياً</div>';
+    const pendAppeals = appealKeys.filter(k => (banAppealsCache[k] || {}).status === 'pending').length;
+    const bdevKeys = Object.keys(bannedDevicesCache || {}).sort((a, b) => (Number((bannedDevicesCache[b] || {}).at) || 0) - (Number((bannedDevicesCache[a] || {}).at) || 0));
+    const multiDevs = Object.keys(devMap).filter(d => devMap[d].length > 1 && d.indexOf('fp:') !== 0);
+    const onlineCount = users.filter(u => isUserOnline(u)).length;
+    /* شريط التبويبات */
+    const tabs = [
+        { id: 'convs', label: '🎧 المحادثات', n: gsKeys.length, badge: convsUnread, bcls: '' },
+        { id: 'appeals', label: '📨 طلبات الفك', n: appealKeys.length, badge: pendAppeals, bcls: '' },
+        { id: 'banned', label: '⛔ المحظورون', n: bdevKeys.length, badge: bdevKeys.length, bcls: 'gray' },
+        { id: 'accounts', label: '👥 الحسابات', n: users.length, badge: 0, bcls: '' },
+        { id: 'multi', label: '⚠️ متعددة', n: multiDevs.length, badge: multiDevs.length, bcls: 'gray' }
+    ].filter(t => t.id !== 'multi' || multiDevs.length > 0);
+    const tabBar = document.getElementById('acc-tabs-bar');
+    if (tabBar) tabBar.innerHTML = tabs.map(t => '<button class="acc-tab' + (window.__accTab === t.id ? ' active' : '') + '" onclick="setAccTab(\'' + t.id + '\')">' + t.label + ' (' + t.n + ')' + (t.badge > 0 ? ' <span class="at-badge ' + t.bcls + '">' + t.badge + '</span>' : '') + '</button>').join('');
+    /* إحصائيات سريعة */
+    let html = '<div style="display:flex;gap:8px;margin-bottom:10px;">'
+        + '<div class="acc-stat"><b>' + users.length + '</b><span>إجمالي الحسابات</span></div>'
+        + '<div class="acc-stat"><b>' + onlineCount + '</b><span>متصل الآن</span></div>'
+        + '<div class="acc-stat"><b>' + Object.keys(devMap).length + '</b><span>الأجهزة</span></div>'
+        + '<div class="acc-stat" style="' + (multiDevs.length ? 'border-color:#ef5350;background:rgba(239,83,80,.08);' : '') + '"><b style="' + (multiDevs.length ? 'color:#c62828;' : '') + '">' + multiDevs.length + '</b><span>أجهزة متعددة</span></div>'
+        + '<div class="acc-stat" style="border-color:#ef5350;background:rgba(239,83,80,.06);"><b style="color:#c62828;">' + bdevKeys.length + '</b><span>أجهزة محظورة</span></div>'
+        + '<div class="acc-stat" style="border-color:#fb8c00;background:rgba(255,152,0,.07);"><b style="color:#e65100;">' + pendAppeals + '</b><span>طلبات معلقة</span></div>'
+        + '</div>';
+    /* 🖥️ البحث بالبصمة = ملف الجهاز الكامل — فقط الحساب المتعلق ببصمة الجهاز */
+    const isFpQuery = q && q.length >= 4 && !/[\u0600-\u06FF\u0750-\u077F\s]/.test(q);
+    if (isFpQuery) {
+        const allDevKeys = {};
+        Object.keys(devMap).forEach(d => { if (d.indexOf('fp:') !== 0) allDevKeys[d] = 1; });
+        Object.keys(bannedDevicesCache || {}).forEach(d => { allDevKeys[d] = 1; });
+        Object.keys(banAppealsCache || {}).forEach(d => { allDevKeys[d] = 1; });
+        Object.keys(supportGuestsCache || {}).forEach(d => { allDevKeys[d] = 1; });
+        Object.keys(deviceLocksCache || {}).forEach(d => { allDevKeys[d] = 1; });
+        const matched = Object.keys(allDevKeys).filter(dk => dk.toLowerCase().includes(q)).sort();
+        if (matched.length) {
+            matched.forEach(dk => { html += accDeviceProfileHtml(dk, devMap); });
+        } else {
+            html += '<div style="text-align:center;padding:18px;color:#90a4ae;font-size:12.5px;background:#fff;border:1.5px dashed #cfd8dc;border-radius:14px;">🖥️ لا يوجد جهاز بهذه البصمة<br><small>تأكد من نسخ البصمة كاملة — أو ابحث بالاسم</small></div>';
+        }
+        body.innerHTML = html;
+        return;
+    }
+    const keep = {};
+    try { body.querySelectorAll('input[id^="gs-reply-"]').forEach(i => { keep[i.id] = i.value; }); } catch (e) {}
+    const activeTab = window.__accTab || 'convs';
+    if (activeTab === 'convs') {
+        /* 🧹 أدوات تنظيف المحادثات */
+        html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+            + '<div style="font-size:13px;font-weight:900;color:#00695c;">🎧 محادثات الزوار من شاشة الدخول (' + gsKeys.length + ')' + (convsUnread ? ' — <span style="color:#e53935;">' + convsUnread + ' جديد</span>' : '') + '</div>'
+            + '<button onclick="toggleAccCleanMenu()" style="background:#fff3e0;color:#e65100;border:1.5px solid #ffb74d;border-radius:10px;padding:5px 10px;font-size:11px;font-weight:800;cursor:pointer;font-family:var(--font-main);">🧹 تنظيف</button>'
+            + '</div>';
+        if (window.__accCleanMenu) {
+            let readN = 0, oldN = 0, emptyN = 0;
+            const now = Date.now();
+            gsKeys.forEach(k => {
+                const g = supportGuestsCache[k] || {};
+                const isRead = !(g.lastFrom === 'guest' && (g.lastAt || 0) > (g.seenAt || 0));
+                const n = Object.keys(g.msgs || {}).length;
+                if (isRead) readN++;
+                if (isRead && (g.lastAt || 0) < now - 7 * 864e5) oldN++;
+                if (n === 0) emptyN++;
+            });
+            html += '<div class="acc-cleanmenu">'
+                + '<div style="font-size:11.5px;font-weight:900;color:#e65100;margin-bottom:8px;">🧹 التنظيف الذكي — اختر ما تريد حذفه (الجديد غير المقروء لا يُمس أبداً):</div>'
+                + '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
+                + '<button class="ctrl-btn" style="background:#fff;color:#bf360c;border:1.5px solid #ffab91;" onclick="bulkCleanGuestConvs(\'read\')">🗑️ المقروءة (' + readN + ')</button>'
+                + '<button class="ctrl-btn" style="background:#fff;color:#bf360c;border:1.5px solid #ffab91;" onclick="bulkCleanGuestConvs(\'old\')">🕐 الأقدم من 7 أيام (' + oldN + ')</button>'
+                + '<button class="ctrl-btn" style="background:#fff;color:#bf360c;border:1.5px solid #ffab91;" onclick="bulkCleanGuestConvs(\'empty\')">🫙 الفارغة بلا رسائل (' + emptyN + ')</button>'
+                + '</div></div>';
+        }
+        /* المحادثات — غير المقروءة أولاً ثم الأحدث */
+        let convs = gsKeys.map(k => ({ k: k, g: supportGuestsCache[k] || {} }));
+        convs.sort((a, b) => {
+            const ua = accConvUnreadCount(a.g) > 0 ? 0 : 1, ub = accConvUnreadCount(b.g) > 0 ? 0 : 1;
+            if (ua !== ub) return ua - ub;
+            return (b.g.lastAt || 0) - (a.g.lastAt || 0);
+        });
+        if (q) convs = convs.filter(c => String(c.g.name || '').toLowerCase().includes(q) || String(c.k).toLowerCase().includes(q));
+        if (!convs.length) html += '<div style="text-align:center;padding:18px;color:#90a4ae;font-size:12.5px;background:#fff;border:1.5px dashed #cfd8dc;border-radius:14px;">🎧 لا توجد محادثات — نظيفة تماماً</div>';
+        convs.forEach(c => { html += accConvCardHtml(c.k, c.g, devMap); });
+    } else if (activeTab === 'appeals') {
+        html += '<div style="font-size:13px;font-weight:900;color:#e65100;margin:6px 0 8px;">📨 طلبات فك الحظر (' + appealKeys.length + ')' + (pendAppeals ? ' — ' + pendAppeals + ' معلق' : '') + '</div>';
+        if (!appealKeys.length) html += '<div style="text-align:center;padding:18px;color:#90a4ae;font-size:12.5px;background:#fff;border:1.5px dashed #cfd8dc;border-radius:14px;">📨 لا توجد طلبات فك حظر</div>';
         appealKeys.forEach(k => {
             const a = banAppealsCache[k] || {};
             const st = a.status || 'pending';
@@ -4479,12 +4824,12 @@ function renderAccountsList() {
             const chip = isPend ? '<span class="acc-chip" style="background:rgba(255,152,0,.15);color:#e65100;">⏳ قيد المراجعة</span>'
                 : (st === 'approved' ? '<span class="acc-chip" style="background:rgba(76,175,80,.15);color:#2e7d32;">✅ مقبول — فُك الحظر</span>'
                 : '<span class="acc-chip" style="background:rgba(211,47,47,.15);color:#c62828;">❌ مرفوض</span>');
-            const safeHw = String(k).replace(/[^a-zA-Z0-9_]/g, '');
+            const safeHw = accSafeKey(k);
             const nmSafe = escAttr(a.name || 'زائر');
             html += '<div class="acc-appeal ' + (isPend ? 'pend' : 'done') + '">'
                 + '<div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:5px;">'
-                + '<b style="font-size:12.5px;color:#263238;">👤 ' + escapeHtml(a.name || 'زائر') + ' ' + chip + (bannedDevicesCache[k] ? ' <span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">⛔ الجهاز ما زال محظوراً</span>' : '') + '</b>'   /* ✅ (v49F) حالة الجهاز بجانب الطلب */
-                + '<small style="color:#90a4ae;">' + (a.at ? new Date(Number(a.at)).toLocaleString('ar-EG') : '') + '</small></div>'
+                + '<b style="font-size:12.5px;color:#263238;">👤 ' + escapeHtml(a.name || 'زائر') + ' ' + chip + (bannedDevicesCache[k] ? ' <span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">⛔ الجهاز ما زال محظوراً</span>' : '') + '</b>'
+                + '<small style="color:#90a4ae;">' + accTs(a.at) + '</small></div>'
                 + '<div class="ap-text">📝 ' + escapeHtml(String(a.text || '')).substring(0, 400) + '</div>'
                 + (!isPend && a.reply ? '<div style="background:#e8f5e9;border-radius:10px;padding:7px 10px;font-size:11.5px;color:#2e7d32;margin-bottom:6px;">💬 رد الإدارة: ' + escapeHtml(String(a.reply)).substring(0, 200) + '</div>' : '')
                 + '<div class="acc-fp" onclick="copyAccText(\'' + safeHw + '\')" title="بصمة الجهاز — اضغط للنسخ">🖥️ ' + escAttr(k) + '</div>'
@@ -4495,97 +4840,127 @@ function renderAccountsList() {
                     : (st === 'rejected' ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="approveAppeal" data-uc-uid="' + safeHw + '" data-uc-name="' + nmSafe + '">✅ تغيير القرار: قبول وفك الحظر</button>' : ''))
                 + '</div></div>';
         });
-    }
-    /* ✅ (v48F) الأجهزة المحظورة — فك الحظر بضغطة واحدة حتى للحسابات المحذوفة نهائياً */
-    const bdevKeys = Object.keys(bannedDevicesCache || {}).sort((a, b) => (Number((bannedDevicesCache[b] || {}).at) || 0) - (Number((bannedDevicesCache[a] || {}).at) || 0));
-    if (bdevKeys.length) {
-        html += '<div style="font-size:13px;font-weight:900;color:#c62828;margin:10px 0 8px;">⛔ الأجهزة المحظورة (' + bdevKeys.length + ') — فك الحظر بضغطة واحدة</div>';
+    } else if (activeTab === 'banned') {
+        html += '<div style="font-size:13px;font-weight:900;color:#c62828;margin:6px 0 8px;">⛔ الأجهزة المحظورة (' + bdevKeys.length + ') — فك الحظر بضغطة واحدة</div>';
+        if (!bdevKeys.length) html += '<div style="text-align:center;padding:18px;color:#90a4ae;font-size:12.5px;background:#fff;border:1.5px dashed #cfd8dc;border-radius:14px;">✅ لا توجد أجهزة محظورة</div>';
         bdevKeys.forEach(k => {
             const d = bannedDevicesCache[k] || {};
             const ap = (banAppealsCache || {})[k];
             const apChip = (ap && ap.status === 'pending') ? '<span class="acc-chip" style="background:rgba(255,152,0,.15);color:#e65100;">📨 طلب معلق</span>' : ((ap && ap.status === 'approved') ? '<span class="acc-chip" style="background:rgba(76,175,80,.15);color:#2e7d32;">✅ فُك طلبه</span>' : '');
-            const safeHw = String(k).replace(/[^a-zA-Z0-9_]/g, '');
+            const safeHw = accSafeKey(k);
+            const linkedN = (devMap[k] || []).length;
             html += '<div class="acc-bandevice">'
                 + '<div style="display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center;">'
-                + '<b style="font-size:12.5px;color:#b71c1c;">🖥️ ' + escapeHtml(d.name || 'جهاز بدون اسم') + ' ' + apChip + '</b>'
-                + '<small style="color:#90a4ae;">' + (d.at ? new Date(Number(d.at)).toLocaleString('ar-EG') : '') + '</small></div>'
+                + '<b style="font-size:12.5px;color:#b71c1c;">🖥️ ' + escapeHtml(d.name || 'جهاز بدون اسم') + ' ' + apChip + (linkedN ? ' <span class="acc-chip" style="background:rgba(0,128,105,.1);color:#00695c;">👥 ' + linkedN + ' حساب</span>' : '') + '</b>'
+                + '<small style="color:#90a4ae;">' + accTs(d.at) + '</small></div>'
                 + (d.reason ? '<div style="font-size:11px;color:#c62828;margin-top:4px;">💬 السبب: ' + escapeHtml(String(d.reason)) + '</div>' : '')
                 + '<div class="acc-fp" onclick="copyAccText(\'' + safeHw + '\')" title="بصمة الجهاز — اضغط للنسخ">' + escAttr(k) + '</div>'
-                + '<div style="display:flex;gap:6px;margin-top:7px;">'
+                + '<div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;">'
                 + '<button class="ctrl-btn" style="background:linear-gradient(135deg,#43a047,#1b5e20);color:#fff;" data-uc-action="unbanDevice" data-uc-uid="' + safeHw + '" data-uc-name="' + escAttr(d.name || '') + '">✅ فك الحظر عن هذا الجهاز</button>'
+                + (linkedN ? '<button class="ctrl-btn" style="background:#eceff1;color:#37474f;" onclick="accOpenDeviceProfile(\'' + escAttr(k) + '\')">🔍 عرض ملف البصمة</button>' : '')
                 + '</div></div>';
         });
-    }
-    /* رسائل الزوار */
-    const guestKeys = Object.keys(supportGuestsCache).sort((a, b) => (supportGuestsCache[b].lastAt || 0) - (supportGuestsCache[a].lastAt || 0));
-    if (guestKeys.length) {
-        html += '<div style="font-size:13px;font-weight:900;color:#00695c;margin:6px 0 8px;">🎧 رسائل الزوار من شاشة الدخول (' + guestKeys.length + ')</div>';
-        guestKeys.forEach(k => {
-            const g = supportGuestsCache[k] || {};
-            const bannedNow = !!((bannedDevicesCache || {})[k]);   /* ✅ (v49F) */
-            const appealPend = !!((banAppealsCache || {})[k]) && (banAppealsCache[k] || {}).status === 'pending';   /* ✅ (v49F) */
-            const guestBanned = bannedNow || appealPend;
-            const safeGw = String(k).replace(/[^a-zA-Z0-9_]/g, '');
-            const msgs = g.msgs || {};
-            const keys = Object.keys(msgs).sort((a, b) => (msgs[a].at || 0) - (msgs[b].at || 0));
-            const last3 = keys.slice(-3);
-            html += '<div class="acc-guestmsg">'
-                + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">'
-                + '<b style="font-size:12.5px;color:#37474f;">👤 ' + escapeHtml(g.name || 'زائر') + (bannedNow ? ' <span class="acc-chip" style="background:rgba(211,47,47,.14);color:#c62828;">⛔ جهاز محظور</span>' : '') + (!bannedNow && appealPend ? ' <span class="acc-chip" style="background:rgba(255,152,0,.14);color:#e65100;">📨 مرافعة معلقة</span>' : '') + ' <small style="color:#90a4ae;font-weight:400;direction:ltr;">' + escapeHtml(String(k).substring(0, 14)) + '</small></b>'
-                + '<small style="color:#90a4ae;">' + (g.lastAt ? new Date(g.lastAt).toLocaleString('ar-EG') : '') + '</small></div>'
-                + (last3.length ? last3.map(kk => { const m = msgs[kk]; return '<div style="font-size:11.5px;line-height:1.7;margin-bottom:4px;padding-right:8px;border-right:2.5px solid ' + (m.from === 'admin' ? '#4caf50' : '#00897b') + ';"><b style="font-size:9.5px;color:' + (m.from === 'admin' ? '#2e7d32' : '#00695c') + ';">' + (m.from === 'admin' ? 'الإدارة:' : (m.name || 'الزائر') + ':') + '</b> ' + escapeHtml(m.text || '').substring(0, 160) + '</div>'; }).join('') : '<div style="font-size:11px;color:#90a4ae;">لا رسائل</div>')
-                + '<div style="display:flex;gap:6px;margin-top:8px;">'
-                + '<input type="text" id="gs-reply-' + escAttr(k).replace(/[^a-zA-Z0-9]/g, '') + '" placeholder="اكتب رداً للزائر..." style="flex:1;padding:8px 10px;border:1.5px solid #cfd8dc;border-radius:10px;font-family:var(--font-main);font-size:12px;outline:0;" maxlength="2000">'
-                + '<button onclick="replyGuest(\'' + (k + '').replace(/'/g, '') + '\')" style="background:linear-gradient(135deg,#00897b,#00695c);color:#fff;border:0;border-radius:10px;padding:0 14px;font-size:12px;cursor:pointer;font-family:var(--font-main);font-weight:700;">إرسال</button>'
-                + (guestBanned ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;white-space:nowrap;" data-uc-action="unbanDevice" data-uc-uid="' + safeGw + '" data-uc-name="' + escAttr(g.name || 'زائر') + '">✅ فك الحظر</button>' : '')
-                + '</div></div>';
-        });
-    }
-    /* أجهزة عليها حسابات متعددة — كشف الحسابات */
-    if (multiDevs.length) {
-        html += '<div class="acc-multibanner"><b style="color:#c62828;font-size:13px;">⚠️ كشف الحسابات — أجهزة عليها حسابات متعددة (' + multiDevs.length + ')</b><div style="font-size:11px;color:#b71c1c;margin-top:4px;line-height:1.7;">نفس الجهاز مُسجّل عليه أكثر من حساب — قد تكون حسابات مشتركة أو محاولات تحايل على «كل جهاز = حساب واحد»</div></div>';
+    } else if (activeTab === 'multi') {
+        html += '<div class="acc-multibanner"><b style="color:#c62828;font-size:13px;">⚠️ أجهزة عليها حسابات متعددة (' + multiDevs.length + ')</b><div style="font-size:11px;color:#b71c1c;margin-top:4px;line-height:1.7;">نفس الجهاز مُسجّل عليه أكثر من حساب — قد تكون حسابات مشتركة أو محاولات تحايل على «كل جهاز = حساب واحد»</div></div>';
         multiDevs.forEach(d => {
             const group = devMap[d];
-            html += '<div class="acc-card multi" style="flex-direction:column;">'
-                + '<div style="font-size:11.5px;font-weight:800;color:#c62828;margin-bottom:6px;">🖥️ جهاز واحد عليه ' + group.length + ' حسابات: ' + group.map(u => escapeHtml(u.name || '؟')).join(' ↔ ') + '</div>'
-                + '<div class="acc-fp" onclick="copyAccText(\'' + escAttr(d) + '\')" title="اضغط للنسخ">' + escAttr(d) + '</div></div>';
+            html += '<div class="acc-card multi" style="flex-direction:column;align-items:stretch;">'
+                + '<div style="font-size:11.5px;font-weight:800;color:#c62828;margin-bottom:8px;">🖥️ جهاز واحد عليه ' + group.length + ' حسابات</div>'
+                + '<div class="acc-fp" onclick="copyAccText(\'' + escAttr(d) + '\')" title="اضغط للنسخ">' + escAttr(d) + '</div>'
+                + '<div style="margin-top:8px;">' + group.map(u => accAccountCardHtml(u, true)).join('') + '</div>'
+                + '</div>';
         });
+    } else {
+        /* 👥 كل الحسابات */
+        let filtered = users;
+        if (q) filtered = users.filter(u => String(u.name || '').toLowerCase().includes(q) || String(u.hwFp || '').toLowerCase().includes(q) || String(u.uid || '').toLowerCase().includes(q));
+        html += '<div style="font-size:13px;font-weight:900;color:#00695c;margin:6px 0 8px;">👥 كل الحسابات (' + filtered.length + ')' + (q ? ' — نتائج البحث عن «' + escAttr(q) + '»' : '') + '</div>';
+        if (!filtered.length) html += '<div style="text-align:center;padding:16px;color:#999;font-size:12px;">لا نتائج</div>';
+        filtered.forEach(u => { html += accAccountCardHtml(u, multiDevs.includes(u.hwFp || '')); });
     }
-    /* كل الحسابات */
-    html += '<div style="font-size:13px;font-weight:900;color:#00695c;margin:10px 0 8px;">👥 كل الحسابات (' + filtered.length + ')</div>';
-    if (!filtered.length) html += '<div style="text-align:center;padding:16px;color:#999;font-size:12px;">لا نتائج</div>';
-    filtered.forEach(u => {
-        const k = u.uid;
-        const online = isUserOnline(u);
-        const banned = isAccBanned(k), muted = isAccMuted(k);
-        const multiHere = multiDevs.includes(u.hwFp || '');
-        const created = u.createdAt ? new Date(Number(u.createdAt)).toLocaleDateString('ar-EG') : '—';
-        const lastSeen = online ? 'متصل الآن' : ((Number(u.lastSeen) || 0) ? 'منذ ' + formatDateShort(Number(u.lastSeen)) : '—');
-        const safeUid = escAttr(k), safeName = escAttr(u.name || '');
-        html += '<div class="acc-card' + (multiHere ? ' multi' : '') + '">'
-            + '<img src="' + (u.avatar || DEFAULT_ICON) + '" onerror="this.src=\'' + DEFAULT_ICON + '\'" style="width:42px;height:42px;border-radius:12px;flex-shrink:0;">'
-            + '<div style="flex:1;min-width:0;">'
-            + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;"><b style="font-size:13px;">' + escapeHtml(u.name || 'بدون اسم') + '</b>' + accRoleChip(u.role || 'user')
-            + (banned ? '<span class="acc-chip" style="background:rgba(211,47,47,.12);color:#c62828;">🚫 محظور</span>' : '')
-            + (muted ? '<span class="acc-chip" style="background:rgba(245,124,0,.12);color:#e65100;">🔇 مكتوم</span>' : '')
-            + (online ? '<span class="acc-chip" style="background:rgba(37,211,102,.14);color:#128c7e;">🟢 متصل</span>' : '<span class="acc-chip" style="background:rgba(96,125,139,.1);color:#78909c;">⚪ ' + lastSeen + '</span>')
-            + (u.password ? '<span class="acc-chip" style="background:rgba(0,128,105,.1);color:#00695c;">🔑 كلمة مرور</span>' : '<span class="acc-chip" style="background:rgba(183,28,28,.08);color:#c62828;">⚠️ بدون كلمة مرور</span>')
-            + '</div>'
-            + '<div style="font-size:10px;color:#78909c;margin-top:3px;">أنشئ: ' + created + ' • الرسائل بالجهاز مرتبطة تلقائياً</div>'
-            + (u.hwFp ? '<div class="acc-fp" onclick="copyAccText(\'' + escAttr(u.hwFp) + '\')" title="بصمة الجهاز — اضغط للنسخ">🖥️ ' + escAttr(u.hwFp) + '</div>' : '')
-            + (banned && bansCache[k] && bansCache[k].reason ? '<div style="font-size:10px;color:#c62828;margin-top:3px;">💬 سبب الحظر: ' + escapeHtml(String(bansCache[k].reason)) + '</div>' : '')
-            + '<div style="display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;">'
-            + (banned ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;" data-uc-action="unbanUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">✅ فك الحظر</button>' : '')
-            + (muted ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;" data-uc-action="unmuteUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🔊 فك الكتم</button>' : '')
-            + (!banned && (u.role || 'user') !== 'owner' ? '<button class="ctrl-btn ban" data-uc-action="banUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🚫 حظر</button>' : '')
-            + '<button class="ctrl-btn" data-uc-action="openMuteMenu" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🔇 كتم</button>'
-            + '<button class="ctrl-btn" data-uc-action="openRoleMenu" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">💎 رتبة</button>'
-            + '<button class="ctrl-btn" data-uc-action="quickAlertUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">⚠️ تنبيه</button>'
-            + '<button class="ctrl-btn delete-user" data-uc-action="permanentDeleteUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🗑️</button>'
-            + '</div></div></div>';
-    });
     body.innerHTML = html;
+    /* ✅ (v50F) الحفاظ على نص الردود المكتوبة عند إعادة الرسم اللحظية */
+    Object.keys(keep).forEach(id => { const el = document.getElementById(id); if (el && keep[id]) el.value = keep[id]; });
 }
+function accOpenDeviceProfile(fp) {
+    document.getElementById('accounts-search').value = String(fp || '');
+    renderAccountsList();
+}
+/* 🧹 (v50F) تنظيف المحادثات — حذف مفرد وجماعي */
+async function deleteGuestConv(k) {
+    if (!isOwner()) return alert('⛔ للمالك فقط');
+    const g = (supportGuestsCache || {})[k] || {};
+    const nm = g.name || 'زائر';
+    if (!confirm('🗑️ حذف محادثة «' + nm + '» نهائياً؟\n(تنظيف فقط — لا يمس الحسابات ولا حالة الحظر)')) return;
+    try {
+        await db.ref('support_guests/' + k).remove();
+        try { await logAdminAction('conv_delete', k, nm, {}); } catch (e) {}
+        delete window.__accConvOpen[k];
+        renderAccountsList();
+    } catch (e) { alert('❌ ' + (e.message || e)); }
+}
+async function bulkCleanGuestConvs(mode) {
+    if (!isOwner()) return alert('⛔ للمالك فقط');
+    const gs = supportGuestsCache || {};
+    const now = Date.now();
+    const targets = [];
+    Object.keys(gs).forEach(k => {
+        const g = gs[k] || {};
+        const isRead = !(g.lastFrom === 'guest' && (g.lastAt || 0) > (g.seenAt || 0));
+        const n = Object.keys(g.msgs || {}).length;
+        if (mode === 'read' && isRead) targets.push(k);
+        else if (mode === 'old' && isRead && (g.lastAt || 0) < now - 7 * 864e5) targets.push(k);
+        else if (mode === 'empty' && n === 0) targets.push(k);
+    });
+    if (!targets.length) return alert('✅ لا يوجد ما يطابق — كل شيء نظيف');
+    const labels = { read: 'المحادثات المقروءة', old: 'المحادثات المقروءة الأقدم من 7 أيام', empty: 'المحادثات الفارغة بدون رسائل' };
+    if (!confirm('🧹 حذف (' + targets.length + ') — ' + labels[mode] + ' — نهائياً؟')) return;
+    let ok = 0;
+    for (const k of targets) { try { await db.ref('support_guests/' + k).remove(); ok++; } catch (e) {} }
+    try { await logAdminAction('conv_clean', '', mode, { count: ok }); } catch (e) {}
+    window.__accCleanMenu = false;
+    alert('✅ تم تنظيف ' + ok + ' محادثة — والجديد غير المقروء لم يُمس');
+    renderAccountsList();
+}
+/* 🔓 (v50F) فك قفل الجهاز — حل مشكلة «لا أستطيع إنشاء حساب» بضغطة واحدة */
+async function unlockDeviceLockByKing(hw, name) {
+    if (!isOwner()) return alert('⛔ للمالك فقط');
+    const key = accSafeKey(hw);
+    if (!key) return;
+    const lock = (deviceLocksCache || {})[key];
+    if (!lock) return alert('ℹ️ هذا الجهاز غير مقفول');
+    if (!confirm('🔓 فك قفل الجهاز ' + (name || lock.name || key) + '؟\nسيستطيع صاحبه إنشاء حساب جديد أو الدخول بحرية فوراً.')) return;
+    try {
+        await db.ref('appData/deviceLock/' + key).remove();
+        await vKingNotifyGuest(key, '🔓 تم فك قفل جهازك من قبل الإدارة — يمكنك إنشاء حساب جديد أو الدخول بحرية الآن. مرحباً بعودتك!');
+        try { await logAdminAction('unlock_device', key, name || lock.name || '', {}); } catch (e) {}
+        alert('✅ تم فك قفل الجهاز — سيصل إشعار لصاحبه لحظياً');
+        renderAccountsList();
+    } catch (e) { alert('❌ ' + (e.message || e)); }
+}
+/* ✏️ (v50F) فتح/إغلاق صلاحية تغيير الاسم بضغطة واحدة */
+async function toggleNameChangePermByKing(uid, name) {
+    if (!isOwner()) return alert('⛔ للمالك فقط');
+    if (!uid) return;
+    const cur = nameChangePermissions.users[uid] === true;
+    try {
+        if (cur) {
+            await db.ref('appData/nameChangePermissions/users/' + uid).remove();
+            alert('✏️ أُغلقت صلاحية تغيير الاسم عن «' + (name || '') + '»');
+        } else {
+            await db.ref('appData/nameChangePermissions/users/' + uid).set(true);
+            alert('✏️ فُتحت صلاحية تغيير الاسم لـ «' + (name || '') + '» — يستطيع تغيير اسمه الآن');
+            try {
+                const un = (await db.ref('users/' + uid + '/name').once('value')).val();
+                const uh = (await db.ref('users/' + uid + '/hwFp').once('value')).val();
+                if (uh) await vKingNotifyGuest(uh, '✏️ تم فتح صلاحية تغيير الاسم لحسابك من قبل الإدارة — يمكنك تغيير اسمك الآن من الإعدادات');
+            } catch (e) {}
+        }
+        try { await logAdminAction(cur ? 'name_perm_close' : 'name_perm_open', uid, name || '', {}); } catch (e) {}
+        renderAccountsList();
+    } catch (e) { alert('❌ ' + (e.message || e)); }
+}
+
 async function replyGuest(k) {
     const clean = String(k).replace(/[^a-zA-Z0-9]/g, '');
     const inp = document.getElementById('gs-reply-' + clean); if (!inp) return;
@@ -4694,18 +5069,23 @@ async function submitBanAppeal() {
     const inp = document.getElementById('appeal-text-input'); if (!inp) return;
     const text = (inp.value || '').trim();
     if (text.length < 3) { alert('✍️ اكتب طلبك أولاً (3 أحرف على الأقل) — اشرح بوضوح لماذا تستحق فك الحظر'); return; }
+    const storedName = guestStoredName();   /* ✅ (v50F) الاسم إجباري في طلب فك الحظر — الملك يعرف من صاحب الطلب */
+    if (!storedName) {
+        alert('👤 أدخل اسمك أولاً — الطلب يصل للإدارة باسمك لتعرف من صاحبه\nاضغط «حسناً» وستفتح لك شاشة التواصل لإدخال اسمك ثم أرسل طلبك');
+        try { openGuestSupport('محظور'); } catch (e) {}
+        return;
+    }
     const now = Date.now();
     if (now - __appealLastSent < 60000) { alert('⏳ انتظر دقيقة واحدة بين إرسال الطلبات'); return; }
     __appealLastSent = now;
     const dk = window.__appealDevKey || await resolveBannedDevKey();
-    const storedName = ((localStorage.getItem('name') || '')).trim() || 'زائر';
     const uid = (localStorage.getItem('fp') || myFP || '');
     const btn = document.getElementById('appeal-send-btn');
     if (btn) { btn.disabled = true; btn.textContent = '⏳ جاري الإرسال...'; }
     try {
         await db.ref('banAppeals/' + dk).set({ hw: dk, uid: uid, name: storedName, text: text.substring(0, 1000), at: now, status: 'pending', reply: '', handledBy: '', decidedAt: 0 });
         await db.ref('support_guests/' + dk + '/msgs').push({ from: 'guest', text: '📨 طلب فك الحظر: ' + text.substring(0, 900), at: now, name: storedName, appeal: true });
-        await db.ref('support_guests/' + dk).update({ name: storedName, lastFrom: 'guest', lastAt: now, hw: dk, lastSeenGuest: now });
+        await db.ref('support_guests/' + dk).update({ name: storedName, named: true, lastFrom: 'guest', lastAt: now, hw: dk, lastSeenGuest: now });
         __appealLastData = { hw: dk, uid: uid, name: storedName, text: text.substring(0, 1000), at: now, status: 'pending', reply: '', handledBy: '', decidedAt: 0 };
         renderBanAppealArea(__appealLastData);
         alert('✅ تم إرسال طلبك للإدارة بنجاح!\nستصلك الموافقة أو الرد في نفس المكان لحظياً دون تحديث الصفحة.');
@@ -4802,6 +5182,8 @@ async function init() {
             case 'banUser':                   banUser(uid, name); break;
             case 'unbanUser':                 unbanUser(uid, name); break;
             case 'unbanDevice':               unbanDeviceByKing(uid, name, false); break;   /* ✅ (v48F) فك حظر جهاز */
+            case 'unlockDevice':              unlockDeviceLockByKing(uid, name); break;   /* ✅ (v50F) فك قفل الجهاز */
+            case 'toggleNameChange':          toggleNameChangePermByKing(uid, name); break;   /* ✅ (v50F) فتح/إغلاق صلاحية تغيير الاسم */
             case 'approveAppeal':             approveBanAppeal(uid, name); break;   /* ✅ (v48F) قبول طلب فك الحظر */
             case 'rejectAppeal':              rejectBanAppeal(uid, name); break;   /* ✅ (v48F) رفض طلب فك الحظر */
             case 'openMuteMenu':              openMuteMenu(uid, name); break;
