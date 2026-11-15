@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+<!-- ✅✅✅ v51F KingEyeAndMarks — العين الملكية + العلامة السرية في تطبيق البلاغات (طلب المالك — نفس نظام فيسي برو v81 بالضبط):
+     ✅✅✅ v51F — ترقية كشف الحسابات بنفس أنظمة النسخة الرئيسية v81 حرفياً:
+       👁 كل ملف مستخدم وجهاز وزائر في كشف الحسابات يُظهر بصمة جهازه وعناوين IP الخاصة به
+          (يُلتقط IP لحظياً عند فتح التطبيق وعند التواصل من شاشة الدخول — سر ملكي لا يراه أحد سواك)
+       🔎 بحث شامل في كشف الحسابات: بالاسم أو بصمة الجهاز أو IP أو العلامة السرية — ضغطة على
+          البصمة أو IP تنسخه، والبحث بالبصمة يفتح ملف الجهاز الكامل كما هو
+       🗄 سجل هوية دائم: عند حذف أي حساب تُؤرشف هويته (الاسم + البصمة + IP + من حذف) للأبد
+          في «سجل الهويات» — المحذوفون يظهرون بشارة «🗑️ محذوف» في نتائج البحث ولا يُنسون أبداً
+       🏷 العلامة السرية للملك: ضع اسماً خاصاً + ملاحظة على ملف أي حساب أو جهاز أو زائر من كشف
+          الحسابات — تظهر لك وحدك فقط — وإن رجع صاحب الجهاز الموسوم وسجل بحساب جديد يكشفك النظام
+          فوراً: تنبيه لحظي منبثق على كل أجهزتك + إشعار جرس + نشاط في سجل الإدارة + عدّاد الكشوفات
+          في تبويب «علاماتك السرية» الشامل الجديد داخل كشف الحسابات
+     --- فوق كل مزايا v50F وv49F وv48F دون أي تغيير فيها -->
 <!-- ✅✅✅ v50F ProAdminPanel — لوحة كشف الحسابات الاحترافية الموحدة (طلب المالك):
      ✅✅✅ v50F — إعادة بناء كاملة لقسم «كشف الحسابات والأجهزة» بتنظيم احترافي جدًا:
        🗂️ لوحة مجزأة بتبويبات منظمة: 🎧 المحادثات / 📨 طلبات الفك / ⛔ الأجهزة المحظورة /
@@ -919,6 +932,7 @@
         .acc-tab.active{background:#fff;color:#00695c;border-bottom-color:#00897b}
         .acc-tab .at-badge{background:#e53935;color:#fff;border-radius:8px;padding:1px 5px;font-size:9px;font-weight:900;min-width:17px;text-align:center;line-height:1.4}
         .acc-tab .at-badge.gray{background:#b0bec5}
+        .acc-tab .at-badge.gold{background:#a67c00}
         .acc-tab .at-badge.teal{background:#00897b}
         .acc-conv{background:#fff;border:1.5px solid #e0e7e5;border-radius:14px;padding:10px 12px;margin-bottom:8px}
         .acc-conv.unread{border-color:#ef5350;background:#fffafa;box-shadow:0 1px 6px rgba(239,83,80,.08)}
@@ -943,6 +957,36 @@
         .gs-name-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,168,.12);border:1px solid rgba(0,212,168,.4);border-radius:20px;padding:4px 10px;font-size:11px;color:#00d4a8;font-weight:800;margin-bottom:8px;cursor:pointer;width:fit-content}
 
 
+        /* ✅ (v51F) CSS العين الملكية + العلامة السرية — نفس نظام فيسي برو v81 */
+        .acc-mark-badge{display:inline-block;background:linear-gradient(135deg,#fff8e1,#ffecb3);border:1.5px solid #f5c542;color:#a67c00;font-size:9.5px;font-weight:900;padding:2px 9px;border-radius:8px;margin:2px 2px 0 0;cursor:help;box-shadow:0 1px 4px rgba(245,197,66,.25)}
+        .acc-mark-badge b{color:#c62828}
+        .acc-ip-chip{display:inline-block;background:rgba(33,150,243,.1);border:1px solid rgba(33,150,243,.3);color:#1565c0;font-size:9px;font-weight:800;padding:2px 8px;border-radius:8px;margin:2px 2px 0 0;direction:ltr;cursor:pointer;font-family:monospace}
+        .acc-mark-card{background:linear-gradient(135deg,#fffde7,#fff8e1);border:1.5px solid #f5c542;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+        .acc-mark-card.done{opacity:.75}
+        .acc-hit-row{background:#fff;border:1px solid rgba(245,197,66,.5);border-radius:10px;padding:6px 9px;font-size:11px;margin-top:5px;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center}
+        .acc-arch-card{background:linear-gradient(135deg,#fafafa,#f0f0f0);border:1.5px dashed #9e9e9e;border-radius:12px;padding:9px 11px;margin-top:6px}
+        .acc-arch-badge{display:inline-block;background:#616161;color:#fff;font-size:9px;font-weight:900;padding:2px 8px;border-radius:8px}
+        .acc-ip-row{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #e3f2fd;border-radius:9px;padding:5px 8px;margin-top:4px;font-size:10.5px;flex-wrap:wrap}
+        .acc-ip-row b{direction:ltr;font-family:monospace;color:#1565c0;cursor:pointer;font-size:10.5px}
+        .acc-identity{background:#fff;border:1.5px solid #b3e5fc;border-radius:12px;padding:9px 11px;margin-top:8px}
+        .v51-toast-wrap{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:2147483600;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:92vw}
+        .v51-toast{background:linear-gradient(135deg,#263238,#37474f);color:#fff;border-radius:14px;padding:11px 16px;font-family:var(--font-main);font-size:12.5px;font-weight:800;box-shadow:0 8px 26px rgba(0,0,0,.4);border:1.5px solid rgba(255,255,255,.14);animation:v51ToastIn .25s cubic-bezier(.2,.9,.3,1.2);max-width:92vw;line-height:1.8}
+        .v51-toast.gold{background:linear-gradient(135deg,#7c5800,#a67c00);border-color:#f5c542;box-shadow:0 8px 26px rgba(166,124,0,.5)}
+        .v51-toast.out{animation:v51ToastOut .3s forwards}
+        @keyframes v51ToastIn{from{opacity:0;transform:translateY(-16px) scale(.92)}to{opacity:1;transform:none}}
+        @keyframes v51ToastOut{to{opacity:0;transform:translateY(-14px) scale(.94)}}
+        #mark-modal{position:fixed;top:0;left:0;right:0;bottom:0;z-index:2147483500;background:rgba(10,14,20,.62);display:none;align-items:center;justify-content:center;padding:20px;direction:rtl}
+        #mark-modal.active{display:flex}
+        #mark-modal .mk-box{width:100%;max-width:360px;background:linear-gradient(180deg,#fffde7,#fff);border:2px solid #f5c542;border-radius:18px;padding:18px 16px 14px;box-shadow:0 24px 70px rgba(0,0,0,.5);animation:v51ToastIn .2s ease;font-family:var(--font-main)}
+        #mark-modal h4{margin:0 0 6px;color:#a67c00;font-size:15px;font-weight:900}
+        #mark-modal .mk-hint{font-size:10.5px;color:#8d6e63;line-height:1.8;margin-bottom:10px}
+        #mark-modal input,#mark-modal textarea{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:11px;border:1.5px solid #ffe082;background:#fffdf5;color:#4e342e;font-family:var(--font-main);font-size:13px;outline:0;margin-bottom:8px}
+        #mark-modal textarea{height:64px;resize:none}
+        #mark-modal .mk-actions{display:flex;gap:8px;margin-top:4px}
+        #mark-modal .mk-actions button{flex:1;padding:11px;border:0;border-radius:12px;font-family:var(--font-main);font-size:12.5px;font-weight:900;cursor:pointer}
+        #mark-modal .mk-save{background:linear-gradient(135deg,#f5c542,#d4a017);color:#3e2723}
+        #mark-modal .mk-cancel{background:#eceff1;color:#546e7a}
+        #mark-modal .mk-del{background:#ffebee;color:#c62828}
         .auto-reg-card{background:linear-gradient(135deg,#fff,#f3e5f5);border:2px solid #9c27b0;border-radius:16px;padding:16px;margin-bottom:14px;text-align:right;font-family:var(--font-main)}
         .auto-reg-card.auto-on{border-color:#4caf50;background:linear-gradient(135deg,#f1f8f1,#e8f5e9)}
         .auto-reg-card.auto-off{border-color:#f9a825;background:linear-gradient(135deg,#fff8e1,#fff3e0)}
@@ -1123,7 +1167,7 @@
             <button class="icon-btn" id="reports-btn" onclick="toggleReportsModal()" style="display:none;" title="لوحة البلاغات">
                 📋<span class="notif-badge" id="reports-badge">0</span>
             </button>
-            <button class="icon-btn" id="accounts-btn" onclick="openAccountsModal()" style="display:none;" title="كشف الحسابات والأجهزة — للمالك فقط">
+            <button class="icon-btn" id="accounts-btn" onclick="openAccountsModal()" style="display:none;" title="كشف الحسابات والأجهزة + العلامات السرية — للملك فقط">
                 🔍<span class="notif-badge" id="guest-badge" style="display:none;">0</span>
             </button>
             <button class="icon-btn" id="dm-btn" onclick="openDMList()" title="الرسائل الخاصة" style="display:none;">
@@ -1226,7 +1270,7 @@
             </div>
         </div>
         <div style="padding:8px 10px 0;">
-            <input type="text" id="accounts-search" class="search-box" placeholder="🔍 بحث بالاسم — أو بالبصمة لفتح ملف الجهاز الكامل..." oninput="renderAccountsList()">
+            <input type="text" id="accounts-search" class="search-box" placeholder="🔍 بحث بالاسم أو بصمة الجهاز أو IP أو العلامة السرية — بالبصمة يفتح ملف الجهاز الكامل..." oninput="renderAccountsList()">
         </div>
         <div id="acc-tabs-bar" class="acc-tabs"></div>
         <div class="modal-body" id="accounts-body">
@@ -1234,6 +1278,20 @@
         </div>
     </div>
 
+    <!-- ✅ (v51F) تنبيهات لحظية منبثقة (كشف العلامة السرية) + نافذة العلامة السرية — للملك فقط -->
+    <div id="v51-toast-wrap" class="v51-toast-wrap"></div>
+    <div id="mark-modal">
+        <div class="mk-box">
+            <h4 id="mk-title">🏷️ وضع العلامة السرية</h4>
+            <div class="mk-hint" id="mk-hint">اسم سري + ملاحظة تظهران لك وحدك فقط — لا يراهما صاحب الحساب ولا أي إداري. إن حذف حسابه ورجع سجل بحساب جديد من نفس الجهاز يكشفك النظام فوراً بتنبيه لحظي.</div>
+            <input type="text" id="mk-label-input" placeholder="الاسم السري (مثال: أحمد المزعج — جهاز حمراء)" maxlength="60">
+            <textarea id="mk-note-input" placeholder="ملاحظة خاصة (اختياري) — مثال: حذفته بتاريخ كذا، انتبه له عند الرجوع" maxlength="300"></textarea>
+            <div class="mk-actions" id="mk-actions-row">
+                <button class="mk-cancel" onclick="closeMarkDialog()">إلغاء</button>
+                <button class="mk-save" onclick="saveMarkFromDialog()">💾 حفظ</button>
+            </div>
+        </div>
+    </div>
     <div class="modal-slide" id="users-modal">
         <div class="modal-header">
             <h3>👥 الأعضاء</h3>
@@ -3280,6 +3338,11 @@ function startInAppNotificationListeners() {
         } else if (n.type === 'name_changed') {
             if (currentNotificationPrefs.sound) { playStatusSound(); vibrateDevice(); }
             notifyUser('✏️ تغيير الاسم', 'من "' + (n.oldName || '') + '" إلى "' + (n.newName || '') + '"', n.fromAvatar || DEFAULT_ICON, 'status', null, true);
+        } else if (n.type === 'mark_hit') {   /* ✅ (v51F) كشف العلامة السرية لحظياً على كل أجهزة الملك */
+            if (String(n.byFp || '') === myFP) return;   /* جهاز المُكتشف نفسه أظهر التنبيه بالفعل — لا تكرار */
+            if (currentNotificationPrefs.sound) { playStatusSound(); vibrateDevice(); }
+            notifyUser('🏷️ كشف علامة سرية!', '«' + (n.hitName || 'مجهول') + '» دخل بحساب مرتبط بالجهاز الموسوم «' + (n.markLabel || '') + '»', n.fromAvatar || DEFAULT_ICON, 'mark', () => { closeAllModals(); openAccountsModal(); setTimeout(() => { setAccTab('marks'); }, 250); }, true);
+            try { v51Toast('🏷️ كشف علامة سرية: «' + escapeHtml(String(n.hitName || 'مجهول')) + '» على الجهاز الموسوم «' + escapeHtml(String(n.markLabel || '')) + '»', true); } catch (e) {}
         } else if (n.statusKey) {
             if (currentNotificationPrefs.sound) { playSeenSound(); vibrateDevice(); }
             if (document.hidden && notificationMode === 'fcm') return;
@@ -4450,6 +4513,7 @@ function openGuestSupport(ctx) {
     const dk = window.__appealDevKey || guestChannelKey();   /* ✅ (v48F) مفتاح موحد مع نظام المرافعات */
     try {
         db.ref('support_guests/' + dk).update({ hw: dk, lastSeenGuest: Date.now(), ua: (navigator.userAgent || '').substring(0, 120) }).catch(() => {});
+        recordGuestIp(dk);   /* ✅ (v51F) التقاط IP للزائر — يظهر للملك في كشف الحسابات */
         if (__gsListener) { try { db.ref('support_guests/' + dk).off('value', __gsListener); } catch (e) {} }
         __gsListener = db.ref('support_guests/' + dk).on('value', snap => { renderGsList(snap.val() || {}); });
     } catch (e) {}
@@ -4498,6 +4562,7 @@ async function sendGuestSupportMsg() {
 
 /* ---------- صلاحيات المالك اللحظية: الحظر/الكتم/رسائل الزوار ---------- */
 let bansCache = {}, mutesCache = {}, supportGuestsCache = {}, bannedDevicesCache = {}, banAppealsCache = {}, deviceLocksCache = {};   /* ✅ (v50F) أقفال الأجهزة لحظياً */
+let secretMarksCache = {}, identityArchiveCache = {};   /* ✅ (v51F) العلامات السرية + سجل الهويات الدائم — للملك فقط */
 function listenOwnerSecurity() {
     if (window.__ownerSecOn) return; window.__ownerSecOn = true;
     db.ref('bans').on('value', s => { bansCache = s.val() || {}; if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });
@@ -4510,6 +4575,8 @@ function listenOwnerSecurity() {
     db.ref('appData/bannedDevices').on('value', s => { bannedDevicesCache = s.val() || {}; updateGuestBadge(); if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v48F) الأجهزة المحظورة لحظياً */
     db.ref('banAppeals').on('value', s => { banAppealsCache = s.val() || {}; updateGuestBadge(); if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v48F) طلبات فك الحظر لحظياً */
     db.ref('appData/deviceLock').on('value', s => { deviceLocksCache = s.val() || {}; if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v50F) أقفال الجهاز لحظياً */
+    db.ref('secretMarks').on('value', s => { secretMarksCache = s.val() || {}; updateMarksBadge(); if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v51F) العلامات السرية لحظياً */
+    db.ref('identityArchive').on('value', s => { identityArchiveCache = s.val() || {}; if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList(); });   /* ✅ (v51F) سجل الهويات الدائم — المحذوفون لا يُنسون */
 }
 function updateGuestBadge() {
     const badge = document.getElementById('guest-badge'); if (!badge) return;
@@ -4519,6 +4586,272 @@ function updateGuestBadge() {
     badge.textContent = unread;
     badge.style.display = unread > 0 ? 'inline-flex' : 'none';
 }
+
+/* ============================== ✅✅✅ (v51F) العين الملكية + العلامة السرية — نفس نظام فيسي برو v81 بالضبط ==============================
+   🏷 العلامة السرية: اسم + ملاحظة على ملف أي حساب/جهاز/زائر — تظهر للملك وحدك فقط — وإن رجع صاحب
+      الجهاز الموسوم وسجل بحساب جديد يكشفك النظام فوراً: تنبيه منبثق + إشعار جرس + نشاط + عدّاد كشوفات
+   🌐 التقاط IP لحظياً: عند فتح التطبيق وعند التواصل من شاشة الدخول — يظهر للملك فقط في كل ملف
+   🗄 سجل هوية دائم: كل حساب يُحذف تُؤرشف هويته للأبد (الاسم + البصمة + IP + من حذفه) — 🗑️ محذوف
+   ===================================================================================================================== */
+function markKeyFor(devKey) { return accSafeKey(devKey); }   /* ✅ (v51F) مفتاح موحّد للعلامة مهما كان شكل البصمة */
+function v51Toast(msg, gold) {
+    try {
+        const wrap = document.getElementById('v51-toast-wrap');
+        if (!wrap) { alert(msg); return; }
+        const t = document.createElement('div');
+        t.className = 'v51-toast' + (gold ? ' gold' : '');
+        t.innerHTML = msg;
+        wrap.appendChild(t);
+        while (wrap.children.length > 4) wrap.removeChild(wrap.firstChild);
+        setTimeout(() => { t.classList.add('out'); setTimeout(() => { try { t.remove(); } catch (e) {} }, 320); }, gold ? 9000 : 5000);
+    } catch (e) { try { alert(msg); } catch (e2) {} }
+}
+function updateMarksBadge() {
+    try {
+        if (document.getElementById('accounts-modal') && document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList();
+        if (isOwner() && allUsersData && Object.keys(allUsersData).length) detectMarkHits(allUsersData);   /* ✅ (v51F) كشف العائدين فور تحميل العلامات */
+    } catch (e) {}
+}
+/* ---------- 🏷️ بطاقات ومساعدات العرض (كلها داخل لوحة الملك فقط أصلاً) ---------- */
+function accMarkBadgeHtml(devKey) {
+    const mk = (secretMarksCache || {})[markKeyFor(devKey)];
+    if (!mk || !mk.label) return '';
+    const n = mk.hits ? Object.keys(mk.hits).length : 0;
+    return '<span class="acc-mark-badge" title="علامة سرية تظهر لك وحدك — ' + escAttr(mk.note || 'بلا ملاحظة') + '">🏷️ ' + escapeHtml(mk.label) + (n ? ' <b>+' + n + '</b>' : '') + '</span>';
+}
+function accMarkBtn(devKey, nm, uid, src) {
+    const mk = (secretMarksCache || {})[markKeyFor(devKey)];
+    const lbl = (mk && mk.label) ? '🏷️ تعديل العلامة' : '🏷️ علامة سرية';
+    return '<button class="ctrl-btn" style="background:#fff8e1;color:#a67c00;border:1.5px solid #f5c542;" onclick="accMarkBtnClick(\'' + escJsAttr(devKey) + '\',\'' + escJsAttr(nm || '') + '\',\'' + escJsAttr(uid || '') + '\',\'' + escJsAttr(src || 'device') + '\')" title="العلامة السرية — اسم وملاحظة لا يراهما أحد سواك">' + lbl + '</button>';
+}
+function accMarkBtnClick(devKey, nm, uid, src) {
+    try {
+        if (!isOwner()) return alert('⛔ للملك فقط');
+        const mkKey = markKeyFor(devKey);
+        const mk = (secretMarksCache || {})[mkKey] || null;
+        const ctx = { mkKey: mkKey, devKey: devKey, name: nm || '', uid: uid || '', src: src || 'device', fps: {}, usernames: {}, existing: mk };
+        if (mk) { ctx.fps = mk.fps || {}; ctx.usernames = mk.usernames || {}; }
+        if (uid && src !== 'edit') { ctx.fps[uid] = true; ctx.usernames[uid] = nm || ''; }
+        if (src === 'device' && !uid) {
+            Object.keys(allUsersData || {}).forEach(fp => { const u = allUsersData[fp] || {}; if (markKeyFor(u.hwFp || ('fp:' + fp)) === mkKey) { ctx.fps[fp] = true; if (u.name) ctx.usernames[fp] = u.name; } });
+        }
+        window.__mkCtx = ctx;
+        document.getElementById('mk-title').textContent = (mk && mk.label) ? '🏷️ تعديل العلامة السرية' : '🏷️ وضع العلامة السرية';
+        document.getElementById('mk-label-input').value = (mk && mk.label) || (nm || '');
+        document.getElementById('mk-note-input').value = (mk && mk.note) || '';
+        document.getElementById('mark-modal').classList.add('active');
+        setTimeout(() => { const el = document.getElementById('mk-label-input'); if (el) el.focus(); }, 150);
+    } catch (e) {}
+}
+function openMarkDialogEdit(mkKey) {
+    const mk = (secretMarksCache || {})[mkKey]; if (!mk) return alert('ℹ️ العلامة غير موجودة');
+    const uns = mk.usernames || {};
+    const firstUn = Object.keys(uns).length ? uns[Object.keys(uns)[0]] : '';
+    accMarkBtnClick(mk.devKey || mkKey, firstUn, '', 'edit');
+}
+function closeMarkDialog() { const m = document.getElementById('mark-modal'); if (m) m.classList.remove('active'); window.__mkCtx = null; }
+async function saveMarkFromDialog() {
+    if (!isOwner()) return alert('⛔ للملك فقط');
+    const ctx = window.__mkCtx; if (!ctx) return closeMarkDialog();
+    const label = (document.getElementById('mk-label-input').value || '').trim();
+    const note = (document.getElementById('mk-note-input').value || '').trim();
+    if (!label) { alert('🏷️ اكتب الاسم السري أولاً — هذا هو الاسم الذي سيتعرف به النظام على صاحب الجهاز إن رجع بحساب جديد'); return; }
+    const now = Date.now();
+    const mk = ctx.existing || {};
+    const data = {
+        label: label.substring(0, 60), note: note.substring(0, 300),
+        by: myFP || '', byName: myName || 'الملك',
+        src: mk.src || ctx.src || 'device', devKey: ctx.devKey || mk.devKey || ctx.mkKey,
+        createdAt: mk.createdAt || now, updatedAt: now,
+        fps: ctx.fps || {}, usernames: ctx.usernames || {},
+        hits: mk.hits || {}
+    };
+    try {
+        await db.ref('secretMarks/' + ctx.mkKey).set(data);
+        closeMarkDialog();
+        v51Toast('🏷️ حُفظت العلامة السرية «' + escapeHtml(label) + '» — تظهر لك وحدك وسيكشفك النظام إن رجع صاحب الجهاز بحساب جديد', true);
+        try { await logAdminAction('mark_set', ctx.uid || '', label, { devKey: ctx.devKey || '', note: note.substring(0, 120) }); } catch (e) {}
+        if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList();
+    } catch (e) { alert('❌ ' + (e.message || e)); }
+}
+async function deleteMarkConfirm(mkKey) {
+    if (!isOwner()) return alert('⛔ للملك فقط');
+    const mk = (secretMarksCache || {})[mkKey]; if (!mk) return;
+    if (!confirm('🗑️ حذف العلامة السرية «' + mk.label + '»؟\nإن حذف حسابه ورجع سجل بحساب جديد لن يكشفه النظام بعد الآن.')) return;
+    try {
+        await db.ref('secretMarks/' + mkKey).remove();
+        v51Toast('🗑️ حُذفت العلامة «' + escapeHtml(mk.label) + '» — لن يكشف النظام صاحبها بعد الآن');
+        try { await logAdminAction('mark_delete', '', mk.label, { devKey: mk.devKey || mkKey }); } catch (e) {}
+        if (document.getElementById('accounts-modal').classList.contains('active')) renderAccountsList();
+    } catch (e) { alert('❌ ' + (e.message || e)); }
+}
+/* ---------- 🔔 كشف العائد بحساب جديد على جهاز موسوم — لحظي وبتحصين ضد التكرار ---------- */
+let __v51Handled = window.__v51Handled || (window.__v51Handled = {});
+function detectMarkHits(usersData) {
+    try {
+        if (!isOwner() || !usersData) return;
+        const marks = secretMarksCache || {};
+        Object.keys(usersData).forEach(fp => {
+            const u = usersData[fp] || {};
+            const dk = markKeyFor(u.hwFp || ('fp:' + fp));
+            const mk = marks[dk];
+            if (!mk || !mk.label) return;
+            const known = mk.fps || {};
+            const hits = mk.hits || {};
+            if (known[fp] || hits[accSafeKey(fp)] || __v51Handled[dk + '|' + fp]) return;
+            __v51Handled[dk + '|' + fp] = 1;
+            recordMarkHit(dk, fp, u.name || 'بدون اسم', mk);
+        });
+    } catch (e) {}
+}
+async function recordMarkHit(dk, fp, nm, mk) {
+    try {
+        const hk = accSafeKey(fp);
+        const res = await db.ref('secretMarks/' + dk + '/hits/' + hk).transaction(cur => {
+            if (cur) return;   /* الكشف مسجّل من قبل — أي جهاز ملكي آخر لن يكرره */
+            return { fp: fp, name: nm, at: Date.now() };
+        });
+        if (!res || !res.committed) return;
+        const updates = {};
+        updates['secretMarks/' + dk + '/fps/' + hk] = true;
+        updates['secretMarks/' + dk + '/usernames/' + hk] = nm;
+        await db.ref().update(updates);
+        Object.keys(allUsersData || {}).forEach(ofp => {
+            if ((allUsersData[ofp] || {}).role === 'owner') {
+                db.ref('notifications/' + ofp).push({ from: '🏷️ حارس العلامات', type: 'mark_hit', markLabel: mk.label || '', devKey: mk.devKey || dk, hitName: nm, hitFp: fp, time: Date.now(), seen: false, byFp: myFP || '' }).catch(() => {});
+            }
+        });
+        v51Toast('🏷️ كشف علامة سرية: «' + escapeHtml(nm) + '» دخل بحساب مرتبط بالجهاز الموسوم «' + escapeHtml(mk.label || '') + '»', true);
+        try { await logAdminAction('mark_hit', fp, nm, { devKey: mk.devKey || dk, label: mk.label || '' }); } catch (e) {}
+    } catch (e) {}
+}
+/* ---------- 🌐 التقاط عناوين IP — لحظياً ومن كل جهاز — تظهر للملك فقط ---------- */
+async function fetchMyIpInfo() {
+    if (window.__v51IpInfo) return window.__v51IpInfo;
+    let info = null;
+    try {
+        const c = new AbortController(); const t = setTimeout(() => c.abort(), 6000);
+        const r = await fetch('https://api.ipify.org?format=json', { signal: c.signal }); clearTimeout(t);
+        const j = await r.json();
+        if (j && j.ip) info = { ip: String(j.ip).substring(0, 45), at: Date.now() };
+    } catch (e) {}
+    if (info) {
+        try {
+            const c2 = new AbortController(); const t2 = setTimeout(() => c2.abort(), 6000);
+            const r2 = await fetch('https://ipwho.is/' + encodeURIComponent(info.ip), { signal: c2.signal }); clearTimeout(t2);
+            const j2 = await r2.json();
+            if (j2 && j2.success !== false) {
+                info.city = String(j2.city || '').substring(0, 40);
+                info.country = String(j2.country || '').substring(0, 40);
+                info.flag = (j2.flag && j2.flag.emoji) ? String(j2.flag.emoji).substring(0, 8) : '';
+            }
+        } catch (e) {}
+    }
+    window.__v51IpInfo = info;
+    return info;
+}
+function mergeIpMap(cur, info, maxN) {
+    const out = {};
+    const entries = Object.keys(cur || {}).map(ip => ({ ip: ip, at: (cur[ip] || {}).at || 0, city: (cur[ip] || {}).city || '', country: (cur[ip] || {}).country || '', flag: (cur[ip] || {}).flag || '' }));
+    entries.filter(e => e.ip !== info.ip).sort((a, b) => (b.at || 0) - (a.at || 0)).slice(0, (maxN || 6) - 1).forEach(e => { out[e.ip] = { at: e.at, city: e.city, country: e.country, flag: e.flag }; });
+    out[info.ip] = { at: info.at || Date.now(), city: info.city || '', country: info.country || '', flag: info.flag || '' };
+    return out;
+}
+async function recordMyIp() {
+    try {
+        if (!myFP || typeof db === 'undefined' || !db) return;
+        const info = await fetchMyIpInfo(); if (!info) return;
+        const node = db.ref('users/' + myFP + '/ips');
+        const cur = (await node.once('value')).val() || {};
+        await node.set(mergeIpMap(cur, info, 6));
+    } catch (e) {}
+}
+async function recordGuestIp(dk) {
+    try {
+        if (!dk || typeof db === 'undefined' || !db) return;
+        const skey = 'v51_gip_' + accSafeKey(dk);
+        try { if (sessionStorage.getItem(skey)) return; } catch (e) {}
+        const info = await fetchMyIpInfo(); if (!info) return;
+        try { sessionStorage.setItem(skey, '1'); } catch (e) {}
+        const node = db.ref('support_guests/' + dk + '/ips');
+        const cur = (await node.once('value')).val() || {};
+        await node.set(mergeIpMap(cur, info, 6));
+    } catch (e) {}
+}
+function accIpChipsHtml(ipsObj, maxN) {
+    const ips = Object.keys(ipsObj || {}).sort((a, b) => ((ipsObj[b] || {}).at || 0) - ((ipsObj[a] || {}).at || 0)).slice(0, maxN || 3);
+    if (!ips.length) return '';
+    return ips.map(ip => {
+        const d = ipsObj[ip] || {};
+        const geo = [d.flag, d.city, d.country].filter(Boolean).join(' ');
+        return '<span class="acc-ip-chip" onclick="copyAccText(\'' + escJsAttr(ip) + '\')" title="' + escAttr((geo ? geo + ' — ' : '') + (d.at ? accTs(d.at) : 'اضغط للنسخ')) + '">🌐 ' + escAttr(ip) + '</span>';
+    }).join('');
+}
+/* ---------- 🗄 سجل الهويات الدائم — كل محذوف يُؤرشف ولا يُنسى أبداً ---------- */
+async function archiveDeletedIdentity(uid, u) {
+    try {
+        if (!uid || typeof db === 'undefined' || !db) return;
+        u = u || (allUsersData || {})[uid] || {};
+        await db.ref('identityArchive/' + accSafeKey(uid)).set({
+            fp: uid, name: u.name || 'بدون اسم', role: u.role || 'user',
+            hwFp: u.hwFp || ('fp:' + uid), avatar: u.avatar || '',
+            createdAt: u.createdAt || null, ips: u.ips || {},
+            deletedAt: Date.now(), deletedBy: myName || 'الإدارة'
+        });
+    } catch (e) {}
+}
+function accArchCardHtml(ak, a) {
+    a = a || {};
+    const ips = Object.keys(a.ips || {}).length;
+    return '<div class="acc-arch-card">'
+        + '<div style="display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center;">'
+        + '<b style="font-size:12px;color:#424242;">👤 ' + escapeHtml(a.name || 'بدون اسم') + ' <span class="acc-arch-badge">🗑️ محذوف</span> ' + accRoleChip(a.role || 'user') + '</b>'
+        + '<small style="color:#9e9e9e;">حُذف: ' + accTs(a.deletedAt) + (a.deletedBy ? ' بواسطة ' + escapeHtml(a.deletedBy) : '') + '</small></div>'
+        + '<div class="acc-fp" onclick="copyAccText(\'' + escAttr(a.hwFp || ak) + '\')" title="بصمة الجهاز — اضغط للنسخ">🖥️ ' + escAttr(a.hwFp || ak) + '</div>'
+        + (ips ? '<div style="margin-top:3px;">' + accIpChipsHtml(a.ips, 3) + '</div>' : '')
+        + '</div>';
+}
+/* ---------- 🏷️ تبويب «علاماتك السرية» — قائمة شاملة بكل العلامات وكشوفاتها ---------- */
+function renderMarksTabHtml() {
+    const marks = secretMarksCache || {};
+    const keys = Object.keys(marks).sort((a, b) => ((marks[b].updatedAt || marks[b].createdAt) || 0) - ((marks[a].updatedAt || marks[a].createdAt) || 0));
+    let html = '<div class="acc-multibanner" style="border-color:#f5c548;background:linear-gradient(135deg,#fffde7,#fff8e1);">'
+        + '<b style="color:#a67c00;font-size:13px;">🏷️ علاماتك السرية (' + keys.length + ')</b>'
+        + '<div style="font-size:11px;color:#8d6e63;margin-top:4px;line-height:1.8;">اسم سري + ملاحظة على جهاز أي مستخدم — لا يراهما أحد سواك: لا صاحب الحساب ولا أي إداري. إن حذفت حسابه ورجع سجل بحساب جديد من نفس الجهاز يكشفك النظام فوراً بتنبيه لحظي + إشعار جرس + نشاط في سجل الإدارة.</div></div>';
+    if (!keys.length) {
+        html += '<div style="text-align:center;padding:18px;color:#90a4ae;font-size:12.5px;background:#fff;border:1.5px dashed #ffe082;border-radius:14px;">🏷️ لا توجد علامات سرية بعد<br><small>ضع علامة على أي حساب أو جهاز أو زائر من زر «🏷️ علامة سرية» في كشف الحسابات</small></div>';
+        return html;
+    }
+    keys.forEach(k => {
+        const mk = marks[k] || {};
+        const hits = mk.hits || {};
+        const hn = Object.keys(hits).length;
+        const uns = mk.usernames || {};
+        const unNames = Object.keys(uns).map(u2 => uns[u2]).filter(Boolean);
+        html += '<div class="acc-mark-card">'
+            + '<div style="display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center;">'
+            + '<b style="font-size:13px;color:#a67c00;">🏷️ ' + escapeHtml(mk.label || 'بلا اسم') + (hn ? ' <span class="acc-chip" style="background:#c62828;color:#fff;">🔔 ' + hn + ' كشف</span>' : '') + '</b>'
+            + '<small style="color:#a1887f;">وضعتها: ' + escapeHtml(mk.byName || 'أنت') + (mk.createdAt ? ' • ' + accTs(mk.createdAt) : '') + '</small></div>'
+            + (mk.note ? '<div style="font-size:11px;color:#6d4c41;background:#fff;border-radius:9px;padding:6px 9px;margin-top:5px;line-height:1.8;">📝 ' + escapeHtml(mk.note) + '</div>' : '')
+            + '<div class="acc-fp" onclick="copyAccText(\'' + escAttr(mk.devKey || k) + '\')" title="بصمة الجهاز الموسومة — اضغط للنسخ">🖥️ ' + escAttr(mk.devKey || k) + '</div>'
+            + (unNames.length ? '<div style="font-size:10px;color:#8d6e63;margin-top:4px;">👥 حسابات الجهاز: ' + unNames.slice(0, 6).map(n2 => escapeHtml(n2)).join('، ') + (Object.keys(uns).length > 6 ? '…' : '') + '</div>' : '')
+            + '<div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;">'
+            + '<button class="ctrl-btn" style="background:#eceff1;color:#37474f;" onclick="accOpenDeviceProfile(\'' + escAttr(mk.devKey || k) + '\')">🖥️ ملف الجهاز</button>'
+            + '<button class="ctrl-btn" style="background:#fff8e1;color:#a67c00;border:1.5px solid #f5c542;" onclick="openMarkDialogEdit(\'' + escAttr(k) + '\')">✏️ تعديل</button>'
+            + '<button class="ctrl-btn delete-user" onclick="deleteMarkConfirm(\'' + escAttr(k) + '\')">🗑️ حذف العلامة</button>'
+            + '</div>';
+        if (hn) {
+            html += '<div style="font-size:10.5px;font-weight:900;color:#c62828;margin-top:8px;">🔔 كشوفات العلامة — حسابات جديدة سُجّلت من هذا الجهاز الموسوم:</div>';
+            Object.keys(hits).sort((a, b) => ((hits[b] || {}).at || 0) - ((hits[a] || {}).at || 0)).forEach(hk2 => {
+                const h = hits[hk2] || {};
+                html += '<div class="acc-hit-row"><b style="color:#263238;">👤 ' + escapeHtml(h.name || 'بدون اسم') + '</b><span style="color:#a67c00;font-size:10px;">⏰ ' + accTs(h.at) + (h.fp ? ' • <span style="direction:ltr;font-family:monospace;">' + escAttr(String(h.fp).substring(0, 14)) + '…</span>' : '') + '</span></div>';
+            });
+        }
+        html += '</div>';
+    });
+    return html;
+}
+/* ============================== نهاية (v51F) ============================== */
 function openAccountsModal() {
     if (!isOwner()) return alert('⛔ للمالك فقط');
     document.getElementById('accounts-modal').classList.add('active');
@@ -4589,9 +4922,12 @@ function accAccountCardHtml(u, multiHere) {
         + '</div>'
         + '<div style="font-size:10px;color:#78909c;margin-top:3px;">أنشئ: ' + created + '</div>'
         + (u.hwFp ? '<div class="acc-fp" onclick="copyAccText(\'' + escAttr(u.hwFp) + '\')" title="بصمة الجهاز — اضغط للنسخ">🖥️ ' + escAttr(u.hwFp) + '</div>' : '')
+        + accMarkBadgeHtml(u.hwFp || ('fp:' + k))   /* ✅ (v51F) شارة العلامة السرية — للملك فقط */
+        + '<div style="margin-top:3px;">' + accIpChipsHtml(u.ips, 2) + '</div>'   /* ✅ (v51F) عناوين IP — للملك فقط */
         + (banned && bansCache[k] && bansCache[k].reason ? '<div style="font-size:10px;color:#c62828;margin-top:3px;">💬 سبب الحظر: ' + escapeHtml(String(bansCache[k].reason)) + '</div>' : '');
     /* ⚡ (v50F) أزرار الحل السريع — كل مشكلة زر لحالها */
     html += '<div style="display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;">'
+        + accMarkBtn(u.hwFp || ('fp:' + k), u.name || '', k, 'account')   /* ✅ (v51F) زر العلامة السرية */
         + (banned ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;" data-uc-action="unbanUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">✅ فك الحظر</button>' : '')
         + (muted ? '<button class="ctrl-btn" style="background:#e8f5e9;color:#2e7d32;" data-uc-action="unmuteUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🔊 فك الكتم</button>' : '')
         + (!banned && (u.role || 'user') !== 'owner' ? '<button class="ctrl-btn ban" data-uc-action="banUser" data-uc-uid="' + safeUid + '" data-uc-name="' + safeName + '">🚫 حظر</button>' : '')
@@ -4636,7 +4972,8 @@ function accConvCardHtml(k, g, devMap, opts) {
         + '<small style="color:#90a4ae;white-space:nowrap;">' + (g.lastAt ? accTs(g.lastAt) : '') + '</small>'
         + '</div>'
         + '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:2px;">' + chips + '</div>'
-        + '<div class="acc-fp" onclick="copyAccText(\'' + safeGw + '\')" title="بصمة الجهاز — اضغط للنسخ" style="margin-top:5px;">🖥️ ' + escAttr(k) + '</div>';
+        + '<div class="acc-fp" onclick="copyAccText(\'' + safeGw + '\')" title="بصمة الجهاز — اضغط للنسخ" style="margin-top:5px;">🖥️ ' + escAttr(k) + '</div>'
+        + '<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;align-items:center;">' + accMarkBadgeHtml(k) + accIpChipsHtml(g.ips, 2) + '</div>';   /* ✅ (v51F) العلامة + IP — للملك فقط */
     /* الحساب المرتبط — من صاحب الحساب */
     if (linked.length) {
         linked.forEach(u => {
@@ -4683,6 +5020,7 @@ function accConvCardHtml(k, g, devMap, opts) {
     html += '<div style="display:flex;gap:6px;margin-top:8px;">'
         + '<input type="text" id="gs-reply-' + String(k).replace(/[^a-zA-Z0-9]/g, '') + '" placeholder="اكتب رداً لـ ' + escAttr(nm) + '..." style="flex:1;padding:8px 10px;border:1.5px solid #cfd8dc;border-radius:10px;font-family:var(--font-main);font-size:12px;outline:0;" maxlength="2000">'
         + '<button onclick="replyGuest(\'' + (k + '').replace(/'/g, '') + '\')" style="background:linear-gradient(135deg,#00897b,#00695c);color:#fff;border:0;border-radius:10px;padding:0 14px;font-size:12px;cursor:pointer;font-family:var(--font-main);font-weight:700;">إرسال</button>'
+        + '<button onclick="accMarkBtnClick(\'' + (k + '').replace(/'/g, '') + '\',\'' + escJsAttr(nm) + '\',\'\',\'guest\')" title="العلامة السرية على هذا الزائر — اسم لا يراه أحد سواك" style="background:#fff8e1;color:#a67c00;border:1.5px solid #f5c542;border-radius:10px;padding:0 10px;font-size:13px;cursor:pointer;">🏷️</button>'   /* ✅ (v51F) */
         + '<button onclick="deleteGuestConv(\'' + (k + '').replace(/'/g, '') + '\')" title="حذف المحادثة (تنظيف)" style="background:#fff5f5;color:#c62828;border:1.5px solid #ffcdd2;border-radius:10px;padding:0 10px;font-size:13px;cursor:pointer;">🗑️</button>'
         + '</div></div>';
     return html;
@@ -4709,6 +5047,49 @@ function accDeviceProfileHtml(dk, devMap) {
         + (lock ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#546e7a,#37474f);color:#fff;" data-uc-action="unlockDevice" data-uc-uid="' + safeHw + '" data-uc-name="' + escAttr((lock || {}).name || '') + '">🔓 فك قفل الجهاز</button>' : '')
         + (ap && ap.status === 'pending' ? '<button class="ctrl-btn" style="background:linear-gradient(135deg,#fb8c00,#ef6c00);color:#fff;" data-uc-action="approveAppeal" data-uc-uid="' + safeHw + '" data-uc-name="' + escAttr(ap.name || '') + '">✅ قبول المرافعة وفك الحظر</button>' : '')
         + '</div></div>';
+    /* ✅ (v51F) كتلة العلامة السرية على ملف الجهاز — وضع/تعديل/حذف + الكشوفات */
+    const dmk = (secretMarksCache || {})[markKeyFor(dk)];
+    if (dmk && dmk.label) {
+        const dhn = dmk.hits ? Object.keys(dmk.hits).length : 0;
+        html += '<div class="acc-mark-card">'
+            + '<div style="display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center;">'
+            + '<b style="font-size:12.5px;color:#a67c00;">🏷️ العلامة السرية: «' + escapeHtml(dmk.label) + '»' + (dhn ? ' <span class="acc-chip" style="background:#c62828;color:#fff;">🔔 ' + dhn + ' كشف</span>' : '') + '</b>'
+            + '<small style="color:#a1887f;">' + accTs(dmk.createdAt) + '</small></div>'
+            + (dmk.note ? '<div style="font-size:11px;color:#6d4c41;background:#fff;border-radius:9px;padding:6px 9px;margin-top:5px;line-height:1.8;">📝 ' + escapeHtml(dmk.note) + '</div>' : '')
+            + '<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">'
+            + '<button class="ctrl-btn" style="background:#fff8e1;color:#a67c00;border:1.5px solid #f5c542;" onclick="openMarkDialogEdit(\'' + escAttr(markKeyFor(dk)) + '\')">✏️ تعديل العلامة</button>'
+            + '<button class="ctrl-btn delete-user" onclick="deleteMarkConfirm(\'' + escAttr(markKeyFor(dk)) + '\')">🗑️ حذف العلامة</button>'
+            + '</div>';
+        if (dhn) {
+            html += '<div style="font-size:10.5px;font-weight:900;color:#c62828;margin-top:8px;">🔔 كشوفات — حسابات جديدة سُجّلت من هذا الجهاز الموسوم:</div>';
+            Object.keys(dmk.hits).sort((a, b) => ((dmk.hits[b] || {}).at || 0) - ((dmk.hits[a] || {}).at || 0)).forEach(hk3 => {
+                const h3 = dmk.hits[hk3] || {};
+                html += '<div class="acc-hit-row"><b style="color:#263238;">👤 ' + escapeHtml(h3.name || 'بدون اسم') + '</b><span style="color:#a67c00;font-size:10px;">⏰ ' + accTs(h3.at) + '</span></div>';
+            });
+        }
+        html += '</div>';
+    } else {
+        html += '<div style="margin-top:8px;">' + accMarkBtn(dk, (linked[0] || {}).name || (g || {}).name || '', (linked[0] || {}).uid || '', 'device') + '</div>';
+    }
+    /* ✅ (v51F) بطاقة الهوية: كل عناوين IP لهذا الجهاز — من حساباته وزائره — للملك فقط */
+    const ipMapD = {};
+    linked.forEach(u2 => { Object.keys(u2.ips || {}).forEach(ip2 => { const d2 = u2.ips[ip2] || {}; if (!ipMapD[ip2] || (d2.at || 0) > (ipMapD[ip2].at || 0)) ipMapD[ip2] = d2; }); });
+    Object.keys((g || {}).ips || {}).forEach(ip2 => { const d2 = g.ips[ip2] || {}; if (!ipMapD[ip2] || (d2.at || 0) > (ipMapD[ip2].at || 0)) ipMapD[ip2] = d2; });
+    const ipKeysD = Object.keys(ipMapD).sort((a, b) => (ipMapD[b].at || 0) - (ipMapD[a].at || 0));
+    html += '<div class="acc-identity"><b style="font-size:12px;color:#1565c0;">🌐 عناوين IP لهذا الجهاز (' + ipKeysD.length + ') — سر ملكي</b>';
+    if (!ipKeysD.length) html += '<div style="font-size:10.5px;color:#90a4ae;margin-top:4px;line-height:1.7;">لا توجد عناوين مسجلة بعد — تُلتقط تلقائياً عند فتح التطبيق أو التواصل من شاشة الدخول</div>';
+    else ipKeysD.forEach(ip2 => {
+        const d2 = ipMapD[ip2];
+        const geo2 = [d2.flag, d2.city, d2.country].filter(Boolean).join(' ');
+        html += '<div class="acc-ip-row"><b onclick="copyAccText(\'' + escJsAttr(ip2) + '\')" title="اضغط للنسخ">' + escAttr(ip2) + '</b><span style="color:#78909c;font-size:9.5px;">' + escAttr(geo2) + '</span><span style="color:#b0bec5;font-size:9.5px;margin-inline-start:auto;">' + accTs(d2.at) + '</span></div>';
+    });
+    html += '</div>';
+    /* ✅ (v51F) الهويات المحذوفة التي كانت على هذا الجهاز — لا يُنسون أبداً */
+    const archsD = Object.keys(identityArchiveCache || {}).filter(ak3 => { const a3 = identityArchiveCache[ak3] || {}; return markKeyFor(a3.hwFp || a3.fp || '') === markKeyFor(dk); });
+    if (archsD.length) {
+        html += '<div style="font-size:12.5px;font-weight:900;color:#616161;margin:10px 0 4px;">🗄️ هويات محذوفة كانت على هذا الجهاز (' + archsD.length + ') — لا يُنسون أبداً:</div>';
+        archsD.forEach(ak3 => { html += accArchCardHtml(ak3, identityArchiveCache[ak3] || {}); });
+    }
     /* الحسابات المرتبطة بهذه البصمة فقط */
     html += '<div style="font-size:12.5px;font-weight:900;color:#00695c;margin:10px 0 8px;">👥 الحسابات المتعلقة بهذه البصمة (' + linked.length + ')</div>';
     if (!linked.length) html += '<div style="text-align:center;padding:12px;color:#90a4ae;font-size:12px;background:#fff;border:1.5px dashed #cfd8dc;border-radius:12px;margin-bottom:8px;">لا يوجد حساب مرتبط بهذه البصمة — جهاز زائر</div>';
@@ -4739,14 +5120,18 @@ function renderAccountsList() {
     const bdevKeys = Object.keys(bannedDevicesCache || {}).sort((a, b) => (Number((bannedDevicesCache[b] || {}).at) || 0) - (Number((bannedDevicesCache[a] || {}).at) || 0));
     const multiDevs = Object.keys(devMap).filter(d => devMap[d].length > 1 && d.indexOf('fp:') !== 0);
     const onlineCount = users.filter(u => isUserOnline(u)).length;
+    /* ✅ (v51F) عدّادات العلامات السرية + الكشوفات */
+    const markKeys = Object.keys(secretMarksCache || {});
+    const marksHits = markKeys.reduce((acc, k) => acc + (((secretMarksCache[k] || {}).hits) ? Object.keys(secretMarksCache[k].hits).length : 0), 0);
     /* شريط التبويبات */
     const tabs = [
         { id: 'convs', label: '🎧 المحادثات', n: gsKeys.length, badge: convsUnread, bcls: '' },
         { id: 'appeals', label: '📨 طلبات الفك', n: appealKeys.length, badge: pendAppeals, bcls: '' },
         { id: 'banned', label: '⛔ المحظورون', n: bdevKeys.length, badge: bdevKeys.length, bcls: 'gray' },
         { id: 'accounts', label: '👥 الحسابات', n: users.length, badge: 0, bcls: '' },
+        { id: 'marks', label: '🏷️ علاماتك السرية', n: markKeys.length, badge: marksHits, bcls: 'gold' },   /* ✅ (v51F) */
         { id: 'multi', label: '⚠️ متعددة', n: multiDevs.length, badge: multiDevs.length, bcls: 'gray' }
-    ].filter(t => t.id !== 'multi' || multiDevs.length > 0);
+    ].filter(t => (t.id !== 'multi' || multiDevs.length > 0));
     const tabBar = document.getElementById('acc-tabs-bar');
     if (tabBar) tabBar.innerHTML = tabs.map(t => '<button class="acc-tab' + (window.__accTab === t.id ? ' active' : '') + '" onclick="setAccTab(\'' + t.id + '\')">' + t.label + ' (' + t.n + ')' + (t.badge > 0 ? ' <span class="at-badge ' + t.bcls + '">' + t.badge + '</span>' : '') + '</button>').join('');
     /* إحصائيات سريعة */
@@ -4758,6 +5143,41 @@ function renderAccountsList() {
         + '<div class="acc-stat" style="border-color:#ef5350;background:rgba(239,83,80,.06);"><b style="color:#c62828;">' + bdevKeys.length + '</b><span>أجهزة محظورة</span></div>'
         + '<div class="acc-stat" style="border-color:#fb8c00;background:rgba(255,152,0,.07);"><b style="color:#e65100;">' + pendAppeals + '</b><span>طلبات معلقة</span></div>'
         + '</div>';
+    /* 🏷️ (v51F) علامات سرية مطابقة للبحث — تظهر فوق نتائج أي تبويب */
+    const markMatches = q ? markKeys.filter(k => { const m = secretMarksCache[k] || {}; return String(m.label || '').toLowerCase().includes(q) || String(m.note || '').toLowerCase().includes(q); }) : [];
+    if (markMatches.length) {
+        html += '<div style="font-size:12.5px;font-weight:900;color:#a67c00;margin:4px 0 8px;">🏷️ علامات سرية مطابقة لبحثك (' + markMatches.length + '):</div>';
+        markMatches.forEach(k => {
+            const mk = secretMarksCache[k] || {};
+            const hn = mk.hits ? Object.keys(mk.hits).length : 0;
+            html += '<div class="acc-mark-card" style="padding:8px 11px;">'
+                + '<div style="display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;align-items:center;">'
+                + '<b style="font-size:12px;color:#a67c00;">🏷️ ' + escapeHtml(mk.label || '') + (hn ? ' <span class="acc-chip" style="background:#c62828;color:#fff;">🔔 ' + hn + '</span>' : '') + '</b>'
+                + '<span style="display:flex;gap:5px;flex-wrap:wrap;">'
+                + '<button class="ctrl-btn" style="background:#eceff1;color:#37474f;" onclick="accOpenDeviceProfile(\'' + escAttr(mk.devKey || k) + '\')">🖥️ ملف الجهاز</button>'
+                + '<button class="ctrl-btn" style="background:#fff8e1;color:#a67c00;border:1.5px solid #f5c542;" onclick="openMarkDialogEdit(\'' + escAttr(k) + '\')">✏️ تعديل</button>'
+                + '</span></div>'
+                + (mk.note ? '<div style="font-size:10.5px;color:#6d4c41;margin-top:4px;">📝 ' + escapeHtml(mk.note) + '</div>' : '')
+                + '</div>';
+        });
+    }
+    /* 🌐 (v51F) البحث بعنوان IP: كل حساب أو جهاز أو زائر أو محذوف عليه هذا العنوان */
+    const isIpQuery = q && q.indexOf('.') >= 0 && /^[0-9.]{4,21}$/.test(q);
+    if (isIpQuery) {
+        const results = [];
+        users.forEach(u => { if (Object.keys(u.ips || {}).some(ip => ip.toLowerCase().includes(q))) results.push({ kind: 'acc', u: u }); });
+        Object.keys(supportGuestsCache || {}).forEach(dk2 => { const g2 = supportGuestsCache[dk2] || {}; if (Object.keys(g2.ips || {}).some(ip => ip.toLowerCase().includes(q))) results.push({ kind: 'guest', dk: dk2, g: g2 }); });
+        Object.keys(identityArchiveCache || {}).forEach(ak2 => { const a2 = identityArchiveCache[ak2] || {}; if (Object.keys(a2.ips || {}).some(ip => ip.toLowerCase().includes(q))) results.push({ kind: 'arch', ak: ak2, a: a2 }); });
+        html += '<div style="font-size:13px;font-weight:900;color:#1565c0;margin:6px 0 8px;">🌐 نتائج البحث عن IP «' + escAttr(q) + '» — ' + results.length + ' نتيجة</div>';
+        if (!results.length) html += '<div style="text-align:center;padding:18px;color:#90a4ae;font-size:12.5px;background:#fff;border:1.5px dashed #bbdefb;border-radius:14px;">🌐 لا يوجد حساب أو جهاز أو زائر عليه هذا العنوان<br><small>قد يكون العنوان قديماً أو تغيّر — جرّب بحثاً جزئياً مثل «185.2»</small></div>';
+        results.forEach(r => {
+            if (r.kind === 'acc') html += accAccountCardHtml(r.u, false);
+            else if (r.kind === 'guest') html += accConvCardHtml(r.dk, r.g, devMap);
+            else html += accArchCardHtml(r.ak, r.a);
+        });
+        body.innerHTML = html;
+        return;
+    }
     /* 🖥️ البحث بالبصمة = ملف الجهاز الكامل — فقط الحساب المتعلق ببصمة الجهاز */
     const isFpQuery = q && q.length >= 4 && !/[\u0600-\u06FF\u0750-\u077F\s]/.test(q);
     if (isFpQuery) {
@@ -4870,13 +5290,24 @@ function renderAccountsList() {
                 + '<div style="margin-top:8px;">' + group.map(u => accAccountCardHtml(u, true)).join('') + '</div>'
                 + '</div>';
         });
+    } else if (activeTab === 'marks') {
+        /* ✅ (v51F) تبويب العلامات السرية الشامل */
+        html += renderMarksTabHtml();
     } else {
         /* 👥 كل الحسابات */
         let filtered = users;
-        if (q) filtered = users.filter(u => String(u.name || '').toLowerCase().includes(q) || String(u.hwFp || '').toLowerCase().includes(q) || String(u.uid || '').toLowerCase().includes(q));
+        if (q) filtered = users.filter(u => String(u.name || '').toLowerCase().includes(q) || String(u.hwFp || '').toLowerCase().includes(q) || String(u.uid || '').toLowerCase().includes(q) || Object.keys(u.ips || {}).some(ip => ip.toLowerCase().includes(q)));   /* ✅ (v51F) البحث يشمل IP */
         html += '<div style="font-size:13px;font-weight:900;color:#00695c;margin:6px 0 8px;">👥 كل الحسابات (' + filtered.length + ')' + (q ? ' — نتائج البحث عن «' + escAttr(q) + '»' : '') + '</div>';
         if (!filtered.length) html += '<div style="text-align:center;padding:16px;color:#999;font-size:12px;">لا نتائج</div>';
         filtered.forEach(u => { html += accAccountCardHtml(u, multiDevs.includes(u.hwFp || '')); });
+        /* ✅ (v51F) سجل الهويات: الحسابات المحذوفة المطابقة للبحث — لا يُنسون أبداً */
+        if (q) {
+            const archM = Object.keys(identityArchiveCache || {}).filter(ak => { const a = identityArchiveCache[ak] || {}; return String(a.name || '').toLowerCase().includes(q) || String(a.hwFp || '').toLowerCase().includes(q) || String(a.fp || '').toLowerCase().includes(q) || Object.keys(a.ips || {}).some(ip => ip.toLowerCase().includes(q)); });
+            if (archM.length) {
+                html += '<div style="font-size:12.5px;font-weight:900;color:#616161;margin:12px 0 6px;">🗄️ في سجل الهويات — حسابات محذوفة مطابقة (' + archM.length + ') — لا يُنسون أبداً:</div>';
+                archM.forEach(ak => { html += accArchCardHtml(ak, identityArchiveCache[ak] || {}); });
+            }
+        }
     }
     body.innerHTML = html;
     /* ✅ (v50F) الحفاظ على نص الردود المكتوبة عند إعادة الرسم اللحظية */
@@ -5291,6 +5722,7 @@ function enterChat() {
     db.ref('users/' + myFP + '/createdAt').once('value', snap => { if (!snap.exists()) db.ref('users/' + myFP + '/createdAt').set(Date.now()); });
     db.ref('users/' + myFP + '/role').once('value', s => { if (!s.exists()) db.ref('users/' + myFP + '/role').set('user'); });
     db.ref('users/' + myFP).update({ name: myName, avatar: myAvatar, status: 'online', lastSeen: Date.now(), fp: myFP, hwFp: window.__vDevKey || getHardwareFp() });   /* ✅ (v46F) بصمة الجهاز على الحساب — التوثيق الخارجي أُزيل */
+    recordMyIp();   /* ✅ (v51F) التقاط IP لحظياً — يظهر للملك فقط في كشف الحسابات */
     vDevBind();   /* ✅ (v46F) ربط هذا الجهاز بهذا الحساب — سجل الأجهزة */
 
     db.ref('users/' + myFP + '/name').on('value', s => {
@@ -5987,6 +6419,7 @@ async function permanentDeleteUser(uid, name) {
     if (!confirm('⚠️ تأكيد أخير!')) return;
     const targetAvatar = allUsersData[uid]?.avatar || DEFAULT_ICON;
     try { await logAdminAction('delete_user', uid, name, { target_role: tr }); } catch(e) {}
+    try { await archiveDeletedIdentity(uid, allUsersData[uid]); } catch(e) {}   /* ✅ (v51F) أرشفة الهوية دائماً — المحذوف لا يُنسى بالبصمة وIP */
     try { await vDevBanDevice(uid, name, '🗑️ حذف إداري نهائي — تواصل مع الإدارة لطلب فك القفل'); } catch(e) {}   /* ✅ (v46F/v48F) حذف إداري = قفل جهاز نهائي + سبب واضح */
     try { await db.ref('force_logout/' + uid).set({ reason: 'تم حذف حسابك من قبل المالك', type: 'deleted', by: myName, at: Date.now() }); } catch(e) {}
     await new Promise(r => setTimeout(r, 800));
@@ -6003,6 +6436,7 @@ async function deleteUnknownUser(uid) {
     const targetAvatar = u.avatar || DEFAULT_ICON;
     try {
         await logAdminAction('delete_unknown_user', uid, displayName, {});
+        try { await archiveDeletedIdentity(uid, u); } catch(e) {}   /* ✅ (v51F) أرشفة الهوية */
         try { await vDevBanDevice(uid, displayName, '🗑️ حذف إداري لحساب مجهول — تواصل مع الإدارة لطلب فك القفل'); } catch(e) {}   /* ✅ (v46F/v48F) قفل جهاز + سبب واضح */
         await db.ref('force_logout/' + uid).set({ reason: 'تم حذف حسابك', type: 'deleted', by: myName, at: Date.now() });
         await new Promise(r => setTimeout(r, 800));
@@ -6024,6 +6458,7 @@ async function deleteAllUnknownUsers() {
         const target = unknowns[i];
         try {
             await db.ref('force_logout/' + target.uid).set({ reason: 'تم حذف حسابك', type: 'deleted', by: myName, at: Date.now() });
+            try { await archiveDeletedIdentity(target.uid, allUsersData[target.uid] || { name: target.name, avatar: target.avatar }); } catch(e) {}   /* ✅ (v51F) أرشفة الهوية */
             try { await vDevBanDevice(target.uid, target.name); } catch(e) {}   /* ✅ (v46F) قفل جهاز */
             await new Promise(r => setTimeout(r, 600));
             await purgeUserEverywhere(target.uid, target.name, target.avatar);
@@ -6045,7 +6480,7 @@ function startListeners() {
         if (!messagesCache[k]) { messagesCache[k] = v; const ks = Object.keys(messagesCache); if (ks.length > 300) { const o = ks.sort((a, b) => (Number(messagesCache[a].time) || 0) - (Number(messagesCache[b].time) || 0))[0]; delete messagesCache[o]; } renderMessages(); }
     });
     db.ref('messages').on('child_removed', s => { if (isBeingDeleted) return; const k = s.key; if (messagesCache[k]) { delete messagesCache[k]; animatedMsgIds.delete(k); const el = document.getElementById('msg-' + k); if (el) el.remove(); else renderMessages(); } });
-    db.ref('users').on('value', s => { if (isBeingDeleted) return; const d = {}; s.forEach(c => { d[c.key] = c.val() }); allUsersData = d; updateOnlineBadge(); if (currentDMChat) updateDMChatHeaderStatus(); scheduleUsersRender(); updatePendingBadge(); if (document.getElementById('security-settings-modal').classList.contains('active')) { renderApprovalUserList(); renderNameChangeUserList(); } });
+    db.ref('users').on('value', s => { if (isBeingDeleted) return; const d = {}; s.forEach(c => { d[c.key] = c.val() }); allUsersData = d; if (isOwner()) detectMarkHits(d); updateOnlineBadge(); if (currentDMChat) updateDMChatHeaderStatus(); scheduleUsersRender(); updatePendingBadge(); if (document.getElementById('security-settings-modal').classList.contains('active')) { renderApprovalUserList(); renderNameChangeUserList(); } });   /* ✅ (v51F) كشف العائدين على أجهزة موسومة لحظياً */
     db.ref('statuses').on('value', s => { if (isBeingDeleted) return; statusesCache = {}; s.forEach(c => { statusesCache[c.key] = c.val() }); scheduleStatusesRender(); });
     db.ref('notifications/' + myFP).on('value', s => { if (isBeingDeleted) return; myNotifications = {}; if (s.exists()) s.forEach(c => { myNotifications[c.key] = c.val() }); scheduleNotificationsRender(); });
     loadDMUsersList(); loadMediaUsersList(); loadStatusUsersList();
@@ -6686,6 +7121,7 @@ function renderNotifications() {
         else if (n.type === 'name_changed') { notifTitle = '✏️ تم تغيير اسمك'; notifBody = 'من "' + (n.oldName || '') + '" إلى "' + (n.newName || '') + '" بواسطة ' + (n.byName || 'الإدارة'); notifIcon = '✏️'; }
         else if (n.type === 'new_registration_request') { notifTitle = '📥 طلب تسجيل جديد'; notifBody = 'من: ' + (n.name || 'مجهول'); notifIcon = '📥'; }
         else if (n.type === 'new_report') { notifTitle = '🚩 بلاغ جديد'; notifBody = 'على: ' + (n.targetName || 'مجهول'); notifIcon = '🚩'; }
+        else if (n.type === 'mark_hit') { notifTitle = '🏷️ كشف علامة سرية!'; notifBody = '«' + escapeHtml(String(n.hitName || 'مجهول')) + '» دخل بحساب مرتبط بالجهاز الموسوم «' + escapeHtml(String(n.markLabel || '')) + '» — ' + formatDate(n.time); notifIcon = '🏷️'; }   /* ✅ (v51F) كشف العلامة السرية — العائد بحساب جديد */
         else { notifTitle = '👁️ ' + escapeHtml(fn) + ' شاهد حالتك'; notifIcon = '📸'; }
         d.innerHTML = '<div class="user-info" style="flex:1;"><img src="' + fa + '" class="user-avatar" onclick="event.stopPropagation();openViewer(\'' + safeFa + '\',\'image\',\'' + safeFn + '\')"><div class="user-details"><h4>' + notifIcon + ' ' + notifTitle + '</h4><div style="font-size:10px;color:#777;font-family:var(--font-main);">' + notifBody + '</div></div></div><div style="display:flex;align-items:center;gap:4px;"><span style="font-size:15px;color:var(--primary);">' + notifIcon + '</span></div>';
         d.appendChild(db2);
